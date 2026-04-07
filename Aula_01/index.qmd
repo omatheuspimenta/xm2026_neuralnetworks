@@ -1,4 +1,4 @@
-index---
+---
 title: "Curso Redes Neurais - Xmeeting 2026"
 subtitle: "Introdução a Redes Neurais"
 format: 
@@ -28,6 +28,7 @@ toc: true
 toc-title: "Table of Contents"
 toc-depth: 1
 ---
+
 
 # Introdução
 
