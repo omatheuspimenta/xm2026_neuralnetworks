@@ -1,4 +1,4 @@
----
+index---
 title: "Curso Redes Neurais - Xmeeting 2026"
 subtitle: "Introdução a Redes Neurais"
 format: 
@@ -28,7 +28,6 @@ toc: true
 toc-title: "Table of Contents"
 toc-depth: 1
 ---
-
 
 # Introdução
 
@@ -103,7 +102,7 @@ O objetivo é aprender uma função $f(x;\theta) \approx y$ na qual $\theta são
 Nesse caso quando treinamos o modelo, estamos resolvendo um problema de otimização. A ideia é minimizar o risco que é dado por:
 
 $$
-    R(\theta) = \mathbb{E}_{(x,y)\sim P}[\mathcal{L}(y, f(x;\theta))]
+    R(\theta) = \mathbb{E}_{(x,y)\sim P}[\mathcal{L}(y, f(x_i;\theta))]
 $$
 
 Contudo não temos acesso a verdadeira distribuição, por causa disso o que realmente fazemos é minimizar o risco empírico (ou seja com os nossos dados)
@@ -199,8 +198,11 @@ $$
 Quando isso não ocrre atualiza de forma iterativa para encontrar o melhor peso:
 
 $$
-    w \leftarrow w + \nu y_i x_i \\
-    b \leftarrow b + \nu y_i
+    w \leftarrow w + \eta y_i x_i
+$$
+
+$$
+    b \leftarrow b + \eta y_i
 $$
 
 ## Visão Moderna
@@ -226,6 +228,29 @@ No perceptron clássico o $\phi(z) = sign(z)$, que foi substituido por funções
 </figure>
 
 </div>
+
+## Perceptron - Implementação
+
+Primeiro antes de implementar um perceptron do zero em python. Vamos mostrar passo a passo como os pesos são atualizados. Para isso vamos usar o problema "OR", nesse caso temos os dados:
+
+- $\mathcal(D) = \{([0, 1], 1), ([1, 1], 1), ([1, 0], 1), ([0, 0], -1) \}$
+- Como vemos temos 2 features, nesse caso temos que encontrar $[w_1, w_2, b]$. Para começar vamos começar com valores aleatórios $[0, 0, 0]$ e $\eta = 1$.
+
+Processo:
+
+- 1° interação: Relembrando $\hat{y} = sign(w^Tx_i + b) \rightarrow sign([0, 1]^T*[0, 0] + 0) = 0$. Logo atualiza os parâmetros $w \leftarrow [0, 0] + (1)[0, 1] = [0, 1]$ e $b = 0 + 1 = 1$.
+- 2° interação: $sign([1, 1]^T * [0, 1] + 1) = 1$, correto não atualiza parâmetros.
+- 3° interação: $sign([1, 0]^T * [0, 1] + 1) = 1$, correto.
+- 4° interação: $sign([0, 0]^T * [0, 1] + 1) = 1$, errado, logo $w \leftarrow [0, 1] + (-1)[0, 0] = [0, 1]$ e $b = 1 - 1 = 0$
+- 5° interação: Vai dar certo até $sign([1, 0]^T * [0, 1] + 0) = 0$, errado logo $w \leftarrow [0, 1] + (1)[1, 0] = [1, 1]$ e $b = 0 + 1 = 0$
+- 6° interação: $sign([1, 1]^T * [0, 0] + 1) = 1$, errado logo $w \leftarrow [1, 1] + (-1)[0, 0] = [1, 1]$ e $b = 1 + -1 = 0$
+- 7° interação: Via dar certo até voltar para mesmo caso $sign([1, 1]^T * [0, 0] + 0) = 0$, errado logo $w \leftarrow [1, 1] + (-1)[0, 0] = [1, 1]$ e $b = 0 - 1 = -1$. 
+
+Com isso todos os valores estão corretos, logo os parâmetros que ajustam esse problema são $w [1, 1]$ e $b = -1$. 
+
+## Código
+
+pass
 
 ## Perceptron - Limitações
 
