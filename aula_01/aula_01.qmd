@@ -1,4 +1,4 @@
-index---
+---
 title: "Curso Redes Neurais - Xmeeting 2026"
 subtitle: "Introdução a Redes Neurais"
 format: 
@@ -95,7 +95,7 @@ $$
     \mathcal{D} = \{(x_i,y_i)\}^{N}_{i=1}
 $$
 
-O objetivo é aprender uma função $f(x;\theta) \approx y$ na qual $\theta são os parâmetros do modelo
+O objetivo é aprender uma função $f(x;\theta) \approx y$ na qual $\theta$ são os parâmetros do modelo
 
 ## Problema de Otimização
 
@@ -238,7 +238,7 @@ Primeiro antes de implementar um perceptron do zero em python. Vamos mostrar pas
 
 Processo:
 
-- 1° interação: Relembrando $\hat{y} = sign(w^Tx_i + b) \rightarrow sign([0, 1]^T*[0, 0] + 0) = 0$. Logo atualiza os parâmetros $w \leftarrow [0, 0] + (1)[0, 1] = [0, 1]$ e $b = 0 + 1 = 1$.
+- 1° interação: Relembrando $\hat{y_i} = sign(w^Tx_i + b) \rightarrow sign([0, 1]^T*[0, 0] + 0) = 0$. Logo atualiza os parâmetros $w \leftarrow [0, 0] + (1)[0, 1] = [0, 1]$ e $b = 0 + 1 = 1$.
 - 2° interação: $sign([1, 1]^T * [0, 1] + 1) = 1$, correto não atualiza parâmetros.
 - 3° interação: $sign([1, 0]^T * [0, 1] + 1) = 1$, correto.
 - 4° interação: $sign([0, 0]^T * [0, 1] + 1) = 1$, errado, logo $w \leftarrow [0, 1] + (-1)[0, 0] = [0, 1]$ e $b = 1 - 1 = 0$
@@ -247,10 +247,6 @@ Processo:
 - 7° interação: Via dar certo até voltar para mesmo caso $sign([1, 1]^T * [0, 0] + 0) = 0$, errado logo $w \leftarrow [1, 1] + (-1)[0, 0] = [1, 1]$ e $b = 0 - 1 = -1$. 
 
 Com isso todos os valores estão corretos, logo os parâmetros que ajustam esse problema são $w [1, 1]$ e $b = -1$. 
-
-## Código
-
-pass
 
 ## Perceptron - Limitações
 
