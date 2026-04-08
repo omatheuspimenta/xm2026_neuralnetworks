@@ -679,3 +679,20 @@ $$
 $$
 
 O parâmetro $\lambda$ controla o fator de decaimento de peso. Ajuda a evitar overfitting e garante maior estabilidade ao modelo.
+
+# Referências 
+
+## Referências
+
+- Goodfellow, Ian, et al. Deep learning. Vol. 1. No. 2. Cambridge: MIT press, 2016.
+- Theodoridis, Sergios, and Konstantinos Koutroumbas. Pattern recognition. Elsevier, 2006.
+- Dubey, Shiv Ram, Satish Kumar Singh, and Bidyut Baran Chaudhuri. "Activation functions in deep learning: A comprehensive survey and benchmark." Neurocomputing 503 (2022): 92-108.
+- Kingma, Diederik P., and Jimmy Ba. "Adam: A method for stochastic optimization." arXiv preprint arXiv:1412.6980 (2014).
+- Ruder, Sebastian. "An overview of gradient descent optimization algorithms." arXiv preprint arXiv:1609.04747 (2016).
+
+## Referências
+
+- Wu, Yuxin, and Kaiming He. "Group normalization." Proceedings of the European conference on computer vision (ECCV). 2018.
+- Loshchilov, Ilya, and Frank Hutter. "Decoupled weight decay regularization." arXiv preprint arXiv:1711.05101 (2017).
+- Rosenblatt, Frank. "The perceptron: a probabilistic model for information storage and organization in the brain." Psychological review 65.6 (1958): 386.
+
