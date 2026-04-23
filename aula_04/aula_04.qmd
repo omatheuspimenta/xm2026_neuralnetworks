@@ -1,0 +1,310 @@
+---
+title: "Curso Redes Neurais - Xmeeting 2026"
+subtitle: "Transformers e Vision Transformer (ViT)"
+format: 
+  clean-revealjs:
+    fontsize: 0.6em
+    transition: slide
+    background-transition: fade
+    highlight-style: github
+    code-line-numbers: true
+    slide-number: true
+    chalkboard: true
+    controls: true
+    footer: "Curso Redes Neurais - CNNs | Lucas Otávio"
+    margin: 0.05
+    min-scale: 0.2
+    max-scale: 2.0
+    menu: true
+html-math-method:
+  method: mathjax
+author:
+  - name: Lucas Otávio Leme Silva
+    email: lucasotavio750@gmail.com
+    affiliations: Universidade Tecnológica Federal do Paraná, Cornélio Procópio (UTFPR-CP)
+date: last-modified
+toc: true
+toc-title: "Table of Contents"
+toc-depth: 1
+---
+
+# Problemática
+
+## Estabelecendo o problema
+
+Uma das áreas mais antigas de inteligência artificial é natural language processing. A ideia geral é: Como aprender padrões tão complexos como a linguagem ? 
+
+Por exemplo dado uma frase: "Ela não é flor que se cheire"
+
+Como devemos observar a frase para entender seu sentido ? Flor nesse caso, tem outro sentido da frase "Ele deu flores para namorada".
+
+Isso torna os padrões de uma língua muito mais difícil
+
+## Formalmente
+
+Podemos definir o problema da nlp formalmente da forma:
+
+$$
+  P(x_t|x_1, \cdots, x_{t-1})
+$$
+
+Uma das soluções clássicas são os modelos RNN, LSTM e GRU que foram projetados para lidar com sequências, em que o estado atual depende do anterior e a informação é propagada ao longo do tempo, a ideia consiste em:
+
+$$
+  h_t = f(x_t, h_{t-1})
+$$
+
+## Problemas da RNNs
+
+Ao longo dos anos tentou-se resolver a grande limitação desses modelos, que eram capturar dependências de longo prazo, isso porque Informação relevante no início da sequência se perde ao longo do tempo e gradientes diminuem exponencialmente.
+
+Exemplo: O livro que o professor que o aluno admira escreveu é complexo 
+
+Para entender "livro -> Complexo" o modelo precisa "ignorar" várias camadas intermediárias e as RNN tem dificuldade de fazer isso.
+
+## Problemas da RNNs
+
+O principal problema se deve que a RNN é inerentemente sequencial:
+
+$$
+  h_1 \rightarrow h_2 \rightarrow h_3 \rightarrow \cdots
+$$
+
+Isso faz com que o treinamento seja lento e as derivadas dependam de múltiplas multiplicações de matrizes.
+
+## Objetivo do Transformers
+
+Para resolver o problema apresentado, a ideia é criar um Embedding de Contexto: na qual cada palavra tem um vetor diferente que expressa significados diferentes dependendo das palavras a sua volta.
+E para computar isso é necessário de "Atenção".
+
+<div style="position: relative; width: 80%; height: 500px; margin: auto; text-align:center;">
+<figure class="fragment" data-fragment-index="1" 
+        style="position:absolute; top:0; left:0; width:100%; margin:0;">
+    <img src="images/Intuition.png" 
+         style="width:100%; height:auto;" />
+  </a>
+</figure>
+</div>
+
+# Arquitetura do Transformer
+
+## Como funciona um Transformer  
+
+A arquitetura do modelo pode ser vista na imagem abaixo. A principal novidade é o Multi Head Attention. Para entender como ele funciona, vamos ver um exemplo usando texto.  
+
+<div style="position: relative; width: 30%; height: 500px; margin: auto; text-align:center;">
+<figure class="fragment" data-fragment-index="1" 
+        style="position:absolute; top:0; left:0; width:100%; margin:0;">
+    <img src="images/Estrutura_Transformer.png" 
+         style="width:100%; height:auto;" />
+  </a>
+</figure>
+</div>
+
+## Input Embedding
+
+Primeiro passo é o Input Embedding, na qual representamos os dados em uma nova forma. Perceba que cada palavra é representada por um vetor de tamanho 512, isso é importante porque simplesmente
+representar como "Carro = 1", "Porta = 2", primeiro não mostra o real significado de cada palavra, e palavras com proximidade não tem valores próximos.
+
+<div style="position: relative; width: 80%; height: 500px; margin: auto; text-align:center;">
+<figure class="fragment" data-fragment-index="1" 
+        style="position:absolute; top:0; left:0; width:100%; margin:0;">
+    <img src="images/input_embedding.png" 
+         style="width:100%; height:auto;" />
+  </a>
+</figure>
+</div>
+
+## Positional Encoding
+
+Para um texto, queremos carregar a informação sobre a posição de uma palavra na frase e saber quais são as palavras mais próximas e mais distantes na frase, para isso usamos positional encoding.
+Quando formos ver a parte de atenção, vamos ver a importância do positional encoding porque ela não se importa com a posição, sendo assim precisamos de alguma forma incorporar isso nas representações. 
+
+<div style="position: relative; width: 80%; height: 500px; margin: auto; text-align:center;">
+<figure class="fragment" data-fragment-index="1" 
+        style="position:absolute; top:0; left:0; width:100%; margin:0;">
+    <img src="images/pos_encoding.png" 
+         style="width:100%; height:auto;" />
+  </a>
+</figure>
+</div>
+
+## Positional Encoding
+
+Para calcular o position Encoding vamos usar a fómrula definida no artigo original. Que utiliza fórmulas trigonométricas como seno e cosseno para capturar padrões contínuos e periódicos.
+
+<div style="position: relative; width: 80%; height: 500px; margin: auto; text-align:center;">
+<figure class="fragment" data-fragment-index="1" 
+        style="position:absolute; top:0; left:0; width:100%; margin:0;">
+    <img src="images/pos_encoding2.png" 
+         style="width:100%; height:auto;" />
+  </a>
+</figure>
+</div>
+
+## Self-Attention
+
+Antes de analisar o Multi-Head Attention, vamos entender como funciona o self attention ou single head attention. Atenção é um mecanismo que permite a rede neural aprender relacionar as diferentes partes de uma entrada. A fórmula para attention é dada por:
+
+$$
+    Attention(Q, K, V) = softmax\left(\frac{QK^T}{\sqrt{d_k}}\right)V
+$$
+
+$QK^T$ é um produto escalar entre a query e a key, a divisão $\sqrt{d_k}$ é para evitar saturação do softmax e o softmax é aplicado por linha.
+
+## Self-Attention
+
+Mas quem é $K$ key, $Q$ query e $V$ value:
+
+Eles são projeções lineares aprendidas durante o treinamento da rede:
+
+- $Q = XW_Q$
+- $K = XW_K$
+- $V = XW_V$
+
+Na qual tanto $Q,K \in \mathbb{R}^{n \times d_k}$ e $V \in \mathbb{R}^{n \times d_v}$ . Com isso temos $QK^T \in \mathbb{R}^{n \times n}$ e $Attention \in \mathbb{R}^{n \times d_v}$.
+
+## Intuição Q, K, V
+
+Podemos interpretar o mecanismo de atenção como um sistema de busca:
+
+- Query (Q): o que estou procurando
+- Key (K): o que cada palavra oferece
+- Value (V): a informação associada
+
+Para cada palavra:
+
+1. Comparamos Q com todas as K
+2. Obtemos pesos (importância)
+3. Fazemos média ponderada dos V
+
+## Self-Attention
+Ao utilizarmos softmax garantimos que a soma resultante de cada linha na matriz seja 1. Podemos considerar esses valores como um score.
+
+<div style="position: relative; width: 80%; height: 500px; margin: auto; text-align:center;">
+<figure class="fragment" data-fragment-index="1" 
+        style="position:absolute; top:0; left:0; width:100%; margin:0;">
+    <img src="images/Self.png" 
+         style="width:100%; height:auto;" />
+  </a>
+</figure>
+</div>
+
+## Self-Attention
+A matriz final gerada pela self attention é capaz de capturar não apenas o significado dado pelo embedding, ou a posição (representada pelo positional encoding) mas também a interação de cada palavra com outras palavras. 
+
+<div style="position: relative; width: 80%; height: 500px; margin: auto; text-align:center;">
+<figure class="fragment" data-fragment-index="1" 
+        style="position:absolute; top:0; left:0; width:100%; margin:0;">
+    <img src="images/Self2.png" 
+         style="width:100%; height:auto;" />
+  </a>
+</figure>
+</div>
+
+## Multi Head Attention
+
+Contudo uma língua é muito mais difícil para apenas um self-attention, existem diferentes tipos de padrões. Por isso utilizamos várias "cabeças" ou heads ao mesmo tempo. Isso faz com que cada head aprenda subespaços diferentes.
+Ou seja, cada head pode focar em diferentes relações como: Dependência sintática, concordância, etc ...
+
+$$ 
+  head_i = Attention(QW^Q_i, KW_i^K, VW_i^V)
+$$
+
+$$ 
+  MultiHead = Concat(head_1, \cdots, head_h)W^O
+$$
+
+## Multi Head Attention
+
+<div style="position: relative; width: 100%; height: 500px; margin: auto; text-align:center;">
+<figure class="fragment" data-fragment-index="1" 
+        style="position:absolute; top:0; left:0; width:100%; margin:0;">
+    <img src="images/MultiHead.png" 
+         style="width:100%; height:auto;" />
+  </a>
+</figure>
+</div>
+
+## Bloco do Transformer
+
+Cada bloco do encoder segue as seguintes camadas:
+
+1. Multi-Head Attention  
+2. Conexão Residual e Normalização  
+3. Camada Densa  
+4. Conexão Residual e Normalização  
+
+Isso é repetido várias vezes ao longo da rede.
+
+## Observação importante: Máscara
+
+Na prática nós mascaramos os valores do triangulo da matriz formado pela multiplicação da query e da key. Motivo é para a palavra que estamos analisando 
+não ter informação sobre o "futuro", ou seja das palavras que sucedem ela.
+
+$$
+    Attention(Q, K, V) = softmax\left(mask\left(\frac{QK^T}{\sqrt{d_k}}\right)\right)V
+$$
+
+## Observação importante: Máscara
+
+<div style="position: relative; width: 60%; height: 500px; margin: auto; text-align:center;">
+<figure class="fragment" data-fragment-index="1" 
+        style="position:absolute; top:0; left:0; width:100%; margin:0;">
+    <img src="images/mask.png" 
+         style="width:100%; height:auto;" />
+  </a>
+</figure>
+</div>
+
+# ViT
+
+## História
+
+Por muitos anos, as Redes Neurais Convolucionais (CNNs) dominaram a visão computacional, alcançando grandes resultados. Em 2017, um dos artigos mais importantes de redes neurais profundas foi publicado, intitulado 'Attention is All you Need', que estabelece uma nova abordagem para o aprendizado das redes neurais. Uma das principais capacidades da rede Transformer é a de capturar relações globais entre elementos. Pensando nisso, em 2021, foi proposta uma nova abordagem de redes neurais para visão computacional, o Visual Transformer.
+
+## Arquitetura
+
+Visual Transformer (ViT) nada mais é do que uma extensão do modelo visto anteriormente. Usamos somente a parte do encoding do modelo transformer. A arquitetura do modelo de uma Vit pode ser vista na imagem abaixo. Vamos analisar cada parte individualmente.
+
+<div style="position: relative; width: 80%; height: 500px; margin: auto; text-align:center;">
+<figure class="fragment" data-fragment-index="1" 
+        style="position:absolute; top:0; left:0; width:100%; margin:0;">
+    <img src="images/ViT_arquitetura.png" 
+         style="width:100%; height:auto;" />
+  </a>
+</figure>
+</div>
+
+## Patching
+
+Uma importante configuração do Visual Transformer é que ele foi desenvolvido para funcionar com sequências, como texto. Mas como transformamos imagens em sequências ? Para isso, vamos usar patches de imagens.
+
+<div style="position: relative; width: 80%; height: 500px; margin: auto; text-align:center;">
+<figure class="fragment" data-fragment-index="1" 
+        style="position:absolute; top:0; left:0; width:100%; margin:0;">
+    <img src="images/Img_patch.png" 
+         style="width:100%; height:auto;" />
+  </a>
+</figure>
+</div>
+
+## Funções Importantes
+
+- Após a imagem ser dividida em patches a primeira camada de uma ViT e o embedding, mas como fazer o embedding de uma imagem na prática? Normalmente usamos uma projeção linear sobre os patches com MLP ou CNN para criar esse embedding.
+
+- Assim como no transformer é feito um positional embedding das imagens. Além de usar todo aquela parte de funções trigonométricas, no ViT cada valor no positional encoding é um parâmetro que é aprendido pelo modelo.
+
+## Token especial
+
+No ViT existe um patch adicional chamado de class token (CLS token), resumo de toda a imagem. Esse patch adicional começa como uma matriz de valores aleatórios e os pesos são aprendidos ao longo do treinamento. Normalmente utilizamos ele para predição da classe de uma imagem.
+
+## CNN x ViT:
+
+- Na CNN, os filtros enxergam apenas uma pequena região da imagem por vez. Para capturar informações globais, são necessárias várias camadas, enquanto o ViT modela as relações globais desde o início, pois o multi head attention conecta qualquer pixel a qualquer outro, independentemente da posição.
+- A CNN processa a imagem como um todo, aplicando convoluções sucessivas na imagem, enquanto o ViT divide as imagens em patches e trata cada um como um 'token'.
+- A CNN tem um forte viés indutivo porque possui a característica de ser invariante translacional, enquanto o ViT não tem um viés indutivo forte. Isso faz com que o ViT precise de mais dados para treinamento do que uma CNN.
+
+# Referências
+
+## Referências
