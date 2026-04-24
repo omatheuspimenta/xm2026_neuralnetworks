@@ -43,7 +43,7 @@ Panorama das atividades:
 
 Implementação em Python com PyTorch.
 
-## Algebra Linear - Revisitando Multiplicação Matriz
+## Álgebra Linear - Revisitando Multiplicação Matriz
 
 <video width="1280" controls>
   <source src="images/MatrixMultiplicationDetailed.mp4" type="video/mp4">
@@ -51,8 +51,7 @@ Implementação em Python com PyTorch.
 
 ## História das Redes Neurais
 
-A ideia de rede neural não é algo novo, foi apresentada em 1943 no trabalho de McCulloch e Pitts (modelo computacional de um neurônio). Mas **por que somente recentemente elas ganharam força?** Além disso, **o que é uma rede neural?**
-    
+A ideia de rede neural não é algo novo, foi apresentada em 1943 no trabalho de McCulloch e Pitts (modelo computacional de um neurônio). Mas **por que somente recentemente elas ganharam força?** Além disso, **o que é uma rede neural?**  
 Diversas definições já foram propostas:
 
 - Operacionalmente podemos defini-la como: "Sistema complexo que compreende nós e links representados por neurônios e suas conexões" (WARREN et al., 2013)
@@ -68,7 +67,7 @@ Diversas definições já foram propostas:
          style="width:100%; height:auto;" />
   </a>
   <figcaption style="font-size:1em; margin-top:0.5em;">
-    Timeline dos principais acontecimentos no desenvolvimento das Redes Neurais 
+    Linha do Tempo das Redes Neurais 
   </figcaption>
 </figure>
 
@@ -126,16 +125,15 @@ A partir do problema existem diversas abordagens para tentar encontrar a soluç�
 
 ## Perceptron - Neurônio
 
-Perceptron foi originalmente proposto como uma abstração matemática de um neurônio biológico.
-
-<div style="position: relative; width: 75%; height: 400px; margin: auto; text-align:center;">
+Perceptron foi originalmente proposto como uma abstração matemática de um neurônio biológico.  
+<div style="position: relative; width: 65%; height: 400px; margin: auto; text-align:center;">
 <figure class="fragment" data-fragment-index="1" 
         style="position:absolute; top:0; left:0; width:100%; margin:0;">
     <img src="images/neuronio.png" 
          style="width:100%; height:auto;" />
   </a>
   <figcaption style="font-size:1em; margin-top:0.5em;">
-    Arquitetura Perceptron 
+    Neurônio Biológico 
   </figcaption>
 </figure>
 
@@ -166,7 +164,7 @@ $$
 define um hiperplano de decisão em $\mathbb{R}^d$, particiona o espaço em dois semi-espaços:
 
 - $g(x) > 0$ então o ponto está de um lado do hiperplano e podemos definilo como a classe (+1)
-- $g(x) < 0$ está no outro lado e portanto classifcado como outra classe (-1).
+- $g(x) < 0$ está no outro lado e portanto classifcado como outra classe (-1).  
 
 Nesse caso o vetor peso $w$ é normal ao hiperplano e controla a sua orientação, enquanto $b$ desloca a sua posição. 
 
@@ -189,7 +187,7 @@ Em um problema em que temos duas classes linearmaente separaveis com apenas 2 fe
 
 ## Formulação como Problema de Otimização
 
-O Perceptron pode ser visto como um algoritmo que busca (w,b) tal que:
+O Perceptron pode ser visto como um algoritmo que busca $(w,b)$ tal que:
 
 $$
     y_i(w^Tx_i + b) > 0, \forall i
@@ -215,7 +213,6 @@ O Perceptron pode ser interpretado como uma unidade computacional composta por:
 No perceptron clássico o $\phi(z) = sign(z)$, que foi substituido por funções de ativação mais modernas como ReLU, sigmoid, tanh, entre outros que veremos mais para frente. 
 
 ## 
-
 <div style="position: relative; width: 100%; height: 400px; margin: auto; text-align:center;">
 <figure class="fragment" data-fragment-index="1" 
         style="position:absolute; top:0; left:0; width:100%; margin:0;">
@@ -231,10 +228,12 @@ No perceptron clássico o $\phi(z) = sign(z)$, que foi substituido por funções
 
 ## Perceptron - Implementação
 
-Primeiro antes de implementar um perceptron do zero em python. Vamos mostrar passo a passo como os pesos são atualizados. Para isso vamos usar o problema "OR", nesse caso temos os dados:
+Primeiro antes de implementar um perceptron do zero em Python. Vamos mostrar passo a passo como os pesos são atualizados. Para isso vamos usar o problema "OR", nesse caso temos os dados:
 
 - $\mathcal(D) = \{([0, 1], 1), ([1, 1], 1), ([1, 0], 1), ([0, 0], -1) \}$
-- Como vemos temos 2 features, nesse caso temos que encontrar $[w_1, w_2, b]$. Para começar vamos começar com valores aleatórios $[0, 0, 0]$ e $\eta = 1$.
+- Como vemos temos 2 features, nesse caso temos que encontrar $[w_1, w_2, b]$. 
+
+Para começar vamos começar com valores aleatórios $[0, 0, 0]$ e $\eta = 1$.
 
 ##  Processo
 
