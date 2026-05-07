@@ -1,6 +1,6 @@
 ---
 title: "Curso Redes Neurais - Xmeeting 2026"
-subtitle: "Redes Neurais Convolucionais"
+subtitle: "Introdução a Redes Neurais"
 format: 
   clean-revealjs:
     fontsize: 0.6em
@@ -11,7 +11,7 @@ format:
     slide-number: true
     chalkboard: true
     controls: true
-    footer: "Curso Redes Neurais - CNNs | Lucas Otávio"
+    footer: "Curso Redes Neurais - Introdução | Lucas Otávio"
     margin: 0.05
     min-scale: 0.2
     max-scale: 2.0
@@ -23,6 +23,12 @@ author:
   - name: Lucas Otávio Leme Silva
     email: lucasotavio750@gmail.com
     affiliations: Universidade Tecnológica Federal do Paraná, Cornélio Procópio (UTFPR-CP)
+  - name: Matheus Pimenta
+    email: omatheuspimenta@outlook.com
+    affiliations: Universidade de São Paulo, Piracicaba (USP-ESALQ)
+  - name: Fabricio Martins Lopes
+    email: fabricio@utfpr.edu.br
+    affiliations: Universidade Tecnológica Federal do Paraná, Cornélio Procópio (UTFPR-CP)
 date: last-modified
 toc: true
 toc-title: "Table of Contents"
@@ -33,7 +39,7 @@ toc-depth: 1
 
 ## História - Redes Neurais Convolucionais
 
-A grande inspiração para as redes neurais foi um experimento realizado em 1959 por Hubel & Wiesel: Receptive fields of single neurones in the cat's striate cortex
+A principal inspiração para as redes neurais surgiu de um experimento realizado em 1959 por David Hubel e Torsten Wiesel: *Receptive Fields of Single Neurones in the Cat’s Striate Cortex*.
 
 <div style="position: relative; width: 100%; height: 500px; margin: auto; text-align:center;">
 <figure class="fragment" data-fragment-index="1" 
@@ -46,7 +52,7 @@ A grande inspiração para as redes neurais foi um experimento realizado em 1959
 
 ## História - Redes Neurais Convolucionais
 
-O que foi descoberto nesse experimento ? 
+O que foi descoberto nesse experimento? 
 
 - Os neurônios no córtex visual respondem a padrões específicos (menos abstratos), como bordas, cantos e cores.
 - Descobriu-se que esses neurônios funcionam de forma hierárquica, ou seja, as células mais complexas combinam as mais simples para aprender abstrações maiores.
@@ -55,11 +61,11 @@ Esse é exatamente o funcionamento de uma Rede Neural Convolucional
 
 ## História - Redes Neurais Convolucionais
 
-Primeira implementação de algo inspirado nesse experimento foi Neocognitron (1980) por Kunihiko Fukushima.
+Primeira implementação de algo inspirado nesse experimento foi *Neocognitron* (1980) por Kunihiko Fukushima.
 
 <div style="position: relative; width: 80%; height: 500px; margin: auto; text-align:center;">
 <figure class="fragment" data-fragment-index="1" 
-        style="position:absolute; top:0; left:0; width:100%; margin:0;">
+        style="position:absolute; top:0; left:0; width:90%; margin:0;">
     <img src="images/Neocognitron.png" 
          style="width:100%; height:auto;" />
   </a>
@@ -68,7 +74,7 @@ Primeira implementação de algo inspirado nesse experimento foi Neocognitron (1
 
 ## História - Redes Neurais Convolucionais
 
-Um desafio de classificação que existia era o ImageNet, um banco de dados enorme com inúmeras classes. Entre 1989 e 1998. Yann Lecun desenvolveu o LeNet que basicamente é a base clássica das CNNs. Até 2012, o erro era bem grande dentro dessa competição. Contudo, em 2012, foi a primeira vez que uma CNN participou da competição e venceu por larga margem, a partir disso, todos os anos subsequentes foram vencidos por CNNs.   
+O *ImageNet* surgiu como um grande desafio de classificação de imagens, reunindo milhões de imagens distribuídas em inúmeras classes. Entre 1989 e 1998, Yann LeCun desenvolveu o *LeNet*, considerado a base das CNNs modernas. Até 2012, as taxas de erro na competição ainda eram elevadas. Nesse ano, uma CNN venceu o desafio pela primeira vez com ampla vantagem, marcando o início do domínio das CNNs nas edições seguintes.
 
 ## Timeline dos principais acontecimentos no desenvolvimento das CNNs
 

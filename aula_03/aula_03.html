@@ -6,11 +6,13 @@
 <script src="aula_03_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="aula_03_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="aula_03_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="aula_03_files/libs/quarto-html/quarto-syntax-highlighting-a06763021a52c43c40a351ac8b799b8f.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.36">
+<link href="aula_03_files/libs/quarto-html/quarto-syntax-highlighting-a6e161b2431e1f94a14e0f5d32135a3c.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.24">
 
   <meta name="author" content="Lucas Otávio Leme Silva">
-  <meta name="dcterms.date" content="2026-04-10">
+  <meta name="author" content="Matheus Pimenta">
+  <meta name="author" content="Fabricio Martins Lopes">
+  <meta name="dcterms.date" content="2026-05-07">
   <title>Curso Redes Neurais - Xmeeting 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -18,9 +20,6 @@
   <link rel="stylesheet" href="aula_03_files/libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="aula_03_files/libs/revealjs/dist/reveal.css">
   <style>
-    /* Default styles provided by pandoc.
-    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-    */
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -33,7 +32,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="aula_03_files/libs/revealjs/dist/theme/quarto-b2736e9fcda83c748fd63b6e579550ef.css">
+  <link rel="stylesheet" href="aula_03_files/libs/revealjs/dist/theme/quarto-5ae9c59b2727fcd5357d4f034d95f9e0.css">
   <link href="aula_03_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="aula_03_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="aula_03_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -129,13 +128,12 @@
   </style>
 </head>
 <body class="quarto-light">
-<script src="mathjax-config.js"></script>
   <div class="reveal">
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">Curso Redes Neurais - Xmeeting 2026</h1>
-  <p class="subtitle">Redes Neurais Convolucionais</p>
+  <p class="subtitle">Introdução a Redes Neurais</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -149,9 +147,31 @@ Lucas Otávio Leme Silva
             Universidade Tecnológica Federal do Paraná, Cornélio Procópio (UTFPR-CP)
           </p>
     </div>
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Matheus Pimenta 
+</div>
+<div class="quarto-title-author-email">
+<a href="mailto:omatheuspimenta@outlook.com">omatheuspimenta@outlook.com</a>
+</div>
+        <p class="quarto-title-affiliation">
+            Universidade de São Paulo, Piracicaba (USP-ESALQ)
+          </p>
+    </div>
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Fabricio Martins Lopes 
+</div>
+<div class="quarto-title-author-email">
+<a href="mailto:fabricio@utfpr.edu.br">fabricio@utfpr.edu.br</a>
+</div>
+        <p class="quarto-title-affiliation">
+            Universidade Tecnológica Federal do Paraná, Cornélio Procópio (UTFPR-CP)
+          </p>
+    </div>
 </div>
 
-  <p class="date">April 10, 2026</p>
+  <p class="date">May 7, 2026</p>
 </section><section id="TOC">
 <nav role="doc-toc"> 
 <h2 id="toc-title">Table of Contents</h2>
@@ -172,7 +192,7 @@ Lucas Otávio Leme Silva
 </section>
 <section id="história---redes-neurais-convolucionais" class="slide level2">
 <h2>História - Redes Neurais Convolucionais</h2>
-<p>A grande inspiração para as redes neurais foi um experimento realizado em 1959 por Hubel &amp; Wiesel: Receptive fields of single neurones in the cat’s striate cortex</p>
+<p>A principal inspiração para as redes neurais surgiu de um experimento realizado em 1959 por David Hubel e Torsten Wiesel: <em>Receptive Fields of Single Neurones in the Cat’s Striate Cortex</em>.</p>
 <div style="position: relative; width: 100%; height: 500px; margin: auto; text-align:center;">
 <figure class="fragment" data-fragment-index="1" style="position:absolute; top:0; left:0; width:100%; margin:0;">
 <img src="images/inspiracao.png" style="width:100%; height:auto;"> 
@@ -181,7 +201,7 @@ Lucas Otávio Leme Silva
 </section>
 <section id="história---redes-neurais-convolucionais-1" class="slide level2">
 <h2>História - Redes Neurais Convolucionais</h2>
-<p>O que foi descoberto nesse experimento ?</p>
+<p>O que foi descoberto nesse experimento?</p>
 <ul>
 <li>Os neurônios no córtex visual respondem a padrões específicos (menos abstratos), como bordas, cantos e cores.</li>
 <li>Descobriu-se que esses neurônios funcionam de forma hierárquica, ou seja, as células mais complexas combinam as mais simples para aprender abstrações maiores.</li>
@@ -190,16 +210,16 @@ Lucas Otávio Leme Silva
 </section>
 <section id="história---redes-neurais-convolucionais-2" class="slide level2">
 <h2>História - Redes Neurais Convolucionais</h2>
-<p>Primeira implementação de algo inspirado nesse experimento foi Neocognitron (1980) por Kunihiko Fukushima.</p>
+<p>Primeira implementação de algo inspirado nesse experimento foi <em>Neocognitron</em> (1980) por Kunihiko Fukushima.</p>
 <div style="position: relative; width: 80%; height: 500px; margin: auto; text-align:center;">
-<figure class="fragment" data-fragment-index="1" style="position:absolute; top:0; left:0; width:100%; margin:0;">
+<figure class="fragment" data-fragment-index="1" style="position:absolute; top:0; left:0; width:90%; margin:0;">
 <img src="images/Neocognitron.png" style="width:100%; height:auto;"> 
 </figure>
 </div>
 </section>
 <section id="história---redes-neurais-convolucionais-3" class="slide level2">
 <h2>História - Redes Neurais Convolucionais</h2>
-<p>Um desafio de classificação que existia era o ImageNet, um banco de dados enorme com inúmeras classes. Entre 1989 e 1998. Yann Lecun desenvolveu o LeNet que basicamente é a base clássica das CNNs. Até 2012, o erro era bem grande dentro dessa competição. Contudo, em 2012, foi a primeira vez que uma CNN participou da competição e venceu por larga margem, a partir disso, todos os anos subsequentes foram vencidos por CNNs.</p>
+<p>O <em>ImageNet</em> surgiu como um grande desafio de classificação de imagens, reunindo milhões de imagens distribuídas em inúmeras classes. Entre 1989 e 1998, Yann LeCun desenvolveu o <em>LeNet</em>, considerado a base das CNNs modernas. Até 2012, as taxas de erro na competição ainda eram elevadas. Nesse ano, uma CNN venceu o desafio pela primeira vez com ampla vantagem, marcando o início do domínio das CNNs nas edições seguintes.</p>
 </section>
 <section id="timeline-dos-principais-acontecimentos-no-desenvolvimento-das-cnns" class="slide level2">
 <h2>Timeline dos principais acontecimentos no desenvolvimento das CNNs</h2>
@@ -419,7 +439,7 @@ Lucas Otávio Leme Silva
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
-<p>Curso Redes Neurais - CNNs | Lucas Otávio</p>
+<p>Curso Redes Neurais - Introdução | Lucas Otávio</p>
 </div>
 </div></div>
 

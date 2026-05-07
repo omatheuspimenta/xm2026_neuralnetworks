@@ -23,6 +23,12 @@ author:
   - name: Lucas Otávio Leme Silva
     email: lucasotavio750@gmail.com
     affiliations: Universidade Tecnológica Federal do Paraná, Cornélio Procópio (UTFPR-CP)
+  - name: Matheus Pimenta
+    email: omatheuspimenta@outlook.com
+    affiliations: Universidade de São Paulo, Piracicaba (USP-ESALQ)
+  - name: Fabricio Martins Lopes
+    email: fabricio@utfpr.edu.br
+    affiliations: Universidade Tecnológica Federal do Paraná, Cornélio Procópio (UTFPR-CP)
 date: last-modified
 toc: true
 toc-title: "Table of Contents"
@@ -141,7 +147,7 @@ Perceptron foi originalmente proposto como uma abstração matemática de um neu
 
 ## Perceptron - Clássico
 
-Perceptron foi criado como um classificador binário para resolver o problema do aprendizado supervisionado. Dado um vetor de vetor de entrada $x$, o modelo define uma função discriminante linear: 
+Perceptron foi criado como um classificador binário para resolver o problema do aprendizado supervisionado. Dado um vetor de entrada $x$, o modelo define uma função discriminante linear: 
 
 $$ 
     g(x) = w^Tx + b
@@ -170,11 +176,11 @@ Nesse caso o vetor peso $w$ é normal ao hiperplano e controla a sua orientaçã
 
 ## Exemplo
 
-Em um problema em que temos duas classes linearmaente separaveis com apenas 2 features, ou seja $x \in \mathbb{R}^2$, o hiperplano se reduz a uma reta $w_1x_1 + w_2x_2 + b = 0$.
+Em um problema em que temos duas classes linearmaente separáveis com apenas 2 features, ou seja $x \in \mathbb{R}^2$, o hiperplano se reduz a uma reta $w_1x_1 + w_2x_2 + b = 0$.
 
 <div style="position: relative; width: 75%; height: 400px; margin: auto; text-align:center;">
 <figure class="fragment" data-fragment-index="1" 
-        style="position:absolute; top:0; left:0; width:80%; margin:0;">
+        style="position:absolute; top:0; left:0; width:65%; margin:0;">
     <img src="images/Perceptron_cant_choose.svg.png" 
          style="width:100%; height:auto;" />
   </a>
@@ -193,7 +199,7 @@ $$
     y_i(w^Tx_i + b) > 0, \forall i
 $$
 
-Quando isso não ocrre atualiza de forma iterativa para encontrar o melhor peso:
+Quando isso não ocorre atualiza-se de forma iterativa para encontrar o melhor peso:
 
 $$
     w \leftarrow w + \eta y_i x_i
@@ -210,7 +216,7 @@ O Perceptron pode ser interpretado como uma unidade computacional composta por:
 - 1° Combinação Linear: $z = w^Tx + b$
 - 2° Função de ativação: $\hat{y} = \phi(z)$
 
-No perceptron clássico o $\phi(z) = sign(z)$, que foi substituido por funções de ativação mais modernas como ReLU, sigmoid, tanh, entre outros que veremos mais para frente. 
+No perceptron clássico $\phi(z) = sign(z)$, é substituido por funções de ativação mais modernas como ReLU, sigmoid, tanh, entre outras que veremos mais a frente. 
 
 ## 
 <div style="position: relative; width: 100%; height: 400px; margin: auto; text-align:center;">
@@ -228,31 +234,37 @@ No perceptron clássico o $\phi(z) = sign(z)$, que foi substituido por funções
 
 ## Perceptron - Implementação
 
-Primeiro antes de implementar um perceptron do zero em Python. Vamos mostrar passo a passo como os pesos são atualizados. Para isso vamos usar o problema "OR", nesse caso temos os dados:
+Antes de implementar um perceptron do zero em Python, vamos demonstrar, passo a passo, como ocorre a atualização dos pesos. Para isso, utilizaremos o problema lógico “OR”, considerando o seguinte conjunto de dados:
 
-- $\mathcal(D) = \{([0, 1], 1), ([1, 1], 1), ([1, 0], 1), ([0, 0], -1) \}$
-- Como vemos temos 2 features, nesse caso temos que encontrar $[w_1, w_2, b]$. 
+* $\mathcal{D} = {([0,1], 1), ([1,1], 1), ([1,0], 1), ([0,0], -1)}$
+* Como o problema possui duas *features*, o objetivo é encontrar os parâmetros $[w_1, w_2, b]$.
 
-Para começar vamos começar com valores aleatórios $[0, 0, 0]$ e $\eta = 1$.
+Inicialmente, adotaremos os valores:
+
+* Pesos e viés iniciais: $[w_1, w_2, b] = [0,0,0]$
+* Taxa de aprendizado: $\eta = 1$
+
 
 ##  Processo
 
-- 1° interação: Relembrando $\hat{y_i} = sign(w^Tx_i + b) \rightarrow sign([0, 1]^T*[0, 0] + 0) = 0$. Logo atualiza os parâmetros $w \leftarrow [0, 0] + (1)[0, 1] = [0, 1]$ e $b = 0 + 1 = 1$.
-- 2° interação: $sign([1, 1]^T * [0, 1] + 1) = 1$, correto não atualiza parâmetros.
-- 3° interação: $sign([1, 0]^T * [0, 1] + 1) = 1$, correto.
-- 4° interação: $sign([0, 0]^T * [0, 1] + 1) = 1$, errado, logo $w \leftarrow [0, 1] + (-1)[0, 0] = [0, 1]$ e $b = 1 - 1 = 0$
+* **1ª interação:** $\hat{y}_i = sign(w^Tx_i + b) \Rightarrow sign([0,1]^T[0,0] + 0) = 0$. Como a predição está incorreta, atualizamos: $w \leftarrow [0,0] + (1)[0,1] = [0,1]$ e $b \leftarrow 0 + 1 = 1$.
+* **2ª interação:** $sign([1,1]^T[0,1] + 1) = 1$. Predição correta, não há atualização dos parâmetros.
+* **3ª interação:** $sign([1,0]^T[0,1] + 1) = 1$. Predição correta.
+* **4ª interação:** $sign([0,0]^T[0,1] + 1) = 1$. Predição incorreta, então: $w \leftarrow [0,1] + (-1)[0,0] = [0,1]$ e $b \leftarrow 1 - 1 = 0$.
+
 
 ## Processo
 
-- 5° interação: Vai dar certo até $sign([1, 0]^T * [0, 1] + 0) = 0$, errado logo $w \leftarrow [0, 1] + (1)[1, 0] = [1, 1]$ e $b = 0 + 1 = 0$
-- 6° interação: $sign([1, 1]^T * [0, 0] + 1) = 1$, errado logo $w \leftarrow [1, 1] + (-1)[0, 0] = [1, 1]$ e $b = 1 + -1 = 0$
-- 7° interação: Via dar certo até voltar para mesmo caso $sign([1, 1]^T * [0, 0] + 0) = 0$, errado logo $w \leftarrow [1, 1] + (-1)[0, 0] = [1, 1]$ e $b = 0 - 1 = -1$. 
+* **5ª interação:** As predições permanecem corretas até $sign([1,0]^T[0,1] + 0) = 0$. Como a predição está incorreta: $w \leftarrow [0,1] + (1)[1,0] = [1,1]$ e $b \leftarrow 0 + 1 = 1$.
+* **6ª interação:** As predições seguem corretas até $sign([0,0]^T[1,1] + 1) = 1$. Como a predição está incorreta: $w \leftarrow [1,1] + (-1)[0,0] = [1,1]$ e $b \leftarrow 1 - 1 = 0$.
+* **7ª interação:** Novamente, as predições permanecem corretas até $sign([0,0]^T[1,1] + 0) = 0$. Como a predição está incorreta: $w \leftarrow [1,1] + (-1)[0,0] = [1,1]$ e $b \leftarrow 0 - 1 = -1$.
 
-Com isso todos os valores estão corretos, logo os parâmetros que ajustam esse problema são $w [1, 1]$ e $b = -1$. 
+Com isso, todas as amostras são classificadas corretamente. Portanto, os parâmetros finais do modelo são $w = [1,1]$ e $b = -1$.
+
 
 ## Perceptron - Limitações
 
-Um único perceptron tem capacidade de resolver apenas problemas linearmente separáveis. Minsky & Papert provaram (Perceptrons, 1969) que existem restrições sobre o que as redes Perceptron são capazes de representar utilizando o problema clássico XOR:
+Um único perceptron tem capacidade de resolver apenas problemas linearmente separáveis. Minsky & Papert provaram (Perceptrons, 1969) que existem limitações sobre o que as redes Perceptron são capazes de representar utilizando o problema clássico XOR:
 
 <div style="position: relative; width: 100%; height: 400px; margin: auto; text-align:center;">
 <figure class="fragment" data-fragment-index="1" 
@@ -278,30 +290,32 @@ Com a evolução das pesquisas em redes neurais e, principalmente, o avanço da 
 
 ## Como podemos entender redes neurais ? 
 
-As redes neurais podem ser vistas como composições de funções que permitem modelar não linearidades complexas.
+As redes neurais podem ser interpretadas como composições de funções capazes de modelar relações não lineares complexas.
 
 $$
-  f(x) = f_L \circ f_{L-1} \circ \dots \circ f_1(x)
+f(x) = f_L \circ f_{L-1} \circ \dots \circ f_1(x)
 $$
 
-Vimos até agora uma dessas funções que podmeos utilizar:
+Até o momento, vimos uma possível função para cada camada:
 
 $$
-  f_i(x) = \phi(w^T*x + b)
+f_i(x) = \phi(w^T x + b)
 $$
 
-E como podemos observar podemos repetir essa mesma estrutura várias vezes. Essas estruturas nós podemos chamar de camadas, ou seja, redes neurais são uma composição de múltiplas camadas.
+Como podemos observar, essa mesma estrutura pode ser repetida diversas vezes. Cada uma dessas estruturas é chamada de **camada**; assim, redes neurais são formadas pela composição de múltiplas camadas.
+
 
 ## Pipeline Geral de Treinamento
 
-Nos próximos slides vamos entender como funciona a estrutura de um modelo de rede neural, isso será feito através do entendimento de como é feito o pipeline do treinamento delas, que consiste nas seguintes etapas:
+Nos próximos slides, veremos como funciona a estrutura de uma rede neural a partir do pipeline de treinamento, composto pelas seguintes etapas:
 
-- Forward pass
-- Cálculo da loss
-- Backpropagation
-- Atualizaçaõ dos parâmetros
+* *Forward pass*
+* Cálculo da *loss*
+* *Backpropagation*
+* Atualização dos parâmetros
 
-Esse é o loop que define o aprendizado das redes neurais
+Esse ciclo define o processo de aprendizado das redes neurais.
+
 
 ## Exemplificação
 
@@ -318,148 +332,151 @@ Esse loop de aprendizado pode ser visto na figura abaixo:
 
 ## Forward Pass
 
-O foward pass nada mais é do que o cálculo da saída ou seja $\hat{y} = f(x;\theta)$. 
+O *foward pass* é o cálculo da saída ou seja $\hat{y} = f(x;\theta)$. 
 
 ## Função de Perda
 
-A função de perda é uma parte essencial de qualquer modelo de rede neural, ela define uma forma de calcular a diferença entre a previsão do modelo e o valor que se desejaria obter. Podemos escrever isso como:
+A função de perda (*loss function*) é um componente essencial em redes neurais, pois define uma medida da diferença entre a previsão do modelo e o valor esperado. Formalmente:
 
-$$ 
-  \mathcal{L}(y, \hat{y})
+$$
+\mathcal{L}(y, \hat{y})
 $$
 
-Dependendo do seu problema você irá utilizar diferentes funções de perda (em alguns casos até que criar um), vamos ver os 3 principais que usamos em quase todos os casos:
+A escolha da função de perda depende do problema a ser resolvido, em alguns casos, é até necessário definir uma função personalizada. A seguir, veremos as principais funções utilizadas na maioria dos cenários:
 
-- Erro Quadrático Médio / Mean Squared Error (MSE)
-- Binary Cross-Entropy e sua versão generalizada Cross-Entropy
+* Erro Quadrático Médio (*Mean Squared Error — MSE*)
+* *Binary Cross-Entropy* e sua generalização, *Cross-Entropy*
 
-Artigo interessante: https://arxiv.org/pdf/2307.02694
+Artigo interessante: [https://arxiv.org/pdf/2307.02694](https://arxiv.org/pdf/2307.02694)
 
 ## MSE
 
-MSE normalmente é usado em casos de regressão, ou seja, em casos que desejamos prever um valor contínuo.
+O *Mean Squared Error* (MSE) é utilizado principalmente em problemas de regressão, nos quais desejamos prever valores contínuos.
 
 $$
-  \frac{1}{N} \sum (y - \hat{y})^2
+\frac{1}{N} \sum (y - \hat{y})^2
 $$
 
 ## Binary Cross-Entropy
 
-Essa função de perda é utilizada para os casos de classificação binária (relacionado com a entropia de Shannon)
+Essa função de perda é utilizada em problemas de classificação binária e está relacionada ao conceito de entropia de Shannon.
 
 $$
-  \mathcal{L} = -[y \log(\hat{y}) + (1-y)\log(1-\hat{y})]
+\mathcal{L} = -[y \log(\hat{y}) + (1-y)\log(1-\hat{y})]
 $$
 
 ## Cross-Entropy
 
-É a generalização da Binary Cross-Entropy, nesse caso é utilizado quando queremos fazer uma classificação com várias classes (além de apenas 2)
+A *Cross-Entropy* é uma generalização da *Binary Cross-Entropy*, utilizada em problemas de classificação multiclasse.
 
 $$
-  \mathcal{L} = -\sum_i y_i \log(\hat{y}_i)
+\mathcal{L} = -\sum_i y_i \log(\hat{y}_i)
 $$
 
 ## Backpropagation
 
-Relembrando nosso objeto que era minimizar o risco empirico, para realizar isso na rede neural utilizamos o algoritmo backpropagation que calcula algo chamado de "gradiente (\nabla)" da função de custo. 
-Basicamente o que ele faz é calcular a derivada parcial da função de perda em relação a cada peso, propagando o erro da última camada até a primeira ("trás para frente") uitlizando a regra da cadeia.
+Nosso objetivo é minimizar o risco empírico. Para isso, utilizamos o algoritmo de *backpropagation*, responsável por calcular o gradiente ($\nabla$) da função de custo.
+Em essência, o algoritmo calcula a derivada parcial da função de perda em relação a cada parâmetro do modelo, propagando o erro da última camada até a primeira (“de trás para frente”) por meio da regra da cadeia.
 
 $$
-  \mathcal{L}(f(x), y) \rightarrow \frac{\partial \mathcal{L}(f(x), y)}{w_i} 
+\mathcal{L}(f(x), y) \rightarrow \frac{\partial \mathcal{L}(f(x), y)}{\partial w_i}
 $$
 
+Pela regra da cadeia:
+
 $$
-  \frac{\partial y}{\partial x} = \frac{\partial y}{\partial u} \frac{\partial u}{\partial x}
+\frac{\partial y}{\partial x} =
+\frac{\partial y}{\partial u}
+\frac{\partial u}{\partial x}
 $$
 
-## Interpretação Geométrica da Derivada
+
+## Interpretação Geométrica da Derivada {auto-animate=true}
 
 A derivada geometricamente representa a inclinação da reta tangente ao gráfico de uma função. Fermat percebeu que era possível encontrar os máximos e mínimos de uma função a partir de suas derivadas.
 
-<div style="position: relative; width: 55%; height: 400px; margin: auto; text-align:center;">
-<figure class="fragment" data-fragment-index="1" 
-        style="position:absolute; top:80; left:0; width:100%; margin:0;">
-    <img src="images/back_01.png" 
-         style="width:100%; height:auto;" />
-  </a>
-</figure>
+<div style="width: 55%; margin: auto; text-align:center;">
+  <figure style="margin:0;">
+    <img src="images/back_01.png" style="width:100%; height:auto;" />
+  </figure>
 </div>
 
-## Interpretação Geométrica da Derivada
+## Interpretação Geométrica da Derivada {auto-animate=true}
 
-<div style="position: relative; width: 75%; height: 400px; margin: auto; text-align:center;">
-<figure class="fragment" data-fragment-index="1" 
-        style="position:absolute; top:80; left:0; width:100%; margin:0;">
-    <img src="images/back_02.png" 
-         style="width:100%; height:auto;" />
-  </a>
-</figure>
+A derivada geometricamente representa a inclinação da reta tangente ao gráfico de uma função. Fermat percebeu que era possível encontrar os máximos e mínimos de uma função a partir de suas derivadas.
+
+<div style="width: 55%; margin: auto; text-align:center;">
+  <figure style="margin:0;">
+    <img src="images/back_02.png" style="width:100%; height:auto;" />
+  </figure>
 </div>
 
-## Interpretação Geométrica da Derivada
+## Interpretação Geométrica da Derivada {auto-animate=true}
 
-<div style="position: relative; width: 70%; height: 400px; margin: auto; text-align:center;">
-<figure class="fragment" data-fragment-index="1" 
-        style="position:absolute; top:80; left:0; width:100%; margin:0;">
-    <img src="images/back_03.png" 
-         style="width:100%; height:auto;" />
-  </a>
-</figure>
+A derivada geometricamente representa a inclinação da reta tangente ao gráfico de uma função. Fermat percebeu que era possível encontrar os máximos e mínimos de uma função a partir de suas derivadas.
+
+<div style="width: 55%; margin: auto; text-align:center;">
+  <figure style="margin:0;">
+    <img src="images/back_03.png" style="width:100%; height:auto;" />
+  </figure>
 </div>
 
-## Interpretação Geométrica da Derivada
+## Interpretação Geométrica da Derivada {auto-animate=true}
 
-<div style="position: relative; width: 70%; height: 400px; margin: auto; text-align:center;">
-<figure class="fragment" data-fragment-index="1" 
-        style="position:absolute; top:80; left:0; width:100%; margin:0;">
-    <img src="images/back_04.png" 
-         style="width:100%; height:auto;" />
-  </a>
-</figure>
+A derivada geometricamente representa a inclinação da reta tangente ao gráfico de uma função. Fermat percebeu que era possível encontrar os máximos e mínimos de uma função a partir de suas derivadas.
+
+<div style="width: 55%; margin: auto; text-align:center;">
+  <figure style="margin:0;">
+    <img src="images/back_04.png" style="width:100%; height:auto;" />
+  </figure>
 </div>
 
-## Interpretação Geométrica da Derivada
+## Interpretação Geométrica da Derivada {auto-animate=true}
 
-<div style="position: relative; width: 85%; height: 400px; margin: auto; text-align:center;">
-<figure class="fragment" data-fragment-index="1" 
-        style="position:absolute; top:80; left:0; width:100%; margin:0;">
-    <img src="images/back_05.png" 
-         style="width:100%; height:auto;" />
-  </a>
-  <figcaption style="font-size:1em; margin-top:0.5em;">
-    Descida do Gradiente
-  </figcaption>
-</figure>
+A derivada geometricamente representa a inclinação da reta tangente ao gráfico de uma função. Fermat percebeu que era possível encontrar os máximos e mínimos de uma função a partir de suas derivadas.
+
+<div style="width: 55%; margin: auto; text-align:center;">
+  <figure style="margin:0;">
+    <img src="images/back_05.png" style="width:100%; height:auto;" />
+    <!-- <figcaption style="font-size:1em; margin-top:0.5em;">Descida do Gradiente</figcaption> -->
+  </figure>
 </div>
 
 ## Atualização dos Pesos
 
-Esse algoritmo que acabamos de ver é um otimizador conhecido como Gradient Descent, com isso os pesos do nosso modelo de rede neural podem ser atualizados simplesmente com:
+EEsse algoritmo é conhecido como *Gradient Descent*. Com ele, os parâmetros da rede neural podem ser atualizados da seguinte forma:
 
 $$
-  \theta_{t+1} = \theta_t - \eta \nabla_\theta \mathcal{L}
+\theta_{t+1} = \theta_t - \eta \nabla_\theta \mathcal{L}
 $$
 
-Não se preocupe, na prática você não precisa calcular as derivadas, as bibliotecas como pytorch calculam o gradiente de forma automatica. Contudo, entender esse processo é fundamental.
+Na prática, não é necessário calcular as derivadas manualmente, pois bibliotecas como [PyTorch](https://pytorch.org) realizam o cálculo dos gradientes automaticamente. Ainda assim, compreender esse processo é fundamental para entender o treinamento de redes neurais.
+
 
 ## Exemplo
 
-Vamos fazer esse processo de atualizar os parâmetros em um caso simples (sem regra da cadeia), imagine que queremos encontrar o mínimo da função $f(x, y) = x^2 + y^2$, e temos 2 valores iniciais aleatórios $x=4$ e $y=2$.
-O gradiente vai ser dado por $\nabla f(x, y) = (\frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}) = (2x, 2y)
+Vamos aplicar esse processo em um exemplo simples (sem utilizar a regra da cadeia). Considere a função: $f(x,y)=x^2+y^2$ Desejamos encontrar seu ponto de mínimo a partir dos valores iniciais $x=4$ e $y=2$.
+O gradiente da função é dado por:
 
-- 1° interação: $x^{(0)} = 4$ e $y^{(0)} = 2$, $\nabla f(4, 2) = (8, 4)$. Com isso, usando $\eta = 0.1$ temos $(4, 2) - 0.1(8,4) = (3.2, 1.6)$
+$$\nabla f(x,y)=\left(\frac{\partial f}{\partial x},\frac{\partial f}{\partial y}\right)=(2x,2y)$$
 
-Se verificarmos o valor da função veremos que estamos diminuindo 
+* **1ª interação:** $x^{(0)}=4$ e $y^{(0)}=2$, então $\nabla f(4,2)=(8,4)$.
+  Utilizando $\eta = 0.1$: $(4,2) - 0.1(8,4) = (3.2,1.6)$
 
-$$
-  f(4,2) = 16 + 4 = 20 \qquad f(3.2, 1.6) = 10.24 + 2.56 = 12.8
-$$
+Observe que o valor da função diminui após a atualização:$f(4,2)=16+4=20 \qquad f(3.2,1.6)=10.24+2.56=12.8$
+
 
 ## Exemplo
 
-- 2° interação:  $x^{(1)} = 3.2$ e $y^{(0)} = 1.6$, $\nabla f(3.2, 1.6) = (6.4, 3.2)$. Com isso temos $(3.2, 1.6) - 0.1(6.4,3.2) = (2.56, 1.28)$
+* **2ª interação:** $x^{(1)}=3.2$ e $y^{(1)}=1.6$, então $\nabla f(3.2,1.6)=(6.4,3.2)$.
+  Utilizando novamente $\eta = 0.1$:
 
-Novamente vemos que estamos cada vez mais perto de $(0,0)$ que é o mínimo da função, continuando isso chegaremos ao mínimo da função.
+$$
+(3.2,1.6) - 0.1(6.4,3.2) = (2.56,1.28)
+$$
+
+Observe que os valores continuam se aproximando de $(0,0)$, que corresponde ao ponto de mínimo da função. Repetindo esse processo iterativamente, convergimos para o mínimo.
+
 
 # Estrutura do Modelo
 
@@ -472,88 +489,91 @@ Os principais elementos que definem uma rede neural são:
 - Função de Perda
 - Otimizador
 
-Até agora já vimos quais são as funções de perda, uma das camadas mais utilizadas que é a camada de perceptrons e também vimos algumas funções de ativação (sign e tanh). 
-Nos próximos slides veremos algumas outras camadas, um apanhado geral das funções de ativação e entender o otimizador moderno ADAM.
+Até agora vimos quais são as funções de perda, camada de perceptrons e também vimos algumas funções de ativação (sign e tanh). 
+Nos próximos slides veremos outras camadas, outras funções de ativação e vamos entender um dos otimizadores modernos, o ADAM.
 
 ## Funções de Ativação
 
-As funções de ativação possuem um papel central nas redes neurais, são elas que introduzem na rede a não linearidade que é o elemento necessário para se aprender padrões complexos. Atualmente existem uma série de funções de ativação
-cada uma com suas particularidades, vantagens e desvantagens. Entre elas estão:
+As funções de ativação possuem um papel central nas redes neurais, pois são responsáveis por introduzir não linearidade ao modelo, elemento essencial para aprender padrões complexos.
 
-- ReLU (Rectified Linear Unit), Leaky ReLU, RReLU, PReLU
-- ELU, SELU
-- Sigmoid, Tanh, Softmax
-- Funções mais modernas: GELU, Swish, Mish, APALU
-- Mais recentemente temos as funções de ativação ocilatorias: GCU, DSU, NCU, SQU, SSU
-Vamos observar algumas com mais detalhes
+Atualmente, existem diversas funções de ativação, cada uma com características, vantagens e limitações específicas. Entre as principais, destacam-se:
+
+* ReLU (*Rectified Linear Unit*), Leaky ReLU, RReLU e PReLU
+* ELU e SELU
+* Sigmoid, Tanh e Softmax
+* Funções mais modernas: GELU, Swish, Mish e APALU
+* Funções oscilatórias mais recentes: GCU, DSU, NCU, SQU e SSU
+
+A seguir, veremos algumas delas com mais detalhes.
+
 
 ## ReLU
 
-  Relu é basicamente a função de ativação mais utiliza em redes neurais, ganhou muita popularidade por sua extrema eficiência.
+A ReLU é atualmente a função de ativação mais utilizada em redes neurais, principalmente devido à sua simplicidade e eficiência computacional.
 
-  $$
-    ReLU(x) = max(0, x)
-  $$
+$$ReLU(x)=\max(0,x)$$
 
-  - Vantagens: Resolve o problema do Vanishing Gradient Problem e rapida computacionalmente. 
-  - Desvantagens: Fornece gradiente apenas na direção positiva, para entra negativa ela "não faz nada", isso acaba gerando um dos maiores problemas da ReLU conhecido como Dying ReLU 
+* **Vantagens:** reduz o problema do *Vanishing Gradient* e possui baixo custo computacional.
+* **Desvantagens:** produz gradiente apenas para valores positivos. Para entradas negativas, a saída é zero, o que pode levar ao problema conhecido como *Dying ReLU*.
 
-  Artigos interessantes: https://arxiv.org/pdf/1903.06733, https://arxiv.org/abs/2505.22074
+  Artigos interessantes: [https://arxiv.org/pdf/1903.06733](https://arxiv.org/pdf/1903.06733), [https://arxiv.org/abs/2505.22074](https://arxiv.org/abs/2505.22074)
 
 ## Leaky ReLU
   
-  Leaky ReLU foi feito para tentar superar o problema dos neurônios mortos da ReLu, isso é feito adicionado um declibe na função aos valores negativos utilizando uma variável de controle
-  
-  $$
-    Leaky Relu(x) = max(\alpha*x, x)
-  $$
+A Leaky ReLU foi proposta para reduzir o problema dos neurônios mortos (*Dying ReLU*). Para isso, a função adiciona uma pequena inclinação para valores negativos, controlada pelo parâmetro $\alpha$.
 
-  - Desvantagem: Principal desvantagem desse metodo é um parâmetro que tem que ser especificado. Por isso surgimento de variantes como RReLU e PReLU.
+$$Leaky\ ReLU(x)=\max(\alpha x,x)$$
+
+* **Vantagem:** mantém gradientes diferentes de zero para entradas negativas.
+* **Desvantagem:** exige a definição manual do parâmetro $\alpha$, motivando o surgimento de variantes como RReLU e PReLU.
+
 
 ## Sigmoid
 
-Antigamente a Sigmoid era a principal função de ativação, utilizada em toda a rede neural, contudo ela apresenta diversos problemas, dentre eles o maior é o Vanishing Gradient Problem que é causado pela saturação dos valores positivos e negativos.
+A Sigmoid foi, durante muito tempo, a principal função de ativação utilizada em redes neurais. No entanto, ela apresenta algumas limitações, sendo a principal o *Vanishing Gradient Problem*, causado pela saturação para valores muito positivos ou negativos.
 
-$$
-  \sigma(x) = \frac{1}{1 + e^{-x}}
-$$
+$$\sigma(x)=\frac{1}{1+e^{-x}}$$
 
-Basicamente a sigmoid não é mais utilizada nas camadas intermediarias das redes, contudo ela ainda tem uma grande utilidade. Para classificação binária ela se torna muito interessante, isso porque como sua saída varia de 0 a 1, temos que ela
-transforma o valor de saída da rede em uma probabilidade.
+Atualmente, a Sigmoid raramente é utilizada em camadas intermediárias. Ainda assim, ela continua sendo muito importante em problemas de classificação binária, pois sua saída varia entre $0$ e $1$, permitindo interpretar a saída da rede como uma probabilidade.
+
 
 ## Softmax
 
-Tem a mesma ideia da Sigmoid, ou seja, de transformar a saída em uma probabilidade, mas nesse caso para classificação multiclasse.
+A Softmax segue a mesma ideia da Sigmoid: transformar a saída da rede em probabilidades. Entretanto, ela é utilizada em problemas de classificação multiclasse.
 
-$$
-  Softmax(x_i) = \frac{e^{x_i}}{\sum_{j}e^{x_j}}
-$$
+$$Softmax(x_i)=\frac{e^{x_i}}{\sum_j e^{x_j}}$$
 
-Exemplo: Queremos classificar uma imagem entre cachorro, gato, coelho. Imagine que a saída do modelo resulta em 1.75 para cachorro, 3.90 para gato e 4.35 para coelho. Utilizando a fórmula acima, a saída do modelo será: 0.04 para cachorro, 0.37 gato e 0.59 para coelho.
+**Exemplo:** suponha que desejamos classificar uma imagem entre cachorro, gato e coelho. Se a saída da rede for: Cachorro: $1.75$, Gato: $3.90$ e Coelho: $4.35$, a aplicação da Softmax resultaria em: obtemos as probabilidades: Cachorro: $0.04$, Gato: $0.37$ e Coelho: $0.59$
+
+Assim, o modelo classificaria a imagem como **coelho**, por possuir a maior probabilidade.
+
 
 ## GELU
 
-Funções mais modernas como a GELU tem uma maior capacidade de aprender padrões mais complexos, normalmente em troca de uma complexidade maior. A GELU além de ser uma função suave (tem derivada em todos os pontos) é o estado da arte para modelos baseados em transformers.
+Funções de ativação mais modernas, como a GELU, possuem maior capacidade de modelar padrões complexos, geralmente ao custo de uma maior complexidade computacional.
 
-$$
-  GELU(x) = x * \Phi(x) \approx 0.5*x(1 + Tanh(\sqrt{\frac{2}{\pi}}*(x + 0.044715*x^3)))
-$$
+A GELU é uma função suave, isto é, derivável em todos os pontos, e atualmente é amplamente utilizada em modelos baseados em *Transformers*.
+
+$$GELU(x)=x\Phi(x)\approx0.5x\left(1+\tanh\left(\sqrt{\frac{2}{\pi}}\left(x+0.044715x^3\right)\right)\right)$$
+
 
 ## APALU
 
-Adaptive piecewise approximated activation linear unit (APALU), é uma função em que a rede aprende os parâmetros para a função de ativação (paramétrica), totalmente adaptavel e maleavel. Fazendo com que ela funcione bem para dados complexos.
+A *Adaptive Piecewise Approximated Activation Linear Unit* (APALU) é uma função de ativação paramétrica, na qual a própria rede aprende os parâmetros da função durante o treinamento.
 
-$$
-  APALU(x) = \begin{cases} a(x + x(\frac{1}{1 + e^{-1.702(x)}})), & x \geq 0 \\ b(e^x - 1), & x < 0\end{cases}
-$$
+Por ser altamente adaptável e flexível, a APALU pode apresentar bom desempenho em problemas com padrões complexos.
+
+$$APALU(x)=\begin{cases}a\left(x+x\left(\frac{1}{1+e^{-1.702x}}\right)\right),&x\geq0\\b(e^x-1),&x<0\end{cases}$$
+
 
 ## GCU
 
-Growing Cosinet Unit (GCU) foi um das primeiras funções de ativação a trazer funções de ativação oscilatórias, a grande novidade foi que com a GCU é possível resolver o problema XOR com um único neurônio. Contudo suas propriedades e utilização prática foram pouco exploradas.
+A *Growing Cosine Unit* (GCU) foi uma das primeiras funções de ativação a introduzir comportamentos oscilatórios em redes neurais.
 
-$$
-  GCU(x) = x*cos(x)
-$$
+Sua principal contribuição foi mostrar que é possível resolver o problema XOR utilizando apenas um único neurônio. Apesar disso, suas propriedades e aplicações práticas ainda foram pouco exploradas.
+
+$$GCU(x)=x\cos(x)$$
+
 
 ## Camadas
 
@@ -565,11 +585,13 @@ Um modelo é basicamente feito por várias camadas, cada uma tendo uma função 
 
 ## Dropout
 
-O que ele faz é desativar perceptrons aleatoriamente durante o treinamento, isso ajuda a reduzir o overfitting do modelo. *Obs: No teste essa camada é desativada e todos os perceptrons são utilizados
+O que ele faz é desativar perceptrons aleatoriamente durante o treinamento, isso ajuda a reduzir o overfitting do modelo. 
+
+*Obs:* No teste essa camada é desativada e todos os perceptrons são utilizados
 
 <div style="position: relative; width: 85%; height: 400px; margin: auto; text-align:center;">
 <figure class="fragment" data-fragment-index="1" 
-        style="position:absolute; top:80; left:0; width:100%; margin:0;">
+        style="position:absolute; top:80; left:0; width:80%; margin:0;">
     <img src="images/Dropout.png" 
          style="width:100%; height:auto;" />
   </a>
@@ -578,7 +600,7 @@ O que ele faz é desativar perceptrons aleatoriamente durante o treinamento, iss
 
 ## Batch Normalization
 
-Principal função dessa camada é estabilizar o treinamento das redes neurais. O que ele faz é normalizar os dados para ter media 0 e variância 1.
+Principal objetivo dessa camada é estabilizar o treinamento das redes neurais normalizando os dados para ter media $0$ e variância $1$.
 
 <div style="position: relative; width: 85%; height: 400px; margin: auto; text-align:center;">
 <figure class="fragment" data-fragment-index="1" 
@@ -594,7 +616,7 @@ Principal função dessa camada é estabilizar o treinamento das redes neurais. 
 
 ## Batch Normalization
 
-Quando não há normalização, algumas variáveis podem ter escalas muito diferentes, o que leva a gradientes desbalanceados. Com isso, uma variável pode ter magnitude muito maior no gradiente, enquanto outra tem magnitude muito pequena. Esse desbalanceamento pode prejudicar o desempenho dos algoritmos de otimização. 
+Quando não há normalização, algumas variáveis podem ter escalas muito diferentes, o que leva a gradientes desbalanceados. Com isso, uma variável pode ter uma magnitude muito maior no gradiente, enquanto outra tem magnitude muito pequena. Esse desbalanceamento pode prejudicar o desempenho dos algoritmos de otimização. 
 
 <div style="position: relative; width: 80%; height: 400px; margin: auto; text-align:center;">
 <figure class="fragment" data-fragment-index="1" 
@@ -607,12 +629,13 @@ Quando não há normalização, algumas variáveis podem ter escalas muito difer
 
 ## Tipos de Normalização
 
-Existem diferentes estratégias de normalização:
+Existem diferentes estratégias de normalização utilizadas em redes neurais:
 
-- Batch Normalization normaliza as ativações utilizando estatísticas calculadas ao longo do minibatch.
-- Layer Normalization realiza a normalização considerando todas as ativações de uma mesma camada para cada amostra.
-- Instance Normalization normaliza cada amostra individualmente, sem depender de outras observações no batch. 
-- Group Normalization divide os canais em grupos e realiza a normalização dentro de cada grupo.
+* **Batch Normalization:** normaliza as ativações utilizando estatísticas calculadas ao longo do *mini-batch*.
+* **Layer Normalization:** realiza a normalização considerando todas as ativações de uma mesma camada para cada amostra.
+* **Instance Normalization:** normaliza cada amostra individualmente, sem depender das demais observações do *batch*.
+* **Group Normalization:** divide os canais em grupos e realiza a normalização separadamente em cada grupo.
+
 
 ## Tipos de Normalização
 
@@ -627,19 +650,23 @@ Existem diferentes estratégias de normalização:
 
 ## Otimizadores
 
-Mesmo que o SGD tenha bons resultados, na prática hoje em dia utilizamos princiaplemnte otimizadores mais modernos, quase todos variantes do ADAM. Primeiro temos que entender quais são os principais problemas do SGD:
+Embora o SGD (Stochastic Gradient Descent) apresente bons resultados, atualmente são utilizados, principalmente, otimizadores mais modernos, em sua maioria variantes do Adaptive Moment Estimation - ADAM.
 
-- Taxa de aprendizado fixa
-- Demora na convergência em funções com muitos parâmetros
+Para entender essa evolução, é importante observar as principais limitações do SGD:
+
+* Utiliza uma taxa de aprendizado fixa.
+* Pode apresentar convergência lenta em funções com muitos parâmetros.
+
 
 ## ADAM 
 
-O ADAM utiliza um princípio da físico chamado de Momentum. Em vez de atualizar os parâmetros de forma lenta e direta, o Momentum "acelera" a otimização, levando em consideração a direção passada dos gradientes, o que ajuda a acelerar a convergência.
+O ADAM utiliza o conceito de *Momentum*, inspirado na física. Em vez de atualizar os parâmetros apenas com base no gradiente atual, o método considera também a direção acumulada dos gradientes anteriores, acelerando a convergência.
 
-No ADAM, existem dois parâmetros principais chamados $\beta_1$ e $\beta_2$ que controlam o cálculo dos momentos.
+No ADAM, dois hiperparâmetros principais controlam esse processo: $\beta_1$ e $\beta_2$.
 
-- $\beta_1$: Controla a média exponencial dos gradientes passados (momento de primeira ordem).
-- $\beta_2$: Controla a média exponencial dos quadrados dos gradientes passados (momento de segunda ordem).
+* $\beta_1$: controla a média exponencial dos gradientes passados (*momento de primeira ordem*).
+* $\beta_2$: controla a média exponencial dos quadrados dos gradientes passados (*momento de segunda ordem*).
+
 
 ## ADAM
 
@@ -671,13 +698,14 @@ $$
 
 ## ADAMW
 
-Uma das variações mais populares do ADAM é o ADAMW. Ele implementa um weight decay, que aplica uma regularização no modelo. A fórmula da atualização dos parâmetros é modificada para:
+Uma das variantes mais populares do ADAM é o ADAMW, que introduz o conceito de *weight decay* para regularização dos parâmetros do modelo.
 
-$$
-  \theta_t = \theta_{t-1} - \frac{\eta}{\sqrt{\hat{v}_t} + \epsilon} \cdot \hat{m}_t + \eta \lambda\theta_{t-1}
-$$
+A atualização dos parâmetros passa a ser definida por:
 
-O parâmetro $\lambda$ controla o fator de decaimento de peso. Ajuda a evitar overfitting e garante maior estabilidade ao modelo.
+$$\theta_t=\theta_{t-1}-\frac{\eta}{\sqrt{\hat{v}_t}+\epsilon}\cdot\hat{m}t+\eta\lambda\theta{t-1}$$
+
+O parâmetro $\lambda$ controla a intensidade do *weight decay*, ajudando a reduzir *overfitting* e aumentando a estabilidade do treinamento.
+
 
 # Referências 
 
