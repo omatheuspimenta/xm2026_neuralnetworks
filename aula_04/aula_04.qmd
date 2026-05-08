@@ -1,6 +1,6 @@
 ---
 title: "Curso Redes Neurais - Xmeeting 2026"
-subtitle: "Transformers e Vision Transformer (ViT)"
+subtitle: "Introdução a Redes Neurais"
 format: 
   clean-revealjs:
     fontsize: 0.6em
@@ -11,16 +11,23 @@ format:
     slide-number: true
     chalkboard: true
     controls: true
-    footer: "Curso Redes Neurais - CNNs | Lucas Otávio"
+    footer: "Curso Redes Neurais - Transformers e Vision Transformers (ViT) | Lucas Otávio"
     margin: 0.05
     min-scale: 0.2
     max-scale: 2.0
     menu: true
 html-math-method:
   method: mathjax
+  url: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
 author:
   - name: Lucas Otávio Leme Silva
     email: lucasotavio750@gmail.com
+    affiliations: Universidade Tecnológica Federal do Paraná, Cornélio Procópio (UTFPR-CP)
+  - name: Matheus Pimenta
+    email: omatheuspimenta@outlook.com
+    affiliations: Universidade de São Paulo, Piracicaba (USP-ESALQ)
+  - name: Fabricio Martins Lopes
+    email: fabricio@utfpr.edu.br
     affiliations: Universidade Tecnológica Federal do Paraná, Cornélio Procópio (UTFPR-CP)
 date: last-modified
 toc: true
@@ -32,35 +39,35 @@ toc-depth: 1
 
 ## Estabelecendo o problema
 
-Uma das áreas mais antigas de inteligência artificial é natural language processing. A ideia geral é: Como aprender padrões tão complexos como a linguagem ? 
+Uma das áreas mais antigas da inteligência artificial é o *Natural Language Processing* (NLP). A questão central dessa área é: como aprender padrões tão complexos quanto a linguagem humana?
 
-Por exemplo dado uma frase: "Ela não é flor que se cheire"
+Considere, por exemplo, a frase: *“Ela não é flor que se cheire”*.
 
-Como devemos observar a frase para entender seu sentido ? Flor nesse caso, tem outro sentido da frase "Ele deu flores para namorada".
+Como devemos interpretar essa frase para compreender seu significado? Nesse contexto, a palavra *“flor”* possui um sentido diferente daquele presente em frases como: *“Ele deu flores para a namorada”*.
 
-Isso torna os padrões de uma língua muito mais difícil
+Essa dependência de contexto torna os padrões linguísticos significativamente mais complexos.
+
 
 ## Formalmente
 
-Podemos definir o problema da nlp formalmente da forma:
+Podemos definir formalmente o problema de NLP como:
 
-$$
-  P(x_t|x_1, \cdots, x_{t-1})
-$$
+$$P(x_t\mid x_1, \cdots, x_{t-1})$$
 
-Uma das soluções clássicas são os modelos RNN, LSTM e GRU que foram projetados para lidar com sequências, em que o estado atual depende do anterior e a informação é propagada ao longo do tempo, a ideia consiste em:
+Ou seja, deseja-se modelar a probabilidade de um elemento (x_t) dado o histórico anterior da sequência.
 
-$$
-  h_t = f(x_t, h_{t-1})
-$$
+Uma das abordagens clássicas para esse problema são os modelos RNN, LSTM e GRU, projetados especificamente para lidar com dados sequenciais. Nessas arquiteturas, o estado atual depende do estado anterior, permitindo que a informação seja propagada ao longo do tempo. A ideia geral pode ser representada por:
+
+$$h_t = f(x_t, h_{t-1})$$
 
 ## Problemas da RNNs
 
-Ao longo dos anos tentou-se resolver a grande limitação desses modelos, que eram capturar dependências de longo prazo, isso porque Informação relevante no início da sequência se perde ao longo do tempo e gradientes diminuem exponencialmente.
+Ao longo dos anos, diversas abordagens buscaram resolver a principal limitação desses modelos: a dificuldade em capturar dependências de longo prazo. Isso ocorre porque informações relevantes no início da sequência tendem a se perder ao longo do processamento, enquanto os gradientes diminuem exponencialmente durante o treinamento.
 
-Exemplo: O livro que o professor que o aluno admira escreveu é complexo 
+Considere a frase: *“O livro que o professor que o aluno admira escreveu é complexo.”*
 
-Para entender "livro -> Complexo" o modelo precisa "ignorar" várias camadas intermediárias e as RNN tem dificuldade de fazer isso.
+Para relacionar *“livro”* com *“complexo”*, o modelo precisa atravessar múltiplas dependências intermediárias. Modelos recorrentes, como RNNs, possuem dificuldade em preservar esse tipo de informação ao longo da sequência.
+
 
 ## Problemas da RNNs
 
@@ -74,12 +81,12 @@ Isso faz com que o treinamento seja lento e as derivadas dependam de múltiplas 
 
 ## Objetivo do Transformers
 
-Para resolver o problema apresentado, a ideia é criar um Embedding de Contexto: na qual cada palavra tem um vetor diferente que expressa significados diferentes dependendo das palavras a sua volta.
-E para computar isso é necessário de "Atenção".
+Para resolver esse problema, surgiu a ideia de construir *embeddings contextuais*, nos quais cada palavra pode assumir diferentes representações vetoriais dependendo do contexto em que aparece. Dessa forma, o significado de uma palavra passa a depender das demais palavras ao seu redor. Para computar essas representações contextuais, utiliza-se o mecanismo de *atenção* (*attention*).
+
 
 <div style="position: relative; width: 80%; height: 500px; margin: auto; text-align:center;">
 <figure class="fragment" data-fragment-index="1" 
-        style="position:absolute; top:0; left:0; width:100%; margin:0;">
+        style="position:absolute; top:0; left:0; width:70%; margin:0;">
     <img src="images/Intuition.png" 
          style="width:100%; height:auto;" />
   </a>
@@ -90,7 +97,7 @@ E para computar isso é necessário de "Atenção".
 
 ## Como funciona um Transformer  
 
-A arquitetura do modelo pode ser vista na imagem abaixo. A principal novidade é o Multi Head Attention. Para entender como ele funciona, vamos ver um exemplo usando texto.  
+A arquitetura do modelo pode ser vista na imagem abaixo. A principal novidade é o *Multi Head Attention*. Para entender como ele funciona, vamos ver um exemplo usando texto.  
 
 <div style="position: relative; width: 30%; height: 500px; margin: auto; text-align:center;">
 <figure class="fragment" data-fragment-index="1" 
@@ -103,8 +110,9 @@ A arquitetura do modelo pode ser vista na imagem abaixo. A principal novidade é
 
 ## Input Embedding
 
-Primeiro passo é o Input Embedding, na qual representamos os dados em uma nova forma. Perceba que cada palavra é representada por um vetor de tamanho 512, isso é importante porque simplesmente
-representar como "Carro = 1", "Porta = 2", primeiro não mostra o real significado de cada palavra, e palavras com proximidade não tem valores próximos.
+O primeiro passo é o *Input Embedding*, no qual as palavras são representadas em um novo espaço vetorial. Nesse processo, cada palavra é associada a um vetor, por exemplo, de dimensão 512. Essa representação é importante porque codificações simples, como *“Carro = 1”* e *“Porta = 2”*, não capturam o significado semântico das palavras. Além disso, palavras semanticamente semelhantes não necessariamente possuem valores próximos nesse tipo de representação discreta. Com *embeddings*, palavras com significados relacionados tendem a possuir representações vetoriais mais próximas entre si.
+
+## Input Embedding
 
 <div style="position: relative; width: 80%; height: 500px; margin: auto; text-align:center;">
 <figure class="fragment" data-fragment-index="1" 
@@ -117,8 +125,8 @@ representar como "Carro = 1", "Porta = 2", primeiro não mostra o real significa
 
 ## Positional Encoding
 
-Para um texto, queremos carregar a informação sobre a posição de uma palavra na frase e saber quais são as palavras mais próximas e mais distantes na frase, para isso usamos positional encoding.
-Quando formos ver a parte de atenção, vamos ver a importância do positional encoding porque ela não se importa com a posição, sendo assim precisamos de alguma forma incorporar isso nas representações. 
+Para um texto, queremos carregar a informação sobre a posição de uma palavra na frase e saber quais são as palavras mais próximas e mais distantes na frase, para isso usamos *positional encoding*.
+Quando formos ver a parte de atenção, vamos ver a importância do *positional encoding* porque ela não se importa com a posição, sendo assim precisamos de alguma forma incorporar isso nas representações. 
 
 <div style="position: relative; width: 80%; height: 500px; margin: auto; text-align:center;">
 <figure class="fragment" data-fragment-index="1" 
@@ -131,7 +139,7 @@ Quando formos ver a parte de atenção, vamos ver a importância do positional e
 
 ## Positional Encoding
 
-Para calcular o position Encoding vamos usar a fómrula definida no artigo original. Que utiliza fórmulas trigonométricas como seno e cosseno para capturar padrões contínuos e periódicos.
+Para calcular o *position encoding* vamos usar a fómrula definida no artigo original. Que utiliza fórmulas trigonométricas como seno e cosseno para capturar padrões contínuos e periódicos.
 
 <div style="position: relative; width: 80%; height: 500px; margin: auto; text-align:center;">
 <figure class="fragment" data-fragment-index="1" 
@@ -144,42 +152,43 @@ Para calcular o position Encoding vamos usar a fómrula definida no artigo origi
 
 ## Self-Attention
 
-Antes de analisar o Multi-Head Attention, vamos entender como funciona o self attention ou single head attention. Atenção é um mecanismo que permite a rede neural aprender relacionar as diferentes partes de uma entrada. A fórmula para attention é dada por:
+Antes de analisar o *Multi-Head Attention*, é importante compreender o funcionamento do *Self-Attention* (ou *Single-Head Attention*).
 
-$$
-    Attention(Q, K, V) = softmax\left(\frac{QK^T}{\sqrt{d_k}}\right)V
-$$
+A atenção é um mecanismo que permite à rede neural aprender relações entre diferentes partes da entrada. Sua formulação é dada por:
 
-$QK^T$ é um produto escalar entre a query e a key, a divisão $\sqrt{d_k}$ é para evitar saturação do softmax e o softmax é aplicado por linha.
+$$Attention(Q, K, V) = softmax\left(\frac{QK^T}{\sqrt{d_k}}\right)V$$
+
+O termo $QK^T$ representa o produto escalar entre *queries* e *keys*, medindo o grau de similaridade entre elas. A divisão por $\sqrt{d_k}$ é utilizada para evitar a saturação da função *softmax*, que é aplicada linha a linha para gerar os pesos de atenção.
+
 
 ## Self-Attention
 
-Mas quem é $K$ key, $Q$ query e $V$ value:
+Mas o que representam $Q$, $K$ e $V$? Esses termos correspondem a projeções lineares aprendidas durante o treinamento da rede: $Q = XW_Q$, $K = XW_K$ e $V = XW_V$ em que $X$ representa a entrada da camada, enquanto $W_Q$, $W_K$ e $W_V$ são matrizes de pesos treináveis. Temos:
 
-Eles são projeções lineares aprendidas durante o treinamento da rede:
+* $Q, K \in \mathbb{R}^{n \times d_k}$
+* $V \in \mathbb{R}^{n \times d_v}$
 
-- $Q = XW_Q$
-- $K = XW_K$
-- $V = XW_V$
+Consequentemente: $QK^T \in \mathbb{R}^{n \times n}$ e $Attention \in \mathbb{R}^{n \times d_v}$
 
-Na qual tanto $Q,K \in \mathbb{R}^{n \times d_k}$ e $V \in \mathbb{R}^{n \times d_v}$ . Com isso temos $QK^T \in \mathbb{R}^{n \times n}$ e $Attention \in \mathbb{R}^{n \times d_v}$.
+O produto $QK^T$ produz uma matriz de similaridade entre os elementos da sequência, enquanto a saída final da atenção corresponde a uma combinação ponderada dos vetores $V$.
 
-## Intuição Q, K, V
+## Intuição $Q$, $K$, $V$
 
 Podemos interpretar o mecanismo de atenção como um sistema de busca:
 
-- Query (Q): o que estou procurando
-- Key (K): o que cada palavra oferece
-- Value (V): a informação associada
+* **Query (Q):** representa o que está sendo procurado.
+* **Key (K):** representa o que cada palavra oferece.
+* **Value (V):** representa a informação associada a cada palavra.
 
-Para cada palavra:
+Para cada elemento da sequência:
 
-1. Comparamos Q com todas as K
-2. Obtemos pesos (importância)
-3. Fazemos média ponderada dos V
+1. Comparamos $Q$ com todas as $K$.
+2. Calculamos pesos de relevância (*attention weights*).
+3. Produzimos uma combinação ponderada dos vetores $V$.
+
 
 ## Self-Attention
-Ao utilizarmos softmax garantimos que a soma resultante de cada linha na matriz seja 1. Podemos considerar esses valores como um score.
+Ao utilizarmos *softmax* garantimos que a soma resultante de cada linha na matriz seja $1$. Podemos considerar esses valores como um score.
 
 <div style="position: relative; width: 80%; height: 500px; margin: auto; text-align:center;">
 <figure class="fragment" data-fragment-index="1" 
@@ -191,7 +200,7 @@ Ao utilizarmos softmax garantimos que a soma resultante de cada linha na matriz 
 </div>
 
 ## Self-Attention
-A matriz final gerada pela self attention é capaz de capturar não apenas o significado dado pelo embedding, ou a posição (representada pelo positional encoding) mas também a interação de cada palavra com outras palavras. 
+A matriz produzida pelo mecanismo de *Self-Attention* é capaz de capturar não apenas o significado representado pelos *embeddings* e a posição fornecida pelo *Positional Encoding*, mas também as interações entre cada palavra da sequência.
 
 <div style="position: relative; width: 80%; height: 500px; margin: auto; text-align:center;">
 <figure class="fragment" data-fragment-index="1" 
@@ -204,16 +213,13 @@ A matriz final gerada pela self attention é capaz de capturar não apenas o sig
 
 ## Multi Head Attention
 
-Contudo uma língua é muito mais difícil para apenas um self-attention, existem diferentes tipos de padrões. Por isso utilizamos várias "cabeças" ou heads ao mesmo tempo. Isso faz com que cada head aprenda subespaços diferentes.
-Ou seja, cada head pode focar em diferentes relações como: Dependência sintática, concordância, etc ...
+Entretanto, a linguagem natural é complexa demais para ser modelada por apenas um mecanismo de *Self-Attention*, já que diferentes tipos de padrões podem existir simultaneamente. Por esse motivo, utilizamos múltiplas *heads* de atenção em paralelo. Cada *head* aprende representações em diferentes subespaços, permitindo capturar distintos tipos de relações, como dependências sintáticas, concordância gramatical e relações semânticas. Cada *head* é definida por:
 
-$$ 
-  head_i = Attention(QW^Q_i, KW_i^K, VW_i^V)
-$$
+$$head_i = Attention(QW_i^Q, KW_i^K, VW_i^V)$$
 
-$$ 
-  MultiHead = Concat(head_1, \cdots, head_h)W^O
-$$
+A saída final do mecanismo de *Multi-Head Attention* é obtida pela concatenação de todas as *heads*:
+
+$$MultiHead = Concat(head_1, \cdots, head_h)W^O$$
 
 ## Multi Head Attention
 
@@ -261,15 +267,19 @@ $$
 
 ## História
 
-Por muitos anos, as Redes Neurais Convolucionais (CNNs) dominaram a visão computacional, alcançando grandes resultados. Em 2017, um dos artigos mais importantes de redes neurais profundas foi publicado, intitulado 'Attention is All you Need', que estabelece uma nova abordagem para o aprendizado das redes neurais. Uma das principais capacidades da rede Transformer é a de capturar relações globais entre elementos. Pensando nisso, em 2021, foi proposta uma nova abordagem de redes neurais para visão computacional, o Visual Transformer.
+Por muitos anos, as Redes Neurais Convolucionais (CNNs) dominaram a área de visão computacional, alcançando resultados expressivos. Em 2017, foi publicado um dos artigos mais influentes de redes neurais profundas, *“Attention is All You Need”*, que introduziu uma nova abordagem baseada exclusivamente em mecanismos de atenção. Uma das principais capacidades da arquitetura Transformer é capturar relações globais entre os elementos da entrada.
+
+Motivado por esse avanço, em 2021 foi proposta uma nova abordagem para visão computacional: o *Vision Transformer (ViT)*.
+
 
 ## Arquitetura
 
-Visual Transformer (ViT) nada mais é do que uma extensão do modelo visto anteriormente. Usamos somente a parte do encoding do modelo transformer. A arquitetura do modelo de uma Vit pode ser vista na imagem abaixo. Vamos analisar cada parte individualmente.
+O *Vision Transformer* (ViT) pode ser entendido como uma extensão da arquitetura Transformer apresentada anteriormente. Nesse modelo, utiliza-se apenas a etapa de *encoding* do Transformer original. A arquitetura de um ViT pode ser observada na figura abaixo. A seguir, analisaremos cada um de seus componentes individualmente.
+
 
 <div style="position: relative; width: 80%; height: 500px; margin: auto; text-align:center;">
 <figure class="fragment" data-fragment-index="1" 
-        style="position:absolute; top:0; left:0; width:100%; margin:0;">
+        style="position:absolute; top:0; left:0; width:80%; margin:0;">
     <img src="images/ViT_arquitetura.png" 
          style="width:100%; height:auto;" />
   </a>
@@ -278,7 +288,10 @@ Visual Transformer (ViT) nada mais é do que uma extensão do modelo visto anter
 
 ## Patching
 
-Uma importante configuração do Visual Transformer é que ele foi desenvolvido para funcionar com sequências, como texto. Mas como transformamos imagens em sequências ? Para isso, vamos usar patches de imagens.
+Uma característica importante do *Vision Transformer* é que ele foi originalmente desenvolvido para operar sobre sequências, como textos. Dessa forma, surge a seguinte questão: como representar imagens como sequências?
+
+Para isso, o ViT divide a imagem em pequenos blocos, chamados *image patches*.
+
 
 <div style="position: relative; width: 80%; height: 500px; margin: auto; text-align:center;">
 <figure class="fragment" data-fragment-index="1" 
@@ -291,9 +304,10 @@ Uma importante configuração do Visual Transformer é que ele foi desenvolvido 
 
 ## Funções Importantes
 
-- Após a imagem ser dividida em patches a primeira camada de uma ViT e o embedding, mas como fazer o embedding de uma imagem na prática? Normalmente usamos uma projeção linear sobre os patches com MLP ou CNN para criar esse embedding.
+* Após a divisão da imagem em *patches*, a primeira etapa do ViT é a construção dos *embeddings*. Na prática, isso é feito aplicando uma projeção linear sobre cada *patch*, geralmente utilizando uma MLP ou uma CNN para gerar as representações vetoriais.
 
-- Assim como no transformer é feito um positional embedding das imagens. Além de usar todo aquela parte de funções trigonométricas, no ViT cada valor no positional encoding é um parâmetro que é aprendido pelo modelo.
+* Assim como nos Transformers aplicados a texto, também é utilizado um *Positional Embedding*. No ViT, porém, os valores associados ao posicionamento não são definidos por funções trigonométricas fixas; eles são tratados como parâmetros aprendidos durante o treinamento do modelo.
+
 
 ## Token especial
 

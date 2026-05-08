@@ -6,11 +6,13 @@
 <script src="aula_04_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="aula_04_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="aula_04_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="aula_04_files/libs/quarto-html/quarto-syntax-highlighting-a06763021a52c43c40a351ac8b799b8f.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.36">
+<link href="aula_04_files/libs/quarto-html/quarto-syntax-highlighting-a6e161b2431e1f94a14e0f5d32135a3c.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.24">
 
   <meta name="author" content="Lucas Otávio Leme Silva">
-  <meta name="dcterms.date" content="2026-04-23">
+  <meta name="author" content="Matheus Pimenta">
+  <meta name="author" content="Fabricio Martins Lopes">
+  <meta name="dcterms.date" content="2026-05-07">
   <title>Curso Redes Neurais - Xmeeting 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -18,9 +20,6 @@
   <link rel="stylesheet" href="aula_04_files/libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="aula_04_files/libs/revealjs/dist/reveal.css">
   <style>
-    /* Default styles provided by pandoc.
-    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-    */
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -33,7 +32,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="aula_04_files/libs/revealjs/dist/theme/quarto-b2736e9fcda83c748fd63b6e579550ef.css">
+  <link rel="stylesheet" href="aula_04_files/libs/revealjs/dist/theme/quarto-5ae9c59b2727fcd5357d4f034d95f9e0.css">
   <link href="aula_04_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="aula_04_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="aula_04_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -129,13 +128,12 @@
   </style>
 </head>
 <body class="quarto-light">
-<script src="mathjax-config.js"></script>
   <div class="reveal">
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">Curso Redes Neurais - Xmeeting 2026</h1>
-  <p class="subtitle">Transformers e Vision Transformer (ViT)</p>
+  <p class="subtitle">Introdução a Redes Neurais</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -149,9 +147,31 @@ Lucas Otávio Leme Silva
             Universidade Tecnológica Federal do Paraná, Cornélio Procópio (UTFPR-CP)
           </p>
     </div>
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Matheus Pimenta 
+</div>
+<div class="quarto-title-author-email">
+<a href="mailto:omatheuspimenta@outlook.com">omatheuspimenta@outlook.com</a>
+</div>
+        <p class="quarto-title-affiliation">
+            Universidade de São Paulo, Piracicaba (USP-ESALQ)
+          </p>
+    </div>
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Fabricio Martins Lopes 
+</div>
+<div class="quarto-title-author-email">
+<a href="mailto:fabricio@utfpr.edu.br">fabricio@utfpr.edu.br</a>
+</div>
+        <p class="quarto-title-affiliation">
+            Universidade Tecnológica Federal do Paraná, Cornélio Procópio (UTFPR-CP)
+          </p>
+    </div>
 </div>
 
-  <p class="date">April 23, 2026</p>
+  <p class="date">May 7, 2026</p>
 </section><section id="TOC">
 <nav role="doc-toc"> 
 <h2 id="toc-title">Table of Contents</h2>
@@ -170,27 +190,24 @@ Lucas Otávio Leme Silva
 </section>
 <section id="estabelecendo-o-problema" class="slide level2">
 <h2>Estabelecendo o problema</h2>
-<p>Uma das áreas mais antigas de inteligência artificial é natural language processing. A ideia geral é: Como aprender padrões tão complexos como a linguagem ?</p>
-<p>Por exemplo dado uma frase: “Ela não é flor que se cheire”</p>
-<p>Como devemos observar a frase para entender seu sentido ? Flor nesse caso, tem outro sentido da frase “Ele deu flores para namorada”.</p>
-<p>Isso torna os padrões de uma língua muito mais difícil</p>
+<p>Uma das áreas mais antigas da inteligência artificial é o <em>Natural Language Processing</em> (NLP). A questão central dessa área é: como aprender padrões tão complexos quanto a linguagem humana?</p>
+<p>Considere, por exemplo, a frase: <em>“Ela não é flor que se cheire”</em>.</p>
+<p>Como devemos interpretar essa frase para compreender seu significado? Nesse contexto, a palavra <em>“flor”</em> possui um sentido diferente daquele presente em frases como: <em>“Ele deu flores para a namorada”</em>.</p>
+<p>Essa dependência de contexto torna os padrões linguísticos significativamente mais complexos.</p>
 </section>
 <section id="formalmente" class="slide level2">
 <h2>Formalmente</h2>
-<p>Podemos definir o problema da nlp formalmente da forma:</p>
-<p><span class="math display">\[
-  P(x_t|x_1, \cdots, x_{t-1})
-\]</span></p>
-<p>Uma das soluções clássicas são os modelos RNN, LSTM e GRU que foram projetados para lidar com sequências, em que o estado atual depende do anterior e a informação é propagada ao longo do tempo, a ideia consiste em:</p>
-<p><span class="math display">\[
-  h_t = f(x_t, h_{t-1})
-\]</span></p>
+<p>Podemos definir formalmente o problema de NLP como:</p>
+<p><span class="math display">\[P(x_t\mid x_1, \cdots, x_{t-1})\]</span></p>
+<p>Ou seja, deseja-se modelar a probabilidade de um elemento (x_t) dado o histórico anterior da sequência.</p>
+<p>Uma das abordagens clássicas para esse problema são os modelos RNN, LSTM e GRU, projetados especificamente para lidar com dados sequenciais. Nessas arquiteturas, o estado atual depende do estado anterior, permitindo que a informação seja propagada ao longo do tempo. A ideia geral pode ser representada por:</p>
+<p><span class="math display">\[h_t = f(x_t, h_{t-1})\]</span></p>
 </section>
 <section id="problemas-da-rnns" class="slide level2">
 <h2>Problemas da RNNs</h2>
-<p>Ao longo dos anos tentou-se resolver a grande limitação desses modelos, que eram capturar dependências de longo prazo, isso porque Informação relevante no início da sequência se perde ao longo do tempo e gradientes diminuem exponencialmente.</p>
-<p>Exemplo: O livro que o professor que o aluno admira escreveu é complexo</p>
-<p>Para entender “livro -&gt; Complexo” o modelo precisa “ignorar” várias camadas intermediárias e as RNN tem dificuldade de fazer isso.</p>
+<p>Ao longo dos anos, diversas abordagens buscaram resolver a principal limitação desses modelos: a dificuldade em capturar dependências de longo prazo. Isso ocorre porque informações relevantes no início da sequência tendem a se perder ao longo do processamento, enquanto os gradientes diminuem exponencialmente durante o treinamento.</p>
+<p>Considere a frase: <em>“O livro que o professor que o aluno admira escreveu é complexo.”</em></p>
+<p>Para relacionar <em>“livro”</em> com <em>“complexo”</em>, o modelo precisa atravessar múltiplas dependências intermediárias. Modelos recorrentes, como RNNs, possuem dificuldade em preservar esse tipo de informação ao longo da sequência.</p>
 </section>
 <section id="problemas-da-rnns-1" class="slide level2">
 <h2>Problemas da RNNs</h2>
@@ -202,9 +219,9 @@ Lucas Otávio Leme Silva
 </section>
 <section id="objetivo-do-transformers" class="slide level2">
 <h2>Objetivo do Transformers</h2>
-<p>Para resolver o problema apresentado, a ideia é criar um Embedding de Contexto: na qual cada palavra tem um vetor diferente que expressa significados diferentes dependendo das palavras a sua volta. E para computar isso é necessário de “Atenção”.</p>
+<p>Para resolver esse problema, surgiu a ideia de construir <em>embeddings contextuais</em>, nos quais cada palavra pode assumir diferentes representações vetoriais dependendo do contexto em que aparece. Dessa forma, o significado de uma palavra passa a depender das demais palavras ao seu redor. Para computar essas representações contextuais, utiliza-se o mecanismo de <em>atenção</em> (<em>attention</em>).</p>
 <div style="position: relative; width: 80%; height: 500px; margin: auto; text-align:center;">
-<figure class="fragment" data-fragment-index="1" style="position:absolute; top:0; left:0; width:100%; margin:0;">
+<figure class="fragment" data-fragment-index="1" style="position:absolute; top:0; left:0; width:70%; margin:0;">
 <img src="images/Intuition.png" style="width:100%; height:auto;"> 
 </figure>
 </div>
@@ -216,7 +233,7 @@ Lucas Otávio Leme Silva
 </section>
 <section id="como-funciona-um-transformer" class="slide level2">
 <h2>Como funciona um Transformer</h2>
-<p>A arquitetura do modelo pode ser vista na imagem abaixo. A principal novidade é o Multi Head Attention. Para entender como ele funciona, vamos ver um exemplo usando texto.</p>
+<p>A arquitetura do modelo pode ser vista na imagem abaixo. A principal novidade é o <em>Multi Head Attention</em>. Para entender como ele funciona, vamos ver um exemplo usando texto.</p>
 <div style="position: relative; width: 30%; height: 500px; margin: auto; text-align:center;">
 <figure class="fragment" data-fragment-index="1" style="position:absolute; top:0; left:0; width:100%; margin:0;">
 <img src="images/Estrutura_Transformer.png" style="width:100%; height:auto;"> 
@@ -225,7 +242,10 @@ Lucas Otávio Leme Silva
 </section>
 <section id="input-embedding" class="slide level2">
 <h2>Input Embedding</h2>
-<p>Primeiro passo é o Input Embedding, na qual representamos os dados em uma nova forma. Perceba que cada palavra é representada por um vetor de tamanho 512, isso é importante porque simplesmente representar como “Carro = 1”, “Porta = 2”, primeiro não mostra o real significado de cada palavra, e palavras com proximidade não tem valores próximos.</p>
+<p>O primeiro passo é o <em>Input Embedding</em>, no qual as palavras são representadas em um novo espaço vetorial. Nesse processo, cada palavra é associada a um vetor, por exemplo, de dimensão 512. Essa representação é importante porque codificações simples, como <em>“Carro = 1”</em> e <em>“Porta = 2”</em>, não capturam o significado semântico das palavras. Além disso, palavras semanticamente semelhantes não necessariamente possuem valores próximos nesse tipo de representação discreta. Com <em>embeddings</em>, palavras com significados relacionados tendem a possuir representações vetoriais mais próximas entre si.</p>
+</section>
+<section id="input-embedding-1" class="slide level2">
+<h2>Input Embedding</h2>
 <div style="position: relative; width: 80%; height: 500px; margin: auto; text-align:center;">
 <figure class="fragment" data-fragment-index="1" style="position:absolute; top:0; left:0; width:100%; margin:0;">
 <img src="images/input_embedding.png" style="width:100%; height:auto;"> 
@@ -234,7 +254,7 @@ Lucas Otávio Leme Silva
 </section>
 <section id="positional-encoding" class="slide level2">
 <h2>Positional Encoding</h2>
-<p>Para um texto, queremos carregar a informação sobre a posição de uma palavra na frase e saber quais são as palavras mais próximas e mais distantes na frase, para isso usamos positional encoding. Quando formos ver a parte de atenção, vamos ver a importância do positional encoding porque ela não se importa com a posição, sendo assim precisamos de alguma forma incorporar isso nas representações.</p>
+<p>Para um texto, queremos carregar a informação sobre a posição de uma palavra na frase e saber quais são as palavras mais próximas e mais distantes na frase, para isso usamos <em>positional encoding</em>. Quando formos ver a parte de atenção, vamos ver a importância do <em>positional encoding</em> porque ela não se importa com a posição, sendo assim precisamos de alguma forma incorporar isso nas representações.</p>
 <div style="position: relative; width: 80%; height: 500px; margin: auto; text-align:center;">
 <figure class="fragment" data-fragment-index="1" style="position:absolute; top:0; left:0; width:100%; margin:0;">
 <img src="images/pos_encoding.png" style="width:100%; height:auto;"> 
@@ -243,7 +263,7 @@ Lucas Otávio Leme Silva
 </section>
 <section id="positional-encoding-1" class="slide level2">
 <h2>Positional Encoding</h2>
-<p>Para calcular o position Encoding vamos usar a fómrula definida no artigo original. Que utiliza fórmulas trigonométricas como seno e cosseno para capturar padrões contínuos e periódicos.</p>
+<p>Para calcular o <em>position encoding</em> vamos usar a fómrula definida no artigo original. Que utiliza fórmulas trigonométricas como seno e cosseno para capturar padrões contínuos e periódicos.</p>
 <div style="position: relative; width: 80%; height: 500px; margin: auto; text-align:center;">
 <figure class="fragment" data-fragment-index="1" style="position:absolute; top:0; left:0; width:100%; margin:0;">
 <img src="images/pos_encoding2.png" style="width:100%; height:auto;"> 
@@ -252,41 +272,39 @@ Lucas Otávio Leme Silva
 </section>
 <section id="self-attention" class="slide level2">
 <h2>Self-Attention</h2>
-<p>Antes de analisar o Multi-Head Attention, vamos entender como funciona o self attention ou single head attention. Atenção é um mecanismo que permite a rede neural aprender relacionar as diferentes partes de uma entrada. A fórmula para attention é dada por:</p>
-<p><span class="math display">\[
-    Attention(Q, K, V) = softmax\left(\frac{QK^T}{\sqrt{d_k}}\right)V
-\]</span></p>
-<p><span class="math inline">\(QK^T\)</span> é um produto escalar entre a query e a key, a divisão <span class="math inline">\(\sqrt{d_k}\)</span> é para evitar saturação do softmax e o softmax é aplicado por linha.</p>
+<p>Antes de analisar o <em>Multi-Head Attention</em>, é importante compreender o funcionamento do <em>Self-Attention</em> (ou <em>Single-Head Attention</em>).</p>
+<p>A atenção é um mecanismo que permite à rede neural aprender relações entre diferentes partes da entrada. Sua formulação é dada por:</p>
+<p><span class="math display">\[Attention(Q, K, V) = softmax\left(\frac{QK^T}{\sqrt{d_k}}\right)V\]</span></p>
+<p>O termo <span class="math inline">\(QK^T\)</span> representa o produto escalar entre <em>queries</em> e <em>keys</em>, medindo o grau de similaridade entre elas. A divisão por <span class="math inline">\(\sqrt{d_k}\)</span> é utilizada para evitar a saturação da função <em>softmax</em>, que é aplicada linha a linha para gerar os pesos de atenção.</p>
 </section>
 <section id="self-attention-1" class="slide level2">
 <h2>Self-Attention</h2>
-<p>Mas quem é <span class="math inline">\(K\)</span> key, <span class="math inline">\(Q\)</span> query e <span class="math inline">\(V\)</span> value:</p>
-<p>Eles são projeções lineares aprendidas durante o treinamento da rede:</p>
+<p>Mas o que representam <span class="math inline">\(Q\)</span>, <span class="math inline">\(K\)</span> e <span class="math inline">\(V\)</span>? Esses termos correspondem a projeções lineares aprendidas durante o treinamento da rede: <span class="math inline">\(Q = XW_Q\)</span>, <span class="math inline">\(K = XW_K\)</span> e <span class="math inline">\(V = XW_V\)</span> em que <span class="math inline">\(X\)</span> representa a entrada da camada, enquanto <span class="math inline">\(W_Q\)</span>, <span class="math inline">\(W_K\)</span> e <span class="math inline">\(W_V\)</span> são matrizes de pesos treináveis. Temos:</p>
 <ul>
-<li><span class="math inline">\(Q = XW_Q\)</span></li>
-<li><span class="math inline">\(K = XW_K\)</span></li>
-<li><span class="math inline">\(V = XW_V\)</span></li>
+<li><span class="math inline">\(Q, K \in \mathbb{R}^{n \times d_k}\)</span></li>
+<li><span class="math inline">\(V \in \mathbb{R}^{n \times d_v}\)</span></li>
 </ul>
-<p>Na qual tanto <span class="math inline">\(Q,K \in \mathbb{R}^{n \times d_k}\)</span> e <span class="math inline">\(V \in \mathbb{R}^{n \times d_v}\)</span> . Com isso temos <span class="math inline">\(QK^T \in \mathbb{R}^{n \times n}\)</span> e <span class="math inline">\(Attention \in \mathbb{R}^{n \times d_v}\)</span>.</p>
+<p>Consequentemente: <span class="math inline">\(QK^T \in \mathbb{R}^{n \times n}\)</span> e <span class="math inline">\(Attention \in \mathbb{R}^{n \times d_v}\)</span></p>
+<p>O produto <span class="math inline">\(QK^T\)</span> produz uma matriz de similaridade entre os elementos da sequência, enquanto a saída final da atenção corresponde a uma combinação ponderada dos vetores <span class="math inline">\(V\)</span>.</p>
 </section>
 <section id="intuição-q-k-v" class="slide level2">
-<h2>Intuição Q, K, V</h2>
+<h2>Intuição <span class="math inline">\(Q\)</span>, <span class="math inline">\(K\)</span>, <span class="math inline">\(V\)</span></h2>
 <p>Podemos interpretar o mecanismo de atenção como um sistema de busca:</p>
 <ul>
-<li>Query (Q): o que estou procurando</li>
-<li>Key (K): o que cada palavra oferece</li>
-<li>Value (V): a informação associada</li>
+<li><strong>Query (Q):</strong> representa o que está sendo procurado.</li>
+<li><strong>Key (K):</strong> representa o que cada palavra oferece.</li>
+<li><strong>Value (V):</strong> representa a informação associada a cada palavra.</li>
 </ul>
-<p>Para cada palavra:</p>
+<p>Para cada elemento da sequência:</p>
 <ol type="1">
-<li>Comparamos Q com todas as K</li>
-<li>Obtemos pesos (importância)</li>
-<li>Fazemos média ponderada dos V</li>
+<li>Comparamos <span class="math inline">\(Q\)</span> com todas as <span class="math inline">\(K\)</span>.</li>
+<li>Calculamos pesos de relevância (<em>attention weights</em>).</li>
+<li>Produzimos uma combinação ponderada dos vetores <span class="math inline">\(V\)</span>.</li>
 </ol>
 </section>
 <section id="self-attention-2" class="slide level2">
 <h2>Self-Attention</h2>
-<p>Ao utilizarmos softmax garantimos que a soma resultante de cada linha na matriz seja 1. Podemos considerar esses valores como um score.</p>
+<p>Ao utilizarmos <em>softmax</em> garantimos que a soma resultante de cada linha na matriz seja <span class="math inline">\(1\)</span>. Podemos considerar esses valores como um score.</p>
 <div style="position: relative; width: 80%; height: 500px; margin: auto; text-align:center;">
 <figure class="fragment" data-fragment-index="1" style="position:absolute; top:0; left:0; width:100%; margin:0;">
 <img src="images/Self.png" style="width:100%; height:auto;"> 
@@ -295,7 +313,7 @@ Lucas Otávio Leme Silva
 </section>
 <section id="self-attention-3" class="slide level2">
 <h2>Self-Attention</h2>
-<p>A matriz final gerada pela self attention é capaz de capturar não apenas o significado dado pelo embedding, ou a posição (representada pelo positional encoding) mas também a interação de cada palavra com outras palavras.</p>
+<p>A matriz produzida pelo mecanismo de <em>Self-Attention</em> é capaz de capturar não apenas o significado representado pelos <em>embeddings</em> e a posição fornecida pelo <em>Positional Encoding</em>, mas também as interações entre cada palavra da sequência.</p>
 <div style="position: relative; width: 80%; height: 500px; margin: auto; text-align:center;">
 <figure class="fragment" data-fragment-index="1" style="position:absolute; top:0; left:0; width:100%; margin:0;">
 <img src="images/Self2.png" style="width:100%; height:auto;"> 
@@ -304,13 +322,10 @@ Lucas Otávio Leme Silva
 </section>
 <section id="multi-head-attention" class="slide level2">
 <h2>Multi Head Attention</h2>
-<p>Contudo uma língua é muito mais difícil para apenas um self-attention, existem diferentes tipos de padrões. Por isso utilizamos várias “cabeças” ou heads ao mesmo tempo. Isso faz com que cada head aprenda subespaços diferentes. Ou seja, cada head pode focar em diferentes relações como: Dependência sintática, concordância, etc …</p>
-<p><span class="math display">\[
-  head_i = Attention(QW^Q_i, KW_i^K, VW_i^V)
-\]</span></p>
-<p><span class="math display">\[
-  MultiHead = Concat(head_1, \cdots, head_h)W^O
-\]</span></p>
+<p>Entretanto, a linguagem natural é complexa demais para ser modelada por apenas um mecanismo de <em>Self-Attention</em>, já que diferentes tipos de padrões podem existir simultaneamente. Por esse motivo, utilizamos múltiplas <em>heads</em> de atenção em paralelo. Cada <em>head</em> aprende representações em diferentes subespaços, permitindo capturar distintos tipos de relações, como dependências sintáticas, concordância gramatical e relações semânticas. Cada <em>head</em> é definida por:</p>
+<p><span class="math display">\[head_i = Attention(QW_i^Q, KW_i^K, VW_i^V)\]</span></p>
+<p>A saída final do mecanismo de <em>Multi-Head Attention</em> é obtida pela concatenação de todas as <em>heads</em>:</p>
+<p><span class="math display">\[MultiHead = Concat(head_1, \cdots, head_h)W^O\]</span></p>
 </section>
 <section id="multi-head-attention-1" class="slide level2">
 <h2>Multi Head Attention</h2>
@@ -356,20 +371,22 @@ Lucas Otávio Leme Silva
 </section>
 <section id="história" class="slide level2">
 <h2>História</h2>
-<p>Por muitos anos, as Redes Neurais Convolucionais (CNNs) dominaram a visão computacional, alcançando grandes resultados. Em 2017, um dos artigos mais importantes de redes neurais profundas foi publicado, intitulado ‘Attention is All you Need’, que estabelece uma nova abordagem para o aprendizado das redes neurais. Uma das principais capacidades da rede Transformer é a de capturar relações globais entre elementos. Pensando nisso, em 2021, foi proposta uma nova abordagem de redes neurais para visão computacional, o Visual Transformer.</p>
+<p>Por muitos anos, as Redes Neurais Convolucionais (CNNs) dominaram a área de visão computacional, alcançando resultados expressivos. Em 2017, foi publicado um dos artigos mais influentes de redes neurais profundas, <em>“Attention is All You Need”</em>, que introduziu uma nova abordagem baseada exclusivamente em mecanismos de atenção. Uma das principais capacidades da arquitetura Transformer é capturar relações globais entre os elementos da entrada.</p>
+<p>Motivado por esse avanço, em 2021 foi proposta uma nova abordagem para visão computacional: o <em>Vision Transformer (ViT)</em>.</p>
 </section>
 <section id="arquitetura" class="slide level2">
 <h2>Arquitetura</h2>
-<p>Visual Transformer (ViT) nada mais é do que uma extensão do modelo visto anteriormente. Usamos somente a parte do encoding do modelo transformer. A arquitetura do modelo de uma Vit pode ser vista na imagem abaixo. Vamos analisar cada parte individualmente.</p>
+<p>O <em>Vision Transformer</em> (ViT) pode ser entendido como uma extensão da arquitetura Transformer apresentada anteriormente. Nesse modelo, utiliza-se apenas a etapa de <em>encoding</em> do Transformer original. A arquitetura de um ViT pode ser observada na figura abaixo. A seguir, analisaremos cada um de seus componentes individualmente.</p>
 <div style="position: relative; width: 80%; height: 500px; margin: auto; text-align:center;">
-<figure class="fragment" data-fragment-index="1" style="position:absolute; top:0; left:0; width:100%; margin:0;">
+<figure class="fragment" data-fragment-index="1" style="position:absolute; top:0; left:0; width:80%; margin:0;">
 <img src="images/ViT_arquitetura.png" style="width:100%; height:auto;"> 
 </figure>
 </div>
 </section>
 <section id="patching" class="slide level2">
 <h2>Patching</h2>
-<p>Uma importante configuração do Visual Transformer é que ele foi desenvolvido para funcionar com sequências, como texto. Mas como transformamos imagens em sequências ? Para isso, vamos usar patches de imagens.</p>
+<p>Uma característica importante do <em>Vision Transformer</em> é que ele foi originalmente desenvolvido para operar sobre sequências, como textos. Dessa forma, surge a seguinte questão: como representar imagens como sequências?</p>
+<p>Para isso, o ViT divide a imagem em pequenos blocos, chamados <em>image patches</em>.</p>
 <div style="position: relative; width: 80%; height: 500px; margin: auto; text-align:center;">
 <figure class="fragment" data-fragment-index="1" style="position:absolute; top:0; left:0; width:100%; margin:0;">
 <img src="images/Img_patch.png" style="width:100%; height:auto;"> 
@@ -379,8 +396,8 @@ Lucas Otávio Leme Silva
 <section id="funções-importantes" class="slide level2">
 <h2>Funções Importantes</h2>
 <ul>
-<li><p>Após a imagem ser dividida em patches a primeira camada de uma ViT e o embedding, mas como fazer o embedding de uma imagem na prática? Normalmente usamos uma projeção linear sobre os patches com MLP ou CNN para criar esse embedding.</p></li>
-<li><p>Assim como no transformer é feito um positional embedding das imagens. Além de usar todo aquela parte de funções trigonométricas, no ViT cada valor no positional encoding é um parâmetro que é aprendido pelo modelo.</p></li>
+<li><p>Após a divisão da imagem em <em>patches</em>, a primeira etapa do ViT é a construção dos <em>embeddings</em>. Na prática, isso é feito aplicando uma projeção linear sobre cada <em>patch</em>, geralmente utilizando uma MLP ou uma CNN para gerar as representações vetoriais.</p></li>
+<li><p>Assim como nos Transformers aplicados a texto, também é utilizado um <em>Positional Embedding</em>. No ViT, porém, os valores associados ao posicionamento não são definidos por funções trigonométricas fixas; eles são tratados como parâmetros aprendidos durante o treinamento do modelo.</p></li>
 </ul>
 </section>
 <section id="token-especial" class="slide level2">
@@ -419,7 +436,7 @@ Lucas Otávio Leme Silva
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
-<p>Curso Redes Neurais - CNNs | Lucas Otávio</p>
+<p>Curso Redes Neurais - Transformers e Vision Transformers (ViT) | Lucas Otávio</p>
 </div>
 </div></div>
 
@@ -612,7 +629,7 @@ Lucas Otávio Leme Silva
         maxScale: 2,
 
         math: {
-          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],

@@ -245,16 +245,15 @@ Fabricio Martins Lopes
 </section>
 <section id="ideia-central-da-cnn" class="slide level2">
 <h2>Ideia Central da CNN</h2>
-<p>A grande mudança da MLP para a CNN é a introdução de uma nova camada, chamada de camada Convolucional. Essa camada é projetada especificamente para lidar com dados espaciais, na qual é responsável por aprender as features dos dados. Na prática o que ela faz é aprender Kernels, que nada mais são do que filtros de ativação da imagem.</p>
-<p><span class="math display">\[
-  Y = X \bigotimes K \leftarrow Y(i,j) = \sum_{m}\sum_{n} X(i+m, j+n) * K(m,n)
-\]</span></p>
+<p>A grande diferença entre a MLP e a CNN é a introdução da camada convolucional. Essa camada foi projetada especificamente para lidar com dados espaciais, sendo responsável por aprender as <em>features</em> dos dados.</p>
+<p>Na prática, ela aprende <em>kernels</em>, que funcionam como filtros de ativação aplicados à imagem.</p>
+<p><span class="math display">\[Y = X \otimes K \quad \leftarrow \quad Y(i,j) = \sum_{m}\sum_{n} X(i+m, j+n) \cdot K(m,n)\]</span></p>
 </section>
 <section id="propriedades-das-cnns" class="slide level2">
 <h2>Propriedades das CNNs</h2>
 <ul>
-<li>Perceba que ao aprender um kernel <span class="math inline">\(K\)</span> estamos compartilhando esse peso com toda a rede, então ao invés de aprender uma feature por pixel, agora aprendemos apenas <span class="math inline">\(m * n * k_{filtros}\)</span> features.</li>
-<li>CNNs tem uma propriedade matemática fundamental, conhecida como equivariância por deslocamento, ou seja, quando um objeto da imagem muda de lugar, a representação (feature map) produzida pela rede também se move na mesma quantidade.</li>
+<li>Observe que, ao aprender um kernel <span class="math inline">\(K\)</span>, seus pesos são compartilhados por toda a rede. Assim, em vez de aprender uma feature por pixel, a rede passa a aprender apenas <span class="math inline">\((m \times n \times k_{filtros})\)</span> features.</li>
+<li>CNNs possuem uma propriedade matemática fundamental chamada equivariância por deslocamento. Isso significa que, quando um objeto na imagem muda de posição, a representação produzida pela rede (<em>feature map</em>) também se desloca proporcionalmente.</li>
 </ul>
 </section>
 <section id="vizualisando-a-convolução" class="slide level2">
@@ -274,24 +273,23 @@ Fabricio Martins Lopes
 </section>
 <section id="parâmetros-camadas-convolucionais" class="slide level2">
 <h2>Parâmetros Camadas Convolucionais</h2>
-<p>Quais são os parâmetros de uma camada convolucional:</p>
+<p>Os principais parâmetros de uma camada convolucional são:</p>
 <ul>
-<li>Número de Kernels</li>
-<li>Tamanho do Kernel</li>
-<li>Stride: esse valor define o tamanho do passo que o Kernel delsiza sobre a iamgem durante a convolução, por padrão temos stride igual a <span class="math inline">\(1\)</span>.</li>
-<li>Padding: Perceba que quanto maior o tamanho do kernel, menor será a imagem resultante da convolução, e pode ocorrer de querer manter o tamanho da imagem original, para isso usamos padding.</li>
+<li><strong>Número de kernels:</strong> define quantos filtros serão aprendidos pela rede.</li>
+<li><strong>Tamanho do kernel:</strong> determina a dimensão espacial de cada filtro convolucional.</li>
+<li><strong>Stride:</strong> define o tamanho do passo com que o kernel percorre a imagem durante a convolução. Por padrão, utiliza-se (stride = 1).</li>
+<li><strong>Padding:</strong> conforme o tamanho do kernel aumenta, a dimensão da imagem resultante tende a diminuir. Para preservar o tamanho original da entrada, utiliza-se o <em>padding</em>.</li>
 </ul>
 </section>
 <section id="parâmetros-camadas-convolucionais-1" class="slide level2">
 <h2>Parâmetros Camadas Convolucionais</h2>
-<p>Uma fómrula simples para identificar o tamanho da imagem resultante da convolução é:</p>
-<p><span class="math display">\[
-  TamanhoResultante = \frac{TamanhoEntrada - TamanhoKernel + (2*Paddingg)}{Stride} + 1
+<p>Uma fórmula simples para identificar o tamanho da imagem resultante da convolução é: <span class="math display">\[
+  TamResultante = \frac{TamEntrada - TamaKernel + (2*Padding)}{Stride} + 1
 \]</span></p>
 </section>
 <section id="padding" class="slide level2">
 <h2>Padding</h2>
-<p>Exemplo de padding: Nesse caso, temos uma matriz 4x4 e um filtro 3x3. Perceba que, se fôssemos aplicar normalmente a convolução, teríamos uma saída 2x2. Ao adicionarmos o padding, temos o mesmo tamanho de entrada e saída.</p>
+<p>Exemplo de padding: Nesse caso, temos uma matriz <span class="math inline">\(4 \times 4\)</span> e um filtro <span class="math inline">\(3 \times 3\)</span>. Perceba que, se fôssemos aplicar normalmente a convolução, teríamos uma saída <span class="math inline">\(2 \times 2\)</span>. Ao adicionarmos o padding, temos o mesmo tamanho de entrada e saída.</p>
 <div style="position: relative; width: 70%; height: 500px; margin: auto; text-align:center;">
 <figure class="fragment" data-fragment-index="1" style="position:absolute; top:0; left:0; width:100%; margin:0;">
 <img src="images/padding.png" style="width:100%; height:auto;"> 
@@ -305,23 +303,23 @@ Fabricio Martins Lopes
 </section>
 <section id="outras-camadas" class="slide level2">
 <h2>Outras camadas</h2>
-<p>Além da camda convolucional, existem outras 2 camadas camadas muito utilizadsa nas arquiteturas, Pooling (essencial) e flatten. Normalmente temos o seguinte Pipeline de uma arquitetura:</p>
-<p><span class="math display">\[
-  Input $\rightarrow$ n*(Conv, Activation, Pooling) $\rightarrow$ Flatten $\rightarrow$ Dense $\rightarrow$ Output
-\]</span></p>
+<p>Além da camada convolucional, existem outras duas camadas amplamente utilizadas em arquiteturas CNN: <em>Pooling</em> e <em>Flatten</em>.</p>
+<p>De forma geral, o pipeline de uma arquitetura pode ser representado por:</p>
+<p><span class="math display">\[Input \rightarrow n*(Conv,\ Activation,\ Pooling) \rightarrow Flatten \rightarrow Dense \rightarrow Output\]</span></p>
 </section>
 <section id="max-pooling" class="slide level2">
 <h2>Max Pooling</h2>
-<p>O funcionamento dessa camada é bem simples de entender. Ele gera um bloco do tamanho desejado e ‘desliza’ pela imagem, selecionando os maiores valores. Para essa camada, existem 2 parâmetros: tamanho do bloco e o stride.</p>
+<p>O funcionamento dessa camada é relativamente simples. Ela define um bloco de tamanho específico que percorre a imagem, selecionando os maiores valores em cada região.</p>
+<p>Os principais parâmetros dessa camada são:<strong>Tamanho do bloco:</strong> define a dimensão da região analisada e <strong>Stride:</strong> determina o tamanho do passo com que o bloco percorre a imagem.</p>
 <div style="position: relative; width: 100%; height: 500px; margin: auto; text-align:center;">
-<figure class="fragment" data-fragment-index="1" style="position:absolute; top:0; left:0; width:100%; margin:0;">
+<figure class="fragment" data-fragment-index="1" style="position:absolute; top:0; left:0; width:70%; margin:0;">
 <img src="images/max_pooling.png" style="width:100%; height:auto;"> 
 </figure>
 </div>
 </section>
 <section id="flatten" class="slide level2">
 <h2>Flatten</h2>
-<p>Após a imagem ser processada pelos blocos de convolução o resultado continua sendo uma matriz, normalmente após isso transformamos o resultado em um vetor, pois as camadas densas não lidam com dados bidimensionais. Para isso usamos uma simples camada flatten.</p>
+<p>Após o processamento pelos blocos convolucionais, a saída da rede ainda possui formato matricial. Como camadas densas não operam diretamente sobre dados bidimensionais, é necessário transformar essa representação em um vetor. Para isso, utiliza-se a camada <em>Flatten</em>.</p>
 <div style="position: relative; width: 90%; height: 500px; margin: auto; text-align:center;">
 <figure class="fragment" data-fragment-index="1" style="position:absolute; top:0; left:0; width:100%; margin:0;">
 <img src="images/flat.png" style="width:100%; height:auto;"> 
@@ -329,8 +327,9 @@ Fabricio Martins Lopes
 </div>
 </section>
 <section id="aprendizagem-hierárquica" class="slide level2">
-<h2>Aprendizagem hierárquica</h2>
-<p>A CNN assim como o nosso reconhecimento de padrão visual, funciona de forma hierárquica, isso significa que as primeiras camadas aprendem padrões menos abstratos e que vai evoluindo conforme a profundidade da rede, por isso usamos diversos blocos de convolução.</p>
+<h2>Aprendizagem Hierárquica</h2>
+<p>As CNNs, assim como o reconhecimento visual humano, funcionam de forma hierárquica. Isso significa que as primeiras camadas aprendem padrões menos abstratos, enquanto representações mais complexas são aprendidas à medida que a profundidade da rede aumenta.</p>
+<p>Por esse motivo, arquiteturas CNN utilizam múltiplos blocos convolucionais.</p>
 <div style="position: relative; width: 100%; height: 500px; margin: auto; text-align:center;">
 <figure class="fragment" data-fragment-index="1" style="position:absolute; top:0; left:0; width:100%; margin:0;">
 <img src="images/hierarchical_features.png" style="width:100%; height:auto;"> 
@@ -376,8 +375,8 @@ Fabricio Martins Lopes
 <li>VGG</li>
 </ul>
 </section>
-<section id="extra-skip-connetcion-e-residual-connections" class="slide level2">
-<h2>Extra: Skip Connetcion e Residual Connections</h2>
+<section id="extra-skip-connection-e-residual-connections" class="slide level2">
+<h2>Extra: Skip Connection e Residual Connections</h2>
 <p>Residual Connections e Skip Connections foram criados para permitirem aprendizado de redes mais profundas.</p>
 <div style="position: relative; width: 75%; height: 500px; margin: auto; text-align:center;">
 <figure class="fragment" data-fragment-index="1" style="position:absolute; top:0; left:0; width:100%; margin:0;">
@@ -385,22 +384,19 @@ Fabricio Martins Lopes
 </figure>
 </div>
 </section>
-<section id="extra-skip-connetcion-e-residual-connections-1" class="slide level2">
-<h2>Extra: Skip Connetcion e Residual Connections</h2>
-<p>Essas conecções possuem as seguintes características:</p>
+<section id="extra-skip-connection-e-residual-connections-1" class="slide level2">
+<h2>Extra: Skip Connection e Residual Connections</h2>
+<p>Essas conexões possuem as seguintes características:</p>
 <ul>
 <li>Permitem o gradiente fluir diretamente atravessando algumas Camadas</li>
-<li>Mitigam o problema do Vanishing Gradient Problem</li>
+<li>Mitigam o problema do <em>Vanishing Gradient Problem</em></li>
 <li>Facilitam a otimização e permite uma convergência mais rápida</li>
 </ul>
 </section>
 <section id="extra-hyper-connections" class="slide level2">
 <h2>Extra: Hyper Connections</h2>
-<p>Até recentemente, os estudos sobre Hyper-Connections buscavam aumentar a flexibilidade de redes neurais por meio de conexões parametrizadas mais gerais. No entanto, essas abordagens frequentemente introduziam instabilidade numérica e dificuldades de convergência durante o treinamento.</p>
-<p>No início deste ano, o trabalho “mHC: Manifold-Constrained Hyper-Connections”, do grupo da DeepSeek, propôs uma solução mais robusta. A ideia central é impor uma restrição geométrica às hiper-matrizes: em vez de serem arbitrárias, elas passam a pertencer a um espaço estruturado (um manifold). Especificamente, essas matrizes são forçadas a viver no Birkhoff Polytope.</p>
-<ul>
-<li>Basicamente é uma mtriz em que todos os elementos estão entre 0 e 1 e todas as linhas e colunas soma 1.</li>
-</ul>
+<p>Até recentemente, os estudos sobre <em>Hyper-Connections</em> buscavam aumentar a flexibilidade de redes neurais por meio de conexões parametrizadas mais gerais. No entanto, essas abordagens frequentemente introduziam instabilidade numérica e dificuldades de convergência durante o treinamento. No início deste ano, o trabalho <em>“mHC: Manifold-Constrained Hyper-Connections”</em>, desenvolvido pelo grupo da DeepSeek, propôs uma solução mais robusta. A principal ideia é impor uma restrição geométrica às hiper-matrizes: em vez de serem arbitrárias, elas passam a pertencer a um espaço estruturado (<em>manifold</em>).</p>
+<p>Mais especificamente, essas matrizes são restringidas ao <em>Birkhoff Polytope</em>: matrizes cujos elementos estão no intervalo entre <span class="math inline">\(0\)</span> e <span class="math inline">\(1\)</span>, e em que a soma de cada linha e de cada coluna é igual a <span class="math inline">\(1\)</span>.</p>
 </section>
 <section id="extra-hyper-connections-1" class="slide level2">
 <h2>Extra: Hyper Connections</h2>
