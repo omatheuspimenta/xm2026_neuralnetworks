@@ -1,6 +1,6 @@
 ---
 title: "Curso Redes Neurais - Xmeeting 2026"
-subtitle: "Graph Neural Networks"
+subtitle: "Introdução a Redes Neurais"
 format: 
   clean-revealjs:
     fontsize: 0.6em
@@ -18,9 +18,16 @@ format:
     menu: true
 html-math-method:
   method: mathjax
+  url: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
 author:
   - name: Lucas Otávio Leme Silva
     email: lucasotavio750@gmail.com
+    affiliations: Universidade Tecnológica Federal do Paraná, Cornélio Procópio (UTFPR-CP)
+  - name: Matheus Pimenta
+    email: omatheuspimenta@outlook.com
+    affiliations: Universidade de São Paulo, Piracicaba (USP-ESALQ)
+  - name: Fabricio Martins Lopes
+    email: fabricio@utfpr.edu.br
     affiliations: Universidade Tecnológica Federal do Paraná, Cornélio Procópio (UTFPR-CP)
 date: last-modified
 toc: true
@@ -32,15 +39,17 @@ toc-depth: 1
 
 ## Grafos
 
-Grafos nada mais são do que representações de uma coleção de nós (vértices) e arestas que conectam esses nós, formando uma estrutura que representa as relações entre os nós.
+Grafos são estruturas compostas por um conjunto de nós (ou vértices) e arestas que conectam esses nós, permitindo representar relações entre diferentes elementos.
+Formalmente, um grafo pode ser definido como:
 
-$$
-  G = (V, E)
-$$
+$$G = (V, E)$$
+
+em que $V$ representa o conjunto de vértices e $E$ o conjunto de arestas do grafo.
+
 
 <div style="position: relative; width: 45%; height: 500px; margin: auto; text-align:center;">
 <figure class="fragment" data-fragment-index="1" 
-        style="position:absolute; top:0; left:0; width:100%; margin:0;">
+        style="position:absolute; top:0; left:0; width:70%; margin:0;">
     <img src="images/Grafo.png" 
          style="width:100%; height:auto;" />
   </a>
@@ -60,91 +69,99 @@ A partir da união das redes neurais com os grafos podemos resolver diversos tip
 
 ## Grafos Direcionados e Não direcionados
 
-Nos Grafos direcionados, cada vértice possue uma direção, ou seja, ele liga os nós em um direção específica, ao contrário dos grafos não direcionados.
+::: {layout-ncol=1 style="text-align:center;"}
 
-```
-# Criando grafo Direcionado
+```{python}
+#| echo: true
 import networkx as nx
+import matplotlib.pyplot as plt
+plt.figure(figsize=(6, 4))
 G = nx.DiGraph()
 G.add_edges_from([('Fabricio', 'Matheus'), ('Fabricio', 'Lucas'), ('Matheus', 'Lucas')])
+nx.draw( G, with_labels=True, node_color='lightgreen', font_weight='bold', node_size=1500, arrowsize=15, edge_color='gray')
+plt.margins(0.2)
+plt.show()
 ```
+:::
 
-<div style="position: relative; width: 50%; height: 500px; margin: auto; text-align:center;">
-<figure class="fragment" data-fragment-index="1" 
-        style="position:absolute; top:0; left:0; width:100%; margin:0;">
-    <img src="images/Grafo_Direcionado.png" 
-         style="width:100%; height:auto;" />
-  </a>
-</figure>
-</div>
-
-
-## Grafos Direcionados e Não direcionados
-
-```
+## Grafos Direcionados 
+::: {layout-ncol=1 style="text-align:center;"}
+```{python}
+#| echo: true
 # Criando um grafo não direcionado
 Z = nx.Graph()
 Z.add_edges_from([('Fabricio', 'Matheus'), ('Fabricio', 'Lucas'), ('Matheus', 'Lucas')])
+nx.draw( Z, with_labels=True, node_color='lightgreen', font_weight='bold', node_size=1500, arrowsize=15, edge_color='gray')
 ```
-
-<div style="position: relative; width: 60%; height: 500px; margin: auto; text-align:center;">
-<figure class="fragment" data-fragment-index="1" 
-        style="position:absolute; top:0; left:0; width:100%; margin:0;">
-    <img src="images/Grafo_nao_Direcionado.png" 
-         style="width:100%; height:auto;" />
-  </a>
-</figure>
-</div>
+:::
 
 ## Grafos ponderados
-
-```
-# Criando um grafo ponderado
+::: {layout-ncol=1 style="text-align:center;"}
+```{python}
+#| echo: true
+plt.figure(figsize=(6, 3)) 
 GP = nx.Graph()
 GP.add_edges_from([('H', 'O', {"weight": 4}), ('H', 'K', {"weight": 13}),
                    ('K', 'T', {"weight": 30}), ('T', 'O', {"weight": 10})])
+pos = nx.spring_layout(GP)
+nx.draw(GP, pos, with_labels=True, node_color='lightblue', node_size=800)
+# Desenha os pesos das arestas
 labels = nx.get_edge_attributes(GP, "weight")
+nx.draw_networkx_edge_labels(GP, pos, edge_labels=labels)
+plt.margins(0.2)
+plt.show()
 ```
+:::
 
-<div style="position: relative; width: 60%; height: 500px; margin: auto; text-align:center;">
-<figure class="fragment" data-fragment-index="1" 
-        style="position:absolute; top:0; left:0; width:100%; margin:0;">
-    <img src="images/Grafo_Ponderado.png" 
-         style="width:100%; height:auto;" />
-  </a>
-</figure>
-</div>
 
 ## Grafos Conectados e Disconectados
 
 Um grafo é dito conectado se existe um caminho entra quaisquer dois vértices do grafo, caso contrário, o grafo é dito desconectado.
 
-```
-# Verificando se um grafo é conectado
+```{python}
+#| echo: true
+plt.figure(figsize=(5, 2)) 
 G = nx.Graph()
 G.add_edges_from([(1, 3), (3, 4), (4, 1), (5, 6)])
-print(f"O grafo está conectado ? {nx.is_connected(G1)}")
+# Exibe o resultado do teste
+print(f"O grafo está conectado? {nx.is_connected(G)}")
+# Desenho do Grafo
+nx.draw(G, with_labels=True, node_color='salmon', node_size=600)
+plt.margins(0.2)
+plt.show()
 ```
 
-## Degrau e Vizinhança
+## Grau e Vizinhança
 
-- Degrau de um nó: Número de vértices incidentes no nó (uma aresta é insidente em um nó, se o nó é um dos endpoints da aresta).
-- Se o grafo for direcionado então temos degrau interno (número de arestas que chegam no nó) e o degrau externo (número de arestas que saem do nó).
-- Ciclo: Um caminho em que o primeiro e o último vértice vizitado são os mesmos
-- Vizinhos: Sâo os Nós diretamente conectados a um nó particular. Dois nós são ditos adjacentes se estão diretamente ligados através de uma aresta.
+* **Grau de um nó:** número de arestas incidentes ao vértice. Uma aresta é dita incidente a um nó quando o vértice é uma de suas extremidades.
+* **Grafos direcionados:** nesse caso, distinguimos:
+  * **Grau de entrada (*in-degree*):** número de arestas que chegam ao nó.
+  * **Grau de saída (*out-degree*):** número de arestas que saem do nó.
+* **Ciclo:** caminho em que o primeiro e o último vértice visitados são iguais.
+* **Vizinhos:** são os nós diretamente conectados a um determinado vértice. Dois nós são considerados adjacentes quando existe uma aresta ligando-os diretamente.
 
-```
-# Verificando se um grafo é conectado
+## Grau e Vizinhança
+::: {layout-ncol=1 style="text-align:center;"}
+```{python}
+#| echo: true
+plt.figure(figsize=(5, 2))
 Z = nx.Graph()
 Z.add_edges_from([('Fabricio', 'Matheus'), ('Fabricio', 'Lucas'), ('Matheus', 'Lucas')])
-print(f"Degrau(Lucas) = {Z.degree['Lucas']}")
+
+print(f"Grau(Lucas) = {Z.degree['Lucas']}")
+
+# Desenho do Grafo
+nx.draw(Z, with_labels=True, node_color='orange', node_size=1000, font_size=10)
+plt.margins(0.3)
+plt.show()
 ```
+:::
 
 ## Medidas de um grafo 
 
-- Grau de Centralidade: Mais simples, usa apenas o degrau do nó, quanto maior o valor maior o indicativo que o vértice é altamente conectado com os outros vértices do grafo, e assim, influência a rede.
-- Centralidade de proximidade: Mede o quão próximo um nó está dos outros nós da rede (média da distância entre os caminhos mais curtos do nó até os outros nós da rede)
-- Centralidade de intermediação: Mede quantas vezes um nó está em um dos caminhos mais curtos entre dois nós (alto valor indica que o nó funciona como uma ponte entre diferentes nós)
+* **Centralidade de grau:** métrica mais simples, baseada apenas no grau do nó. Quanto maior seu valor, maior a indicação de que o vértice possui muitas conexões com outros nós do grafo e, consequentemente, maior influência na rede.
+* **Centralidade de proximidade:** mede o quão próximo um nó está dos demais nós da rede, considerando a média das distâncias dos menores caminhos entre esse nó e todos os outros vértices.
+* **Centralidade de intermediação:** mede quantas vezes um nó aparece nos menores caminhos entre pares de vértices. Valores elevados indicam que o nó atua como uma ponte entre diferentes regiões da rede.
 
 ## Medidas de um grafo 
 
@@ -168,7 +185,8 @@ $$
 
 ## Medidas de um grafo
 
-```
+```{python}
+#| echo: true
 print(f"Grau de Centralidade = {nx.degree_centrality(G)}")
 print(f"Centralidade de proximidade = {nx.closeness_centrality(G)}")
 print(f"Centralidade de intermediação= {nx.betweenness_centrality(G)}")
@@ -191,7 +209,10 @@ Uma matriz adjacente representa as arestas do grafo, indicando onde existe uma a
 
 ## Word2Vec
 
-A ideia do Word2Vec é o que vai trazer a base de como funciona os modelos baseados em grafo. O que queremos no fim usando o Word2Vec é transformar uma palavra em um vetor, criando uma nova representação. Esse é um objetivo semelhante ao que queremos fazer no grafo, que é criar representações significativas dele.
+A ideia central do *Word2Vec* fornece a base conceitual para muitos modelos aplicados a grafos. O objetivo do Word2Vec é transformar palavras em vetores, criando representações contínuas capazes de capturar relações semânticas.
+
+Esse objetivo é semelhante ao encontrado em aprendizado em grafos, no qual buscamos gerar representações vetoriais significativas para os nós e para a própria estrutura do grafo.
+
 
 $$
   v_i \rightarrow z_i \in \mathbb{R}^d
@@ -199,28 +220,29 @@ $$
 
 ## Word2Vec
 
-Um exmeplo do que pode ser feito é:
+Um exemplo simples de representação vetorial é:
+$$\begin{aligned}
+vec(ator) &= [-2, 3, 1] \\
+vec(atriz) &= [-1.9, 2, 1.5] \\
+vec(homem) &= [3, -1, -2] \\
+vec(mulher) &= [2.5, -2.5, -1]
+\end{aligned}$$
 
-$$
-  vec(ator) = [-2, 3, 1]
-  vec(atriz) = [-1.9, 2, 1.5]
-  vec(homem) = [3, -1, -2]
-  vec(mulher) = [2.5, -2.5, -1] 
-$$  
+Uma forma comum de medir a similaridade entre vetores é utilizando a similaridade de cosseno:
 
-Uma forma de medir a semelhança é usando a similaridade de cosseno:
+$$\text{similaridade de cosseno} = \frac{A \cdot B}{||A|| \cdot ||B||}$$
 
-$$
-  \text{similaridade de cosseno} = \frac{A \dot B}{||A|| \dot ||B||}
-$$
-
-Com isso coisas é possível calcular coisas como $vec(ator) - vec(homem) + vec(mulher) \approx vec(atriz)$
+Com representações vetoriais, torna-se possível capturar relações semânticas entre palavras, por exemplo:
+$$vec(ator) - vec(homem) + vec(mulher) \approx vec(atriz)$$
 
 ## Word2Vec - Skip-grams e CBOW
 
-Duas principais formas de fazer o Word2Vec é com CBOW e Skip-gran. o CBOW usa as palavras e o contexto ao seu redor para predizer uma palavra. Enquanto o Skip-gran tenta predizer o contexto a partir de uma palavra.
+As duas principais abordagens para construir modelos *Word2Vec* são o **CBOW** (*Continuous Bag of Words*) e o **Skip-Gram**.
 
-Skip-gran é implementado utilizando um par de palavras $(input, contexto)$, na qual o $contexto$ é a palavra que queremos predizer.
+* **CBOW:** utiliza as palavras do contexto para predizer a palavra central.
+* **Skip-Gram:** realiza o processo inverso, utilizando uma palavra para predizer seu contexto.
+
+O modelo *Skip-Gram* é implementado a partir de pares $(input, contexto)$, em que o termo $contexto$ representa a palavra que o modelo deseja prever a partir da palavra de entrada.
 
 ## Skip-grams
 
@@ -247,9 +269,12 @@ Então temos os passos:
 
 ## DeepWalk - Random Walks
 
-O objetivo de criar representações uteis se mantem com DeepWalk, mas ao invés de usar palavras, usamos nós. A partir disso usamos um algoritimo conhecido como random walk para gerar sequências significativas dos nós, que funcionam como sequência.  
+O objetivo de criar representações úteis permanece no *DeepWalk*, mas, em vez de palavras, utilizamos nós do grafo.
 
-Toda a ideia consiste em o Random Walk serem sequências produzidas apartir da escolha aleatória dos vizinhos a cada etapa. Então se os nós costumam aparecer em conjunto isso indica que eles são proximos de alguma forma.
+Para isso, emprega-se um algoritmo conhecido como *Random Walk*, responsável por gerar sequências significativas de nós, de forma análoga às sequências de palavras em linguagem natural.
+
+A ideia central consiste em construir trajetórias no grafo a partir da escolha aleatória de vizinhos a cada etapa. Assim, se determinados nós aparecem frequentemente nas mesmas sequências, isso indica que possuem algum tipo de proximidade estrutural ou semântica dentro do grafo.
+
 
 ## DeepWalk
 
@@ -266,7 +291,7 @@ DeepWalk nada mais é do que a combinação do Random Walk com o Word2Vec
 
 ## Exemplo DeepWalk
 
-Referência: https://www.mdpi.com/2227-9059/13/3/536
+Referência: [https://www.mdpi.com/2227-9059/13/3/536](https://www.mdpi.com/2227-9059/13/3/536)
 
 <div style="position: relative; width: 70%; height: 500px; margin: auto; text-align:center;">
 <figure class="fragment" data-fragment-index="1" 
@@ -281,14 +306,16 @@ Referência: https://www.mdpi.com/2227-9059/13/3/536
 
 ## Incluindo Features nos Nós - Introdução a GNN
 
-Até agora consideramos apeans a topologia do grafo. Contudo, os grafos tendem a ser mais ricos do que apenas conexões, tanto os nós, quanto as arestas,
-podem ter features. 
+Até agora, consideramos apenas a topologia do grafo. No entanto, grafos geralmente são mais ricos do que apenas suas conexões: tanto nós quanto arestas podem possuir *features* associadas.
 
-Para isso vamos usar o dataset Cora, que representa 2708 publicações, onde a conexão são as referências. Cada publicação é descrita como um vetor binario de 1433 palavras unicas. O objetivo é classificar o nó em uma das 7 categorias.
+Para ilustrar isso, utilizaremos o dataset *Cora*, que representa 2.708 publicações científicas, nas quais as conexões correspondem a citações entre os artigos. Cada publicação é descrita por um vetor binário de 1.433 palavras únicas. O objetivo é classificar cada nó em uma de 7 categorias possíveis.
+
 
 ## Primeiro Graph Neural Network
 
-No modelo tradicional de rede neural podemos fazer $h_A = x_A W^T$, onde $x_A$ era o input do vetor de $A$ e $W$ era a matriz de peso. Qual o problema, em um grafo os vetores de entrada são as features dos nós, isso significa que os nós estão completamente separados um dos outros. Para usar a informação da topologia e ao mesmo tempo das features, precisamos olhar para sua vizinhança.
+No modelo tradicional de redes neurais, podemos definir a representação como $h_A = x_A W^T$, em que $x_A$ é o vetor de entrada do nó (A) e $W$ é a matriz de pesos aprendida.
+
+O problema é que, em um grafo, os vetores de entrada correspondem apenas às *features* dos nós, o que significa que cada nó é tratado de forma isolada, sem considerar suas conexões Para incorporar simultaneamente a informação das *features* e da topologia do grafo, é necessário considerar a vizinhança de cada nó, agregando informações dos nós conectados a ele.
 
 Graph Linear Layer:
 
@@ -298,7 +325,7 @@ $$
 
 ## Primeiro Graph Neural Network
 
-Por questão de eficiência como temos a matirz adjacência é muito mais simples e rápido computar:
+Por questão de eficiência utilizamos a matriz adjacência que é mais simples e rápido de computar:
 
 $$
   H = \widetilde{A}^T X W^T
@@ -308,7 +335,10 @@ Em que $\widetilde{A} = A + I$, para computar o próprio nó.
 
 ## Graph Linear Layer:
 
-```
+```{python}
+#| echo: true
+import torch
+from torch.nn import Linear
 class GNNLayer(torch.nn.Module):
     def __init__(self, dim_in, dim_out):
         super().__init__()
@@ -324,21 +354,24 @@ class GNNLayer(torch.nn.Module):
 
 ## Graph Convolutional Network
 
-Esse conceito foi introduzido por Kipf e Welling em 2017, a ideia é criar uma variante da CNNs para as GNNs. Assim como no caso das CNNs, as GCNs se tornaram as redes de GNN mais populares. 
+Esse conceito foi introduzido por Kipf e Welling em 2017, com o objetivo de propor uma variante das CNNs adaptada para grafos, dando origem às *Graph Convolutional Networks (GCNs)*.
+
+Assim como ocorreu com as CNNs na visão computacional, as GCNs se tornaram uma das arquiteturas mais populares dentro do campo das *Graph Neural Networks (GNNs)*.
+
 
 ## Limitações no nosso modelo
 
-O nosso modelo tem uma limitação muito evidente, vamos verificar novamente como é feito o cálculo:
+O nosso modelo tem uma limitação, vamos verificar novamente como é feito o cálculo:
 
 $$
   h_i = \sum_{j \in \mathcal{N}_i} x_j W^T
 $$
 
-Perceba que não é levado em consideração o número de vizinhos, ou seja se um nó possui 1 vizinho e outro 100, não existe uma normalização, logos os valores vão ficar muito discrepantes. 
+Perceba que não é levado em consideração o número de vizinhos, ou seja se um nó possui 1 vizinho e outro 100, não existe uma normalização, logo os valores ficarão muito discrepantes. 
 
 ## Solucionando o problema
 
-Uma forma de resolver esse problema é simplesmente normalizar pelo degrau do nó.
+Uma forma de resolver esse problema é simplesmente normalizar pelo grau do nó.
 
 $$
   h_i = \frac{1}{deg(i)} \sum_{j \in \mathcal{N}_i} x_j W^T
@@ -346,10 +379,11 @@ $$
 
 ## Normalização Matricial
 
-Para transformar aquela normalização em multiplicação de matrizes, utilizamos a matriz degrau, que conta o número de vizinhos por nó. Com isso existe duas formas de normalização:
+Para transformar a normalização em uma operação de multiplicação de matrizes, utilizamos a matriz de grau, que contabiliza o número de vizinhos de cada nó. A partir disso, existem duas formas comuns de normalização:
 
-- $\widetilde{D}^{-1} \widetilde{A} X W^T$ irá normalizar cada linha das features, fazendo com que a maginitude de um nó com muitos vizinhos não exploda.
-- $\widetilde{A} \widetilde{D}^{-1} X W^T$ irá normalizar cada coluna das features. Isso faz com que cada nó distribua sua informação igualmente entre seus vizinhos (nós de alto grau não domina os outros).
+* $\widetilde{D}^{-1} \widetilde{A} X W^T$: normaliza cada linha das features, evitando que a magnitude de nós com muitos vizinhos cresça excessivamente.
+* $\widetilde{A} \widetilde{D}^{-1} X W^T$: normaliza cada coluna das features, fazendo com que cada nó distribua sua informação de forma uniforme entre seus vizinhos, evitando que nós de alto grau dominem a propagação de informação.
+
 
 ## Normalização Matricial
 
@@ -361,9 +395,10 @@ $$
 
 ## Graph Attention Network
 
-As GATs são uma melhoria teórica das GNNs. Além de uma normalização estática, ela propõe fatores de ponderação calculados pela importância de cada nó usando self-attention.
+As *Graph Attention Networks (GATs)* representam uma evolução teórica das *GNNs*. Em vez de utilizar apenas uma normalização fixa, elas introduzem fatores de ponderação aprendidos, calculados a partir da importância relativa de cada nó por meio de *self-attention*.
 
-Podemos chamar esses fatores de ponderação de scores de atenção $\alpha_{ij}$, com isso temos o graph attention:
+Esses fatores são chamados de *attention scores* $\alpha_{ij}$, que determinam o peso da influência do nó $j$ sobre o nó $i$. Com isso, a operação de *graph attention* pode ser definida como:
+
 
 $$
   h_i = \sum_{j \in \mathcal{N}_i} \alpha_{ij} W x_j
@@ -371,13 +406,13 @@ $$
 
 ## Transformação Linear
 
-Os scores de atenção calcula a importância entre o nó central $i$ e o vizinho $j$. Na camada de atenção do grafo, isso é representado pela concateção dos vetores $[Wx_i || Wx_j]$:
+Os scores de atenção calcula a importância entre o nó central $i$ e o vizinho $j$. Na camada de atenção do grafo, isso é representado pela concatenação dos vetores $[Wx_i || Wx_j]$:
 
 $$
   a_{ij} = W_{att}^T[Wx_i || Wx_j]
 $$
 
-Após isso é aplicado uma função de ativação LeakyRelu e uma softmax:
+Após isso é aplicado uma função de ativação *LeakyRelu* e uma softmax:
 
 $$
   e_{ij} = LeakyRelu(a_{ij})
@@ -386,52 +421,70 @@ $$
 
 ## Multi-head attention
 
-Como já vimos na aula passada normalmente não usamos self-attention e sim multi-head attention. Existe duas formas de fazer isso na GAT:
+Como já vimos na aula passada normalmente não usamos *self-attention* mas a *multi-head attention*. Existe duas formas de fazer isso na GAT:
 
 - Média: A ideia é somar os diferentes embeddigs gerados e depois normalizar pelo número de heads $n$.
 $h_i = \frac{1}{n}\sum_{k=1}^n \sum_{j \in \mathcal{N}_i} \alpha_{ij}^k W^k x_j$
 - Concatenação: Concatena os diferentes embeddins, produzindo uma matriz maior.
 $h_i = ||^n_{k=1}\sum_{j \in \mathcal{N}_i} \alpha_{ij}^k W^k x_j$
 
-Uma regra simples para saber qual usar é: Se está em uma camada intermediaria utilize concateção, quando é a última camada da rede então média.
+Uma regra simples para saber qual usar é: Se está em uma camada intermediaria utilize concateção, quando é a última camada da rede então use a média.
 
 ## Melhoria na GAT
 
-Uma segunda versão do GAT foi proposta (Brody et al. 2021) para permitir uma maior expressão da GAT, isso porque ao invés de aplicar a atenção na transformação linear do input ela é aplicado depois, assim fica:
+Uma segunda versão do *Graph Attention Network* (GAT) foi proposta por Brody et al. (2021), com o objetivo de aumentar a capacidade de representação do modelo. A principal mudança é que, em vez de aplicar o mecanismo de atenção sobre a transformação linear da entrada, a atenção passa a ser aplicada posteriormente, o que torna a modelagem mais expressiva. Assim, a formulação fica:
 
-Antes:
+::: {.columns}
 
+::: {.column width="50%"}
+### Antes (GAT)
+<div style="font-size: 0.7em;">
 $$
-  \alpha_{ij} = \frac{exp(LeakyRelu(W_{att}^t [Wx_i||Wx_j]))}{\sum_{k \in \mathcal{i}} exp(LeakyRelu(W_{att}^t [Wx_i||Wx_k]))}
+\alpha_{ij} = \frac{\exp(\text{LR}(\mathbf{a}^\top [\mathbf{W}x_i \Vert \mathbf{W}x_j]))}{\sum_{k \in \mathcal{N}_i} \exp(\text{LR}(\mathbf{a}^\top [\mathbf{W}x_i \Vert \mathbf{W}x_k]))}
 $$
+</div>
+:::
 
-Depois:
+::: {.column width="50%"}
+### Depois (GATv2)
+<div style="font-size: 0.7em;">
+$$
+\alpha_{ij} = \frac{\exp(\mathbf{a}^\top \text{LR}(\mathbf{W} [x_i \Vert x_j]))}{\sum_{k \in \mathcal{N}_i} \exp(\mathbf{a}^\top \text{LR}(\mathbf{W} [x_i \Vert x_k]))}
+$$
+</div>
+:::
 
-$$
-  \alpha_{ij} = \frac{exp(W_{att}^t \dot LeakyRelu(W[x_i||x_j]))}{\sum_{k \in \mathcal{i}} W_{att}^t \dot exp(LeakyRelu(W[x_i||x_k]))}
-$$
+:::
 
 # GraphSAGE
 
 ## GraphSAGE
 
-GraphSAGE (Hamilton et.al 2017) é uma GNN feita  para lidar com grandes grafos. Na biologia normalmente temos que lidar com escabalabidade, por causa da quantidade de dados que temos. Contudo tanto GCN, quanto GAT não são preparados para isso. GraphSAGE traz duas ideias novas:
+O *GraphSAGE* (Hamilton et al., 2017) é uma *GNN* projetada para lidar com grafos de grande escala. Em áreas como biologia, é comum enfrentar problemas de escalabilidade devido ao volume massivo de dados. No entanto, modelos como GCN e GAT não são naturalmente otimizados para esse cenário.
 
-- Amostragem de Vizinho
-- Operações de Agregação
+O *GraphSAGE* introduz duas ideias principais:
 
-## Amostragem de Vizinho
+* **Amostragem de vizinhos:** em vez de usar todos os vizinhos de um nó, apenas uma amostra é selecionada, reduzindo o custo computacional.
+* **Operações de agregação:** as informações dos vizinhos amostrados são combinadas por meio de funções agregadoras para gerar a representação do nó.
 
-Nas primeiras aulas falamos sobre os batches, e como os otimizadores utilizam eles. Contudo, a maior parte dos datasets daquelas redes neurais são fáceis de extrair um batch, no caso de um dado tabular temos uma linha, no caso de imagens temos uma imagem, etc. 
-Como realizar amostragem a partir de um grafo ? 
 
 ## Amostragem de Vizinho
 
-A ideia consiste 2 etapas: 1° quando fazemos o embedding the nó, usamos apenas seus vizinhos. Isso significa que para computa-los só precisa dos vizinhos diretos (1 hope), se a GNN tiver 2 camadas então precisa dos vizinhos dos vizinhos (2 hops) e assim por diante.
+Nas primeiras aulas, discutimos o conceito de *batches* e como os otimizadores os utilizam durante o treinamento. Em redes tradicionais, essa amostragem é direta: em dados tabulares, cada linha pode ser um exemplo; em imagens, cada imagem já constitui uma amostra independente.
+
+No caso de grafos, porém, essa definição não é tão simples, pois os dados são interdependentes e estruturados. Assim, surge a questão: como realizar a amostragem de um batch a partir de um grafo?
+
+
+## Amostragem de Vizinho
+
+A ideia consiste em duas etapas. Na primeira, ao calcular o *embedding* de um nó, utilizamos apenas a sua vizinhança. Isso significa que, para computá-lo, são necessários apenas os vizinhos diretos (1-hop).
+
+Se a GNN possuir duas camadas, então o nó passa a depender dos vizinhos dos vizinhos (2-hops), e assim sucessivamente conforme a profundidade da rede aumenta.
+
 
 <div style="position: relative; width: 40%; height: 500px; margin: auto; text-align:center;">
 <figure class="fragment" data-fragment-index="1" 
-        style="position:absolute; top:0; left:0; width:100%; margin:0;">
+        style="position:absolute; top:0; left:0; width:70%; margin:0;">
     <img src="images/sampling.png" 
          style="width:100%; height:auto;" />
   </a>
@@ -440,11 +493,14 @@ A ideia consiste 2 etapas: 1° quando fazemos o embedding the nó, usamos apenas
 
 ## Amostragem de Vizinho
 
-Contudo, a computação do grafo se torna muito grande a medida que aumenta o numero de hops e se o degrau do nó for muito elevado. Para o segundo caso uma forma de resolver é fazendo amostragem de vizinhos:
+Contudo, a computação no grafo torna-se cada vez mais custosa à medida que o número de *hops* aumenta ou quando o grau dos nós é muito elevado.
+
+Para o segundo caso, uma forma de contornar esse problema é por meio da **amostragem de vizinhos**, na qual apenas um subconjunto dos vizinhos é utilizado durante a computação das representações dos nós.
+
 
 <div style="position: relative; width: 50%; height: 500px; margin: auto; text-align:center;">
 <figure class="fragment" data-fragment-index="1" 
-        style="position:absolute; top:0; left:0; width:100%; margin:0;">
+        style="position:absolute; top:0; left:0; width:75%; margin:0;">
     <img src="images/sampling2.png" 
          style="width:100%; height:auto;" />
   </a>

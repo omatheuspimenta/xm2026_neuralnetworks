@@ -6,11 +6,13 @@
 <script src="aula_05_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="aula_05_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="aula_05_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="aula_05_files/libs/quarto-html/quarto-syntax-highlighting-a06763021a52c43c40a351ac8b799b8f.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.36">
+<link href="aula_05_files/libs/quarto-html/quarto-syntax-highlighting-a6e161b2431e1f94a14e0f5d32135a3c.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.24">
 
   <meta name="author" content="Lucas Otávio Leme Silva">
-  <meta name="dcterms.date" content="2026-04-15">
+  <meta name="author" content="Matheus Pimenta">
+  <meta name="author" content="Fabricio Martins Lopes">
+  <meta name="dcterms.date" content="2026-05-07">
   <title>Curso Redes Neurais - Xmeeting 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -18,9 +20,6 @@
   <link rel="stylesheet" href="aula_05_files/libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="aula_05_files/libs/revealjs/dist/reveal.css">
   <style>
-    /* Default styles provided by pandoc.
-    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-    */
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -32,8 +31,74 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #24292e;  }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #24292e; } /* Normal */
+    code span.al { color: #ff5555; font-weight: bold; } /* Alert */
+    code span.an { color: #6a737d; } /* Annotation */
+    code span.at { color: #d73a49; } /* Attribute */
+    code span.bn { color: #005cc5; } /* BaseN */
+    code span.bu { color: #d73a49; } /* BuiltIn */
+    code span.cf { color: #d73a49; } /* ControlFlow */
+    code span.ch { color: #032f62; } /* Char */
+    code span.cn { color: #005cc5; } /* Constant */
+    code span.co { color: #6a737d; } /* Comment */
+    code span.cv { color: #6a737d; } /* CommentVar */
+    code span.do { color: #6a737d; } /* Documentation */
+    code span.dt { color: #d73a49; } /* DataType */
+    code span.dv { color: #005cc5; } /* DecVal */
+    code span.er { color: #ff5555; text-decoration: underline; } /* Error */
+    code span.ex { color: #d73a49; font-weight: bold; } /* Extension */
+    code span.fl { color: #005cc5; } /* Float */
+    code span.fu { color: #6f42c1; } /* Function */
+    code span.im { color: #032f62; } /* Import */
+    code span.in { color: #6a737d; } /* Information */
+    code span.kw { color: #d73a49; } /* Keyword */
+    code span.op { color: #24292e; } /* Operator */
+    code span.ot { color: #6f42c1; } /* Other */
+    code span.pp { color: #d73a49; } /* Preprocessor */
+    code span.re { color: #6a737d; } /* RegionMarker */
+    code span.sc { color: #005cc5; } /* SpecialChar */
+    code span.ss { color: #032f62; } /* SpecialString */
+    code span.st { color: #032f62; } /* String */
+    code span.va { color: #e36209; } /* Variable */
+    code span.vs { color: #032f62; } /* VerbatimString */
+    code span.wa { color: #ff5555; } /* Warning */
   </style>
-  <link rel="stylesheet" href="aula_05_files/libs/revealjs/dist/theme/quarto-b2736e9fcda83c748fd63b6e579550ef.css">
+  <link rel="stylesheet" href="aula_05_files/libs/revealjs/dist/theme/quarto-5ae9c59b2727fcd5357d4f034d95f9e0.css">
   <link href="aula_05_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="aula_05_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="aula_05_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -129,13 +194,12 @@
   </style>
 </head>
 <body class="quarto-light">
-<script src="mathjax-config.js"></script>
   <div class="reveal">
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">Curso Redes Neurais - Xmeeting 2026</h1>
-  <p class="subtitle">Graph Neural Networks</p>
+  <p class="subtitle">Introdução a Redes Neurais</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -149,9 +213,31 @@ Lucas Otávio Leme Silva
             Universidade Tecnológica Federal do Paraná, Cornélio Procópio (UTFPR-CP)
           </p>
     </div>
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Matheus Pimenta 
+</div>
+<div class="quarto-title-author-email">
+<a href="mailto:omatheuspimenta@outlook.com">omatheuspimenta@outlook.com</a>
+</div>
+        <p class="quarto-title-affiliation">
+            Universidade de São Paulo, Piracicaba (USP-ESALQ)
+          </p>
+    </div>
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Fabricio Martins Lopes 
+</div>
+<div class="quarto-title-author-email">
+<a href="mailto:fabricio@utfpr.edu.br">fabricio@utfpr.edu.br</a>
+</div>
+        <p class="quarto-title-affiliation">
+            Universidade Tecnológica Federal do Paraná, Cornélio Procópio (UTFPR-CP)
+          </p>
+    </div>
 </div>
 
-  <p class="date">April 15, 2026</p>
+  <p class="date">May 7, 2026</p>
 </section><section id="TOC">
 <nav role="doc-toc"> 
 <h2 id="toc-title">Table of Contents</h2>
@@ -172,12 +258,11 @@ Lucas Otávio Leme Silva
 </section>
 <section id="grafos" class="slide level2">
 <h2>Grafos</h2>
-<p>Grafos nada mais são do que representações de uma coleção de nós (vértices) e arestas que conectam esses nós, formando uma estrutura que representa as relações entre os nós.</p>
-<p><span class="math display">\[
-  G = (V, E)
-\]</span></p>
+<p>Grafos são estruturas compostas por um conjunto de nós (ou vértices) e arestas que conectam esses nós, permitindo representar relações entre diferentes elementos. Formalmente, um grafo pode ser definido como:</p>
+<p><span class="math display">\[G = (V, E)\]</span></p>
+<p>em que <span class="math inline">\(V\)</span> representa o conjunto de vértices e <span class="math inline">\(E\)</span> o conjunto de arestas do grafo.</p>
 <div style="position: relative; width: 45%; height: 500px; margin: auto; text-align:center;">
-<figure class="fragment" data-fragment-index="1" style="position:absolute; top:0; left:0; width:100%; margin:0;">
+<figure class="fragment" data-fragment-index="1" style="position:absolute; top:0; left:0; width:70%; margin:0;">
 <img src="images/Grafo.png" style="width:100%; height:auto;"> 
 </figure>
 </div>
@@ -195,68 +280,148 @@ Lucas Otávio Leme Silva
 </section>
 <section id="grafos-direcionados-e-não-direcionados" class="slide level2">
 <h2>Grafos Direcionados e Não direcionados</h2>
-<p>Nos Grafos direcionados, cada vértice possue uma direção, ou seja, ele liga os nós em um direção específica, ao contrário dos grafos não direcionados.</p>
-<pre><code># Criando grafo Direcionado
-import networkx as nx
-G = nx.DiGraph()
-G.add_edges_from([('Fabricio', 'Matheus'), ('Fabricio', 'Lucas'), ('Matheus', 'Lucas')])</code></pre>
-<div style="position: relative; width: 50%; height: 500px; margin: auto; text-align:center;">
-<figure class="fragment" data-fragment-index="1" style="position:absolute; top:0; left:0; width:100%; margin:0;">
-<img src="images/Grafo_Direcionado.png" style="width:100%; height:auto;"> 
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">import</span> networkx <span class="im">as</span> nx</span>
+<span id="cb1-2"><a href=""></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href=""></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<span id="cb1-4"><a href=""></a>G <span class="op">=</span> nx.DiGraph()</span>
+<span id="cb1-5"><a href=""></a>G.add_edges_from([(<span class="st">'Fabricio'</span>, <span class="st">'Matheus'</span>), (<span class="st">'Fabricio'</span>, <span class="st">'Lucas'</span>), (<span class="st">'Matheus'</span>, <span class="st">'Lucas'</span>)])</span>
+<span id="cb1-6"><a href=""></a>nx.draw( G, with_labels<span class="op">=</span><span class="va">True</span>, node_color<span class="op">=</span><span class="st">'lightgreen'</span>, font_weight<span class="op">=</span><span class="st">'bold'</span>, node_size<span class="op">=</span><span class="dv">1500</span>, arrowsize<span class="op">=</span><span class="dv">15</span>, edge_color<span class="op">=</span><span class="st">'gray'</span>)</span>
+<span id="cb1-7"><a href=""></a>plt.margins(<span class="fl">0.2</span>)</span>
+<span id="cb1-8"><a href=""></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="quarto-layout-panel" style="text-align:center;" data-layout-ncol="1">
+<div class="quarto-layout-row">
+<div id="6ed459a1" class="cell quarto-layout-cell" data-execution_count="1" style="flex-basis: 100.0%;justify-content: flex-start;">
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="aula_05_files/figure-revealjs/cell-2-output-1.png" width="595" height="403"></p>
 </figure>
 </div>
+</div>
+</div>
+</div>
+</div>
 </section>
-<section id="grafos-direcionados-e-não-direcionados-1" class="slide level2">
-<h2>Grafos Direcionados e Não direcionados</h2>
-<pre><code># Criando um grafo não direcionado
-Z = nx.Graph()
-Z.add_edges_from([('Fabricio', 'Matheus'), ('Fabricio', 'Lucas'), ('Matheus', 'Lucas')])</code></pre>
-<div style="position: relative; width: 60%; height: 500px; margin: auto; text-align:center;">
-<figure class="fragment" data-fragment-index="1" style="position:absolute; top:0; left:0; width:100%; margin:0;">
-<img src="images/Grafo_nao_Direcionado.png" style="width:100%; height:auto;"> 
+<section id="grafos-direcionados" class="slide level2">
+<h2>Grafos Direcionados</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="co"># Criando um grafo não direcionado</span></span>
+<span id="cb2-2"><a href=""></a>Z <span class="op">=</span> nx.Graph()</span>
+<span id="cb2-3"><a href=""></a>Z.add_edges_from([(<span class="st">'Fabricio'</span>, <span class="st">'Matheus'</span>), (<span class="st">'Fabricio'</span>, <span class="st">'Lucas'</span>), (<span class="st">'Matheus'</span>, <span class="st">'Lucas'</span>)])</span>
+<span id="cb2-4"><a href=""></a>nx.draw( Z, with_labels<span class="op">=</span><span class="va">True</span>, node_color<span class="op">=</span><span class="st">'lightgreen'</span>, font_weight<span class="op">=</span><span class="st">'bold'</span>, node_size<span class="op">=</span><span class="dv">1500</span>, arrowsize<span class="op">=</span><span class="dv">15</span>, edge_color<span class="op">=</span><span class="st">'gray'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="quarto-layout-panel" style="text-align:center;" data-layout-ncol="1">
+<div class="quarto-layout-row">
+<div id="9de67c42" class="cell quarto-layout-cell" data-execution_count="2" style="flex-basis: 100.0%;justify-content: flex-start;">
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="aula_05_files/figure-revealjs/cell-3-output-1.png" width="979" height="499"></p>
 </figure>
+</div>
+</div>
+</div>
+</div>
 </div>
 </section>
 <section id="grafos-ponderados" class="slide level2">
 <h2>Grafos ponderados</h2>
-<pre><code># Criando um grafo ponderado
-GP = nx.Graph()
-GP.add_edges_from([('H', 'O', {"weight": 4}), ('H', 'K', {"weight": 13}),
-                   ('K', 'T', {"weight": 30}), ('T', 'O', {"weight": 10})])
-labels = nx.get_edge_attributes(GP, "weight")</code></pre>
-<div style="position: relative; width: 60%; height: 500px; margin: auto; text-align:center;">
-<figure class="fragment" data-fragment-index="1" style="position:absolute; top:0; left:0; width:100%; margin:0;">
-<img src="images/Grafo_Ponderado.png" style="width:100%; height:auto;"> 
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">3</span>)) </span>
+<span id="cb3-2"><a href=""></a>GP <span class="op">=</span> nx.Graph()</span>
+<span id="cb3-3"><a href=""></a>GP.add_edges_from([(<span class="st">'H'</span>, <span class="st">'O'</span>, {<span class="st">"weight"</span>: <span class="dv">4</span>}), (<span class="st">'H'</span>, <span class="st">'K'</span>, {<span class="st">"weight"</span>: <span class="dv">13</span>}),</span>
+<span id="cb3-4"><a href=""></a>                   (<span class="st">'K'</span>, <span class="st">'T'</span>, {<span class="st">"weight"</span>: <span class="dv">30</span>}), (<span class="st">'T'</span>, <span class="st">'O'</span>, {<span class="st">"weight"</span>: <span class="dv">10</span>})])</span>
+<span id="cb3-5"><a href=""></a>pos <span class="op">=</span> nx.spring_layout(GP)</span>
+<span id="cb3-6"><a href=""></a>nx.draw(GP, pos, with_labels<span class="op">=</span><span class="va">True</span>, node_color<span class="op">=</span><span class="st">'lightblue'</span>, node_size<span class="op">=</span><span class="dv">800</span>)</span>
+<span id="cb3-7"><a href=""></a><span class="co"># Desenha os pesos das arestas</span></span>
+<span id="cb3-8"><a href=""></a>labels <span class="op">=</span> nx.get_edge_attributes(GP, <span class="st">"weight"</span>)</span>
+<span id="cb3-9"><a href=""></a>nx.draw_networkx_edge_labels(GP, pos, edge_labels<span class="op">=</span>labels)</span>
+<span id="cb3-10"><a href=""></a>plt.margins(<span class="fl">0.2</span>)</span>
+<span id="cb3-11"><a href=""></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="quarto-layout-panel" style="text-align:center;" data-layout-ncol="1">
+<div class="quarto-layout-row">
+<div id="01e518a3" class="cell quarto-layout-cell" data-execution_count="3" style="flex-basis: 100.0%;justify-content: flex-start;">
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="aula_05_files/figure-revealjs/cell-4-output-1.png" width="595" height="307"></p>
 </figure>
+</div>
+</div>
+</div>
+</div>
 </div>
 </section>
 <section id="grafos-conectados-e-disconectados" class="slide level2">
 <h2>Grafos Conectados e Disconectados</h2>
 <p>Um grafo é dito conectado se existe um caminho entra quaisquer dois vértices do grafo, caso contrário, o grafo é dito desconectado.</p>
-<pre><code># Verificando se um grafo é conectado
-G = nx.Graph()
-G.add_edges_from([(1, 3), (3, 4), (4, 1), (5, 6)])
-print(f"O grafo está conectado ? {nx.is_connected(G1)}")</code></pre>
+<div id="74bab3c7" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">2</span>)) </span>
+<span id="cb4-2"><a href=""></a>G <span class="op">=</span> nx.Graph()</span>
+<span id="cb4-3"><a href=""></a>G.add_edges_from([(<span class="dv">1</span>, <span class="dv">3</span>), (<span class="dv">3</span>, <span class="dv">4</span>), (<span class="dv">4</span>, <span class="dv">1</span>), (<span class="dv">5</span>, <span class="dv">6</span>)])</span>
+<span id="cb4-4"><a href=""></a><span class="co"># Exibe o resultado do teste</span></span>
+<span id="cb4-5"><a href=""></a><span class="bu">print</span>(<span class="ss">f"O grafo está conectado? </span><span class="sc">{</span>nx<span class="sc">.</span>is_connected(G)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb4-6"><a href=""></a><span class="co"># Desenho do Grafo</span></span>
+<span id="cb4-7"><a href=""></a>nx.draw(G, with_labels<span class="op">=</span><span class="va">True</span>, node_color<span class="op">=</span><span class="st">'salmon'</span>, node_size<span class="op">=</span><span class="dv">600</span>)</span>
+<span id="cb4-8"><a href=""></a>plt.margins(<span class="fl">0.2</span>)</span>
+<span id="cb4-9"><a href=""></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>O grafo está conectado? False</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="aula_05_files/figure-revealjs/cell-5-output-2.png" width="499" height="211"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
-<section id="degrau-e-vizinhança" class="slide level2">
-<h2>Degrau e Vizinhança</h2>
+<section id="grau-e-vizinhança" class="slide level2">
+<h2>Grau e Vizinhança</h2>
 <ul>
-<li>Degrau de um nó: Número de vértices incidentes no nó (uma aresta é insidente em um nó, se o nó é um dos endpoints da aresta).</li>
-<li>Se o grafo for direcionado então temos degrau interno (número de arestas que chegam no nó) e o degrau externo (número de arestas que saem do nó).</li>
-<li>Ciclo: Um caminho em que o primeiro e o último vértice vizitado são os mesmos</li>
-<li>Vizinhos: Sâo os Nós diretamente conectados a um nó particular. Dois nós são ditos adjacentes se estão diretamente ligados através de uma aresta.</li>
+<li><strong>Grau de um nó:</strong> número de arestas incidentes ao vértice. Uma aresta é dita incidente a um nó quando o vértice é uma de suas extremidades.</li>
+<li><strong>Grafos direcionados:</strong> nesse caso, distinguimos:
+<ul>
+<li><strong>Grau de entrada (<em>in-degree</em>):</strong> número de arestas que chegam ao nó.</li>
+<li><strong>Grau de saída (<em>out-degree</em>):</strong> número de arestas que saem do nó.</li>
+</ul></li>
+<li><strong>Ciclo:</strong> caminho em que o primeiro e o último vértice visitados são iguais.</li>
+<li><strong>Vizinhos:</strong> são os nós diretamente conectados a um determinado vértice. Dois nós são considerados adjacentes quando existe uma aresta ligando-os diretamente.</li>
 </ul>
-<pre><code># Verificando se um grafo é conectado
-Z = nx.Graph()
-Z.add_edges_from([('Fabricio', 'Matheus'), ('Fabricio', 'Lucas'), ('Matheus', 'Lucas')])
-print(f"Degrau(Lucas) = {Z.degree['Lucas']}")</code></pre>
+</section>
+<section id="grau-e-vizinhança-1" class="slide level2">
+<h2>Grau e Vizinhança</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">2</span>))</span>
+<span id="cb6-2"><a href=""></a>Z <span class="op">=</span> nx.Graph()</span>
+<span id="cb6-3"><a href=""></a>Z.add_edges_from([(<span class="st">'Fabricio'</span>, <span class="st">'Matheus'</span>), (<span class="st">'Fabricio'</span>, <span class="st">'Lucas'</span>), (<span class="st">'Matheus'</span>, <span class="st">'Lucas'</span>)])</span>
+<span id="cb6-4"><a href=""></a></span>
+<span id="cb6-5"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Grau(Lucas) = </span><span class="sc">{</span>Z<span class="sc">.</span>degree[<span class="st">'Lucas'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-6"><a href=""></a></span>
+<span id="cb6-7"><a href=""></a><span class="co"># Desenho do Grafo</span></span>
+<span id="cb6-8"><a href=""></a>nx.draw(Z, with_labels<span class="op">=</span><span class="va">True</span>, node_color<span class="op">=</span><span class="st">'orange'</span>, node_size<span class="op">=</span><span class="dv">1000</span>, font_size<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb6-9"><a href=""></a>plt.margins(<span class="fl">0.3</span>)</span>
+<span id="cb6-10"><a href=""></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="quarto-layout-panel" style="text-align:center;" data-layout-ncol="1">
+<div class="quarto-layout-row">
+<div id="dd318e5f" class="cell quarto-layout-cell" data-execution_count="5" style="flex-basis: 100.0%;justify-content: flex-start;">
+<div class="cell-output cell-output-stdout">
+<pre><code>Grau(Lucas) = 2</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="aula_05_files/figure-revealjs/cell-6-output-2.png" width="499" height="211"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="medidas-de-um-grafo" class="slide level2">
 <h2>Medidas de um grafo</h2>
 <ul>
-<li>Grau de Centralidade: Mais simples, usa apenas o degrau do nó, quanto maior o valor maior o indicativo que o vértice é altamente conectado com os outros vértices do grafo, e assim, influência a rede.</li>
-<li>Centralidade de proximidade: Mede o quão próximo um nó está dos outros nós da rede (média da distância entre os caminhos mais curtos do nó até os outros nós da rede)</li>
-<li>Centralidade de intermediação: Mede quantas vezes um nó está em um dos caminhos mais curtos entre dois nós (alto valor indica que o nó funciona como uma ponte entre diferentes nós)</li>
+<li><strong>Centralidade de grau:</strong> métrica mais simples, baseada apenas no grau do nó. Quanto maior seu valor, maior a indicação de que o vértice possui muitas conexões com outros nós do grafo e, consequentemente, maior influência na rede.</li>
+<li><strong>Centralidade de proximidade:</strong> mede o quão próximo um nó está dos demais nós da rede, considerando a média das distâncias dos menores caminhos entre esse nó e todos os outros vértices.</li>
+<li><strong>Centralidade de intermediação:</strong> mede quantas vezes um nó aparece nos menores caminhos entre pares de vértices. Valores elevados indicam que o nó atua como uma ponte entre diferentes regiões da rede.</li>
 </ul>
 </section>
 <section id="medidas-de-um-grafo-1" class="slide level2">
@@ -276,9 +441,16 @@ print(f"Degrau(Lucas) = {Z.degree['Lucas']}")</code></pre>
 </section>
 <section id="medidas-de-um-grafo-2" class="slide level2">
 <h2>Medidas de um grafo</h2>
-<pre><code>print(f"Grau de Centralidade = {nx.degree_centrality(G)}")
-print(f"Centralidade de proximidade = {nx.closeness_centrality(G)}")
-print(f"Centralidade de intermediação= {nx.betweenness_centrality(G)}")</code></pre>
+<div id="982da7df" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Grau de Centralidade = </span><span class="sc">{</span>nx<span class="sc">.</span>degree_centrality(G)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb8-2"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Centralidade de proximidade = </span><span class="sc">{</span>nx<span class="sc">.</span>closeness_centrality(G)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb8-3"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Centralidade de intermediação= </span><span class="sc">{</span>nx<span class="sc">.</span>betweenness_centrality(G)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Grau de Centralidade = {1: 0.5, 3: 0.5, 4: 0.5, 5: 0.25, 6: 0.25}
+Centralidade de proximidade = {1: 0.5, 3: 0.5, 4: 0.5, 5: 0.25, 6: 0.25}
+Centralidade de intermediação= {1: 0.0, 3: 0.0, 4: 0.0, 5: 0.0, 6: 0.0}</code></pre>
+</div>
+</div>
 </section>
 <section id="representação-matriz-adjacente" class="slide level2">
 <h2>Representação matriz adjacente</h2>
@@ -296,30 +468,32 @@ print(f"Centralidade de intermediação= {nx.betweenness_centrality(G)}")</code>
 </section>
 <section id="word2vec" class="slide level2">
 <h2>Word2Vec</h2>
-<p>A ideia do Word2Vec é o que vai trazer a base de como funciona os modelos baseados em grafo. O que queremos no fim usando o Word2Vec é transformar uma palavra em um vetor, criando uma nova representação. Esse é um objetivo semelhante ao que queremos fazer no grafo, que é criar representações significativas dele.</p>
+<p>A ideia central do <em>Word2Vec</em> fornece a base conceitual para muitos modelos aplicados a grafos. O objetivo do Word2Vec é transformar palavras em vetores, criando representações contínuas capazes de capturar relações semânticas.</p>
+<p>Esse objetivo é semelhante ao encontrado em aprendizado em grafos, no qual buscamos gerar representações vetoriais significativas para os nós e para a própria estrutura do grafo.</p>
 <p><span class="math display">\[
   v_i \rightarrow z_i \in \mathbb{R}^d
 \]</span></p>
 </section>
 <section id="word2vec-1" class="slide level2">
 <h2>Word2Vec</h2>
-<p>Um exmeplo do que pode ser feito é:</p>
-<p><span class="math display">\[
-  vec(ator) = [-2, 3, 1]
-  vec(atriz) = [-1.9, 2, 1.5]
-  vec(homem) = [3, -1, -2]
-  vec(mulher) = [2.5, -2.5, -1]
-\]</span></p>
-<p>Uma forma de medir a semelhança é usando a similaridade de cosseno:</p>
-<p><span class="math display">\[
-  \text{similaridade de cosseno} = \frac{A \dot B}{||A|| \dot ||B||}
-\]</span></p>
-<p>Com isso coisas é possível calcular coisas como <span class="math inline">\(vec(ator) - vec(homem) + vec(mulher) \approx vec(atriz)\)</span></p>
+<p>Um exemplo simples de representação vetorial é: <span class="math display">\[\begin{aligned}
+vec(ator) &amp;= [-2, 3, 1] \\
+vec(atriz) &amp;= [-1.9, 2, 1.5] \\
+vec(homem) &amp;= [3, -1, -2] \\
+vec(mulher) &amp;= [2.5, -2.5, -1]
+\end{aligned}\]</span></p>
+<p>Uma forma comum de medir a similaridade entre vetores é utilizando a similaridade de cosseno:</p>
+<p><span class="math display">\[\text{similaridade de cosseno} = \frac{A \cdot B}{||A|| \cdot ||B||}\]</span></p>
+<p>Com representações vetoriais, torna-se possível capturar relações semânticas entre palavras, por exemplo: <span class="math display">\[vec(ator) - vec(homem) + vec(mulher) \approx vec(atriz)\]</span></p>
 </section>
 <section id="word2vec---skip-grams-e-cbow" class="slide level2">
 <h2>Word2Vec - Skip-grams e CBOW</h2>
-<p>Duas principais formas de fazer o Word2Vec é com CBOW e Skip-gran. o CBOW usa as palavras e o contexto ao seu redor para predizer uma palavra. Enquanto o Skip-gran tenta predizer o contexto a partir de uma palavra.</p>
-<p>Skip-gran é implementado utilizando um par de palavras <span class="math inline">\((input, contexto)\)</span>, na qual o <span class="math inline">\(contexto\)</span> é a palavra que queremos predizer.</p>
+<p>As duas principais abordagens para construir modelos <em>Word2Vec</em> são o <strong>CBOW</strong> (<em>Continuous Bag of Words</em>) e o <strong>Skip-Gram</strong>.</p>
+<ul>
+<li><strong>CBOW:</strong> utiliza as palavras do contexto para predizer a palavra central.</li>
+<li><strong>Skip-Gram:</strong> realiza o processo inverso, utilizando uma palavra para predizer seu contexto.</li>
+</ul>
+<p>O modelo <em>Skip-Gram</em> é implementado a partir de pares <span class="math inline">\((input, contexto)\)</span>, em que o termo <span class="math inline">\(contexto\)</span> representa a palavra que o modelo deseja prever a partir da palavra de entrada.</p>
 </section>
 <section id="skip-grams" class="slide level2">
 <h2>Skip-grams</h2>
@@ -343,8 +517,9 @@ print(f"Centralidade de intermediação= {nx.betweenness_centrality(G)}")</code>
 </section>
 <section id="deepwalk---random-walks" class="slide level2">
 <h2>DeepWalk - Random Walks</h2>
-<p>O objetivo de criar representações uteis se mantem com DeepWalk, mas ao invés de usar palavras, usamos nós. A partir disso usamos um algoritimo conhecido como random walk para gerar sequências significativas dos nós, que funcionam como sequência.</p>
-<p>Toda a ideia consiste em o Random Walk serem sequências produzidas apartir da escolha aleatória dos vizinhos a cada etapa. Então se os nós costumam aparecer em conjunto isso indica que eles são proximos de alguma forma.</p>
+<p>O objetivo de criar representações úteis permanece no <em>DeepWalk</em>, mas, em vez de palavras, utilizamos nós do grafo.</p>
+<p>Para isso, emprega-se um algoritmo conhecido como <em>Random Walk</em>, responsável por gerar sequências significativas de nós, de forma análoga às sequências de palavras em linguagem natural.</p>
+<p>A ideia central consiste em construir trajetórias no grafo a partir da escolha aleatória de vizinhos a cada etapa. Assim, se determinados nós aparecem frequentemente nas mesmas sequências, isso indica que possuem algum tipo de proximidade estrutural ou semântica dentro do grafo.</p>
 </section>
 <section id="deepwalk" class="slide level2">
 <h2>DeepWalk</h2>
@@ -357,7 +532,7 @@ print(f"Centralidade de intermediação= {nx.betweenness_centrality(G)}")</code>
 </section>
 <section id="exemplo-deepwalk" class="slide level2">
 <h2>Exemplo DeepWalk</h2>
-<p>Referência: https://www.mdpi.com/2227-9059/13/3/536</p>
+<p>Referência: <a href="https://www.mdpi.com/2227-9059/13/3/536">https://www.mdpi.com/2227-9059/13/3/536</a></p>
 <div style="position: relative; width: 70%; height: 500px; margin: auto; text-align:center;">
 <figure class="fragment" data-fragment-index="1" style="position:absolute; top:0; left:0; width:100%; margin:0;">
 <img src="images/biomedicines.png" style="width:100%; height:auto;"> 
@@ -371,12 +546,13 @@ print(f"Centralidade de intermediação= {nx.betweenness_centrality(G)}")</code>
 </section>
 <section id="incluindo-features-nos-nós---introdução-a-gnn-1" class="slide level2">
 <h2>Incluindo Features nos Nós - Introdução a GNN</h2>
-<p>Até agora consideramos apeans a topologia do grafo. Contudo, os grafos tendem a ser mais ricos do que apenas conexões, tanto os nós, quanto as arestas, podem ter features.</p>
-<p>Para isso vamos usar o dataset Cora, que representa 2708 publicações, onde a conexão são as referências. Cada publicação é descrita como um vetor binario de 1433 palavras unicas. O objetivo é classificar o nó em uma das 7 categorias.</p>
+<p>Até agora, consideramos apenas a topologia do grafo. No entanto, grafos geralmente são mais ricos do que apenas suas conexões: tanto nós quanto arestas podem possuir <em>features</em> associadas.</p>
+<p>Para ilustrar isso, utilizaremos o dataset <em>Cora</em>, que representa 2.708 publicações científicas, nas quais as conexões correspondem a citações entre os artigos. Cada publicação é descrita por um vetor binário de 1.433 palavras únicas. O objetivo é classificar cada nó em uma de 7 categorias possíveis.</p>
 </section>
 <section id="primeiro-graph-neural-network" class="slide level2">
 <h2>Primeiro Graph Neural Network</h2>
-<p>No modelo tradicional de rede neural podemos fazer <span class="math inline">\(h_A = x_A W^T\)</span>, onde <span class="math inline">\(x_A\)</span> era o input do vetor de <span class="math inline">\(A\)</span> e <span class="math inline">\(W\)</span> era a matriz de peso. Qual o problema, em um grafo os vetores de entrada são as features dos nós, isso significa que os nós estão completamente separados um dos outros. Para usar a informação da topologia e ao mesmo tempo das features, precisamos olhar para sua vizinhança.</p>
+<p>No modelo tradicional de redes neurais, podemos definir a representação como <span class="math inline">\(h_A = x_A W^T\)</span>, em que <span class="math inline">\(x_A\)</span> é o vetor de entrada do nó (A) e <span class="math inline">\(W\)</span> é a matriz de pesos aprendida.</p>
+<p>O problema é que, em um grafo, os vetores de entrada correspondem apenas às <em>features</em> dos nós, o que significa que cada nó é tratado de forma isolada, sem considerar suas conexões Para incorporar simultaneamente a informação das <em>features</em> e da topologia do grafo, é necessário considerar a vizinhança de cada nó, agregando informações dos nós conectados a ele.</p>
 <p>Graph Linear Layer:</p>
 <p><span class="math display">\[
   h_a = \sum_{i \in \mathcal{N}_A} x_i W^T
@@ -384,7 +560,7 @@ print(f"Centralidade de intermediação= {nx.betweenness_centrality(G)}")</code>
 </section>
 <section id="primeiro-graph-neural-network-1" class="slide level2">
 <h2>Primeiro Graph Neural Network</h2>
-<p>Por questão de eficiência como temos a matirz adjacência é muito mais simples e rápido computar:</p>
+<p>Por questão de eficiência utilizamos a matriz adjacência que é mais simples e rápido de computar:</p>
 <p><span class="math display">\[
   H = \widetilde{A}^T X W^T
 \]</span></p>
@@ -392,15 +568,19 @@ print(f"Centralidade de intermediação= {nx.betweenness_centrality(G)}")</code>
 </section>
 <section id="graph-linear-layer" class="slide level2">
 <h2>Graph Linear Layer:</h2>
-<pre><code>class GNNLayer(torch.nn.Module):
-    def __init__(self, dim_in, dim_out):
-        super().__init__()
-        self.linear = Linear(dim_in, dim_out, bias=False)
-
-    def forward(self, x, adjacency):
-        x = self.linear(x)
-        x = torch.sparse.mm(adjacency, x)
-        return x</code></pre>
+<div id="8a59bd18" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href=""></a><span class="im">import</span> torch</span>
+<span id="cb10-2"><a href=""></a><span class="im">from</span> torch.nn <span class="im">import</span> Linear</span>
+<span id="cb10-3"><a href=""></a><span class="kw">class</span> GNNLayer(torch.nn.Module):</span>
+<span id="cb10-4"><a href=""></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, dim_in, dim_out):</span>
+<span id="cb10-5"><a href=""></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb10-6"><a href=""></a>        <span class="va">self</span>.linear <span class="op">=</span> Linear(dim_in, dim_out, bias<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb10-7"><a href=""></a></span>
+<span id="cb10-8"><a href=""></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x, adjacency):</span>
+<span id="cb10-9"><a href=""></a>        x <span class="op">=</span> <span class="va">self</span>.linear(x)</span>
+<span id="cb10-10"><a href=""></a>        x <span class="op">=</span> torch.sparse.mm(adjacency, x)</span>
+<span id="cb10-11"><a href=""></a>        <span class="cf">return</span> x</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </section></section>
 <section>
 <section id="graph-convolutional-network" class="title-slide slide level1 center">
@@ -409,29 +589,30 @@ print(f"Centralidade de intermediação= {nx.betweenness_centrality(G)}")</code>
 </section>
 <section id="graph-convolutional-network-1" class="slide level2">
 <h2>Graph Convolutional Network</h2>
-<p>Esse conceito foi introduzido por Kipf e Welling em 2017, a ideia é criar uma variante da CNNs para as GNNs. Assim como no caso das CNNs, as GCNs se tornaram as redes de GNN mais populares.</p>
+<p>Esse conceito foi introduzido por Kipf e Welling em 2017, com o objetivo de propor uma variante das CNNs adaptada para grafos, dando origem às <em>Graph Convolutional Networks (GCNs)</em>.</p>
+<p>Assim como ocorreu com as CNNs na visão computacional, as GCNs se tornaram uma das arquiteturas mais populares dentro do campo das <em>Graph Neural Networks (GNNs)</em>.</p>
 </section>
 <section id="limitações-no-nosso-modelo" class="slide level2">
 <h2>Limitações no nosso modelo</h2>
-<p>O nosso modelo tem uma limitação muito evidente, vamos verificar novamente como é feito o cálculo:</p>
+<p>O nosso modelo tem uma limitação, vamos verificar novamente como é feito o cálculo:</p>
 <p><span class="math display">\[
   h_i = \sum_{j \in \mathcal{N}_i} x_j W^T
 \]</span></p>
-<p>Perceba que não é levado em consideração o número de vizinhos, ou seja se um nó possui 1 vizinho e outro 100, não existe uma normalização, logos os valores vão ficar muito discrepantes.</p>
+<p>Perceba que não é levado em consideração o número de vizinhos, ou seja se um nó possui 1 vizinho e outro 100, não existe uma normalização, logo os valores ficarão muito discrepantes.</p>
 </section>
 <section id="solucionando-o-problema" class="slide level2">
 <h2>Solucionando o problema</h2>
-<p>Uma forma de resolver esse problema é simplesmente normalizar pelo degrau do nó.</p>
+<p>Uma forma de resolver esse problema é simplesmente normalizar pelo grau do nó.</p>
 <p><span class="math display">\[
   h_i = \frac{1}{deg(i)} \sum_{j \in \mathcal{N}_i} x_j W^T
 \]</span></p>
 </section>
 <section id="normalização-matricial" class="slide level2">
 <h2>Normalização Matricial</h2>
-<p>Para transformar aquela normalização em multiplicação de matrizes, utilizamos a matriz degrau, que conta o número de vizinhos por nó. Com isso existe duas formas de normalização:</p>
+<p>Para transformar a normalização em uma operação de multiplicação de matrizes, utilizamos a matriz de grau, que contabiliza o número de vizinhos de cada nó. A partir disso, existem duas formas comuns de normalização:</p>
 <ul>
-<li><span class="math inline">\(\widetilde{D}^{-1} \widetilde{A} X W^T\)</span> irá normalizar cada linha das features, fazendo com que a maginitude de um nó com muitos vizinhos não exploda.</li>
-<li><span class="math inline">\(\widetilde{A} \widetilde{D}^{-1} X W^T\)</span> irá normalizar cada coluna das features. Isso faz com que cada nó distribua sua informação igualmente entre seus vizinhos (nós de alto grau não domina os outros).</li>
+<li><span class="math inline">\(\widetilde{D}^{-1} \widetilde{A} X W^T\)</span>: normaliza cada linha das features, evitando que a magnitude de nós com muitos vizinhos cresça excessivamente.</li>
+<li><span class="math inline">\(\widetilde{A} \widetilde{D}^{-1} X W^T\)</span>: normaliza cada coluna das features, fazendo com que cada nó distribua sua informação de forma uniforme entre seus vizinhos, evitando que nós de alto grau dominem a propagação de informação.</li>
 </ul>
 </section>
 <section id="normalização-matricial-1" class="slide level2">
@@ -443,19 +624,19 @@ print(f"Centralidade de intermediação= {nx.betweenness_centrality(G)}")</code>
 </section>
 <section id="graph-attention-network" class="slide level2">
 <h2>Graph Attention Network</h2>
-<p>As GATs são uma melhoria teórica das GNNs. Além de uma normalização estática, ela propõe fatores de ponderação calculados pela importância de cada nó usando self-attention.</p>
-<p>Podemos chamar esses fatores de ponderação de scores de atenção <span class="math inline">\(\alpha_{ij}\)</span>, com isso temos o graph attention:</p>
+<p>As <em>Graph Attention Networks (GATs)</em> representam uma evolução teórica das <em>GNNs</em>. Em vez de utilizar apenas uma normalização fixa, elas introduzem fatores de ponderação aprendidos, calculados a partir da importância relativa de cada nó por meio de <em>self-attention</em>.</p>
+<p>Esses fatores são chamados de <em>attention scores</em> <span class="math inline">\(\alpha_{ij}\)</span>, que determinam o peso da influência do nó <span class="math inline">\(j\)</span> sobre o nó <span class="math inline">\(i\)</span>. Com isso, a operação de <em>graph attention</em> pode ser definida como:</p>
 <p><span class="math display">\[
   h_i = \sum_{j \in \mathcal{N}_i} \alpha_{ij} W x_j
 \]</span></p>
 </section>
 <section id="transformação-linear" class="slide level2">
 <h2>Transformação Linear</h2>
-<p>Os scores de atenção calcula a importância entre o nó central <span class="math inline">\(i\)</span> e o vizinho <span class="math inline">\(j\)</span>. Na camada de atenção do grafo, isso é representado pela concateção dos vetores <span class="math inline">\([Wx_i || Wx_j]\)</span>:</p>
+<p>Os scores de atenção calcula a importância entre o nó central <span class="math inline">\(i\)</span> e o vizinho <span class="math inline">\(j\)</span>. Na camada de atenção do grafo, isso é representado pela concatenação dos vetores <span class="math inline">\([Wx_i || Wx_j]\)</span>:</p>
 <p><span class="math display">\[
   a_{ij} = W_{att}^T[Wx_i || Wx_j]
 \]</span></p>
-<p>Após isso é aplicado uma função de ativação LeakyRelu e uma softmax:</p>
+<p>Após isso é aplicado uma função de ativação <em>LeakyRelu</em> e uma softmax:</p>
 <p><span class="math display">\[
   e_{ij} = LeakyRelu(a_{ij})
   \alpha_{ij} = softmax(e_{ij}) = \frac{exp(e_{ij})}{\sum_{k \in \mathcal{N}_i} exp(e_{ik})}
@@ -463,24 +644,32 @@ print(f"Centralidade de intermediação= {nx.betweenness_centrality(G)}")</code>
 </section>
 <section id="multi-head-attention" class="slide level2">
 <h2>Multi-head attention</h2>
-<p>Como já vimos na aula passada normalmente não usamos self-attention e sim multi-head attention. Existe duas formas de fazer isso na GAT:</p>
+<p>Como já vimos na aula passada normalmente não usamos <em>self-attention</em> mas a <em>multi-head attention</em>. Existe duas formas de fazer isso na GAT:</p>
 <ul>
 <li>Média: A ideia é somar os diferentes embeddigs gerados e depois normalizar pelo número de heads <span class="math inline">\(n\)</span>. <span class="math inline">\(h_i = \frac{1}{n}\sum_{k=1}^n \sum_{j \in \mathcal{N}_i} \alpha_{ij}^k W^k x_j\)</span></li>
 <li>Concatenação: Concatena os diferentes embeddins, produzindo uma matriz maior. <span class="math inline">\(h_i = ||^n_{k=1}\sum_{j \in \mathcal{N}_i} \alpha_{ij}^k W^k x_j\)</span></li>
 </ul>
-<p>Uma regra simples para saber qual usar é: Se está em uma camada intermediaria utilize concateção, quando é a última camada da rede então média.</p>
+<p>Uma regra simples para saber qual usar é: Se está em uma camada intermediaria utilize concateção, quando é a última camada da rede então use a média.</p>
 </section>
 <section id="melhoria-na-gat" class="slide level2">
 <h2>Melhoria na GAT</h2>
-<p>Uma segunda versão do GAT foi proposta (Brody et al.&nbsp;2021) para permitir uma maior expressão da GAT, isso porque ao invés de aplicar a atenção na transformação linear do input ela é aplicado depois, assim fica:</p>
-<p>Antes:</p>
+<p>Uma segunda versão do <em>Graph Attention Network</em> (GAT) foi proposta por Brody et al.&nbsp;(2021), com o objetivo de aumentar a capacidade de representação do modelo. A principal mudança é que, em vez de aplicar o mecanismo de atenção sobre a transformação linear da entrada, a atenção passa a ser aplicada posteriormente, o que torna a modelagem mais expressiva. Assim, a formulação fica:</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="antes-gat">Antes (GAT)</h3>
+<div style="font-size: 0.7em;">
 <p><span class="math display">\[
-  \alpha_{ij} = \frac{exp(LeakyRelu(W_{att}^t [Wx_i||Wx_j]))}{\sum_{k \in \mathcal{i}} exp(LeakyRelu(W_{att}^t [Wx_i||Wx_k]))}
+\alpha_{ij} = \frac{\exp(\text{LR}(\mathbf{a}^\top [\mathbf{W}x_i \Vert \mathbf{W}x_j]))}{\sum_{k \in \mathcal{N}_i} \exp(\text{LR}(\mathbf{a}^\top [\mathbf{W}x_i \Vert \mathbf{W}x_k]))}
 \]</span></p>
-<p>Depois:</p>
+</div>
+</div><div class="column" style="width:50%;">
+<h3 id="depois-gatv2">Depois (GATv2)</h3>
+<div style="font-size: 0.7em;">
 <p><span class="math display">\[
-  \alpha_{ij} = \frac{exp(W_{att}^t \dot LeakyRelu(W[x_i||x_j]))}{\sum_{k \in \mathcal{i}} W_{att}^t \dot exp(LeakyRelu(W[x_i||x_k]))}
+\alpha_{ij} = \frac{\exp(\mathbf{a}^\top \text{LR}(\mathbf{W} [x_i \Vert x_j]))}{\sum_{k \in \mathcal{N}_i} \exp(\mathbf{a}^\top \text{LR}(\mathbf{W} [x_i \Vert x_k]))}
 \]</span></p>
+</div>
+</div></div>
 </section></section>
 <section>
 <section id="graphsage" class="title-slide slide level1 center">
@@ -489,30 +678,34 @@ print(f"Centralidade de intermediação= {nx.betweenness_centrality(G)}")</code>
 </section>
 <section id="graphsage-1" class="slide level2">
 <h2>GraphSAGE</h2>
-<p>GraphSAGE (Hamilton et.al 2017) é uma GNN feita para lidar com grandes grafos. Na biologia normalmente temos que lidar com escabalabidade, por causa da quantidade de dados que temos. Contudo tanto GCN, quanto GAT não são preparados para isso. GraphSAGE traz duas ideias novas:</p>
+<p>O <em>GraphSAGE</em> (Hamilton et al., 2017) é uma <em>GNN</em> projetada para lidar com grafos de grande escala. Em áreas como biologia, é comum enfrentar problemas de escalabilidade devido ao volume massivo de dados. No entanto, modelos como GCN e GAT não são naturalmente otimizados para esse cenário.</p>
+<p>O <em>GraphSAGE</em> introduz duas ideias principais:</p>
 <ul>
-<li>Amostragem de Vizinho</li>
-<li>Operações de Agregação</li>
+<li><strong>Amostragem de vizinhos:</strong> em vez de usar todos os vizinhos de um nó, apenas uma amostra é selecionada, reduzindo o custo computacional.</li>
+<li><strong>Operações de agregação:</strong> as informações dos vizinhos amostrados são combinadas por meio de funções agregadoras para gerar a representação do nó.</li>
 </ul>
 </section>
 <section id="amostragem-de-vizinho" class="slide level2">
 <h2>Amostragem de Vizinho</h2>
-<p>Nas primeiras aulas falamos sobre os batches, e como os otimizadores utilizam eles. Contudo, a maior parte dos datasets daquelas redes neurais são fáceis de extrair um batch, no caso de um dado tabular temos uma linha, no caso de imagens temos uma imagem, etc. Como realizar amostragem a partir de um grafo ?</p>
+<p>Nas primeiras aulas, discutimos o conceito de <em>batches</em> e como os otimizadores os utilizam durante o treinamento. Em redes tradicionais, essa amostragem é direta: em dados tabulares, cada linha pode ser um exemplo; em imagens, cada imagem já constitui uma amostra independente.</p>
+<p>No caso de grafos, porém, essa definição não é tão simples, pois os dados são interdependentes e estruturados. Assim, surge a questão: como realizar a amostragem de um batch a partir de um grafo?</p>
 </section>
 <section id="amostragem-de-vizinho-1" class="slide level2">
 <h2>Amostragem de Vizinho</h2>
-<p>A ideia consiste 2 etapas: 1° quando fazemos o embedding the nó, usamos apenas seus vizinhos. Isso significa que para computa-los só precisa dos vizinhos diretos (1 hope), se a GNN tiver 2 camadas então precisa dos vizinhos dos vizinhos (2 hops) e assim por diante.</p>
+<p>A ideia consiste em duas etapas. Na primeira, ao calcular o <em>embedding</em> de um nó, utilizamos apenas a sua vizinhança. Isso significa que, para computá-lo, são necessários apenas os vizinhos diretos (1-hop).</p>
+<p>Se a GNN possuir duas camadas, então o nó passa a depender dos vizinhos dos vizinhos (2-hops), e assim sucessivamente conforme a profundidade da rede aumenta.</p>
 <div style="position: relative; width: 40%; height: 500px; margin: auto; text-align:center;">
-<figure class="fragment" data-fragment-index="1" style="position:absolute; top:0; left:0; width:100%; margin:0;">
+<figure class="fragment" data-fragment-index="1" style="position:absolute; top:0; left:0; width:70%; margin:0;">
 <img src="images/sampling.png" style="width:100%; height:auto;"> 
 </figure>
 </div>
 </section>
 <section id="amostragem-de-vizinho-2" class="slide level2">
 <h2>Amostragem de Vizinho</h2>
-<p>Contudo, a computação do grafo se torna muito grande a medida que aumenta o numero de hops e se o degrau do nó for muito elevado. Para o segundo caso uma forma de resolver é fazendo amostragem de vizinhos:</p>
+<p>Contudo, a computação no grafo torna-se cada vez mais custosa à medida que o número de <em>hops</em> aumenta ou quando o grau dos nós é muito elevado.</p>
+<p>Para o segundo caso, uma forma de contornar esse problema é por meio da <strong>amostragem de vizinhos</strong>, na qual apenas um subconjunto dos vizinhos é utilizado durante a computação das representações dos nós.</p>
 <div style="position: relative; width: 50%; height: 500px; margin: auto; text-align:center;">
-<figure class="fragment" data-fragment-index="1" style="position:absolute; top:0; left:0; width:100%; margin:0;">
+<figure class="fragment" data-fragment-index="1" style="position:absolute; top:0; left:0; width:75%; margin:0;">
 <img src="images/sampling2.png" style="width:100%; height:auto;"> 
 </figure>
 </div>
@@ -751,7 +944,7 @@ print(f"Centralidade de intermediação= {nx.betweenness_centrality(G)}")</code>
         maxScale: 2,
 
         math: {
-          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
