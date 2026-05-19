@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Material do Curso - XMeeting 2026</title>
+
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -14,25 +15,30 @@
             padding: 20px;
             background-color: #f9f9f9;
         }
+
         header {
             margin-bottom: 40px;
             border-bottom: 1px solid #eaeaea;
             padding-bottom: 20px;
         }
+
         h1 {
             font-size: 1.5rem;
             margin: 0;
             color: #111;
         }
+
         .subtitle {
             color: #666;
             font-size: 0.9rem;
             margin-top: 5px;
         }
+
         ul {
             list-style: none;
             padding: 0;
         }
+
         li {
             background: white;
             border: 1px solid #e1e4e8;
@@ -41,112 +47,360 @@
             padding: 15px;
             transition: box-shadow 0.2s ease;
         }
+
         li:hover {
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             border-color: #0366d6;
         }
+
         .day-title {
             font-weight: 600;
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
             color: #24292e;
         }
+
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .resource-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .resource-name {
+            font-weight: 500;
+            color: #24292e;
+            min-width: 180px;
+        }
+
         a {
             text-decoration: none;
             color: #0366d6;
             font-weight: 500;
         }
+
         a:hover {
             text-decoration: underline;
         }
-        .links-container {
-            display: flex;
-            gap: 15px;
-            font-size: 0.95rem;
-            flex-wrap: wrap; /* Adicionado para lidar com muitos links */
-            align-items: center;
+
+        .download-link {
+            font-size: 0.9rem;
         }
-        .separator {
-            color: #ccc;
-        }
+
         footer {
             margin-top: 50px;
             font-size: 0.8rem;
             color: #888;
             text-align: center;
         }
+
+        @media (max-width: 600px) {
+            .resource-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .resource-name {
+                min-width: auto;
+            }
+        }
     </style>
 </head>
+
 <body>
 
     <header>
         <h1>Curso Redes Neurais - XMeeting 2026</h1>
-        <div class="subtitle">Links para os slides e materiais de apoio</div>
+        <div class="subtitle">
+            Links para os slides e materiais de apoio
+        </div>
     </header>
 
     <main>
+
         <ul>
+
+            <!-- DIA 01 -->
             <li>
+
                 <span class="day-title">Dia 01</span>
+
                 <div class="links-container">
-                    <a href="aula_01/aula_01.html" target="_blank">Abrir Slides</a>
-                    <span class="separator">|</span>
-                    <a href="https://github.com/omatheuspimenta/xm2026_neuralnetworks/blob/main/aula_01/material_apoio/funcoes_ativacao.ipynb" target="_blank">Funções de Ativação</a>
-                    <span class="separator">|</span>
-                    <a href="https://github.com/omatheuspimenta/xm2026_neuralnetworks/blob/main/aula_01/material_apoio/otimizacao.ipynb" target="_blank">Otimização</a>
-                    <span class="separator">|</span>
-                    <a href="https://github.com/omatheuspimenta/xm2026_neuralnetworks/blob/main/aula_01/material_apoio/perceptron.ipynb" target="_blank">Perceptron</a>
+
+                    <div class="resource-item">
+                        <span class="resource-name">Slides</span>
+
+                        <a href="aula_01/aula_01.html" target="_blank">
+                            Visualizar
+                        </a>
+                    </div>
+
+                    <div class="resource-item">
+                        <span class="resource-name">Funções de Ativação</span>
+
+                        <a href="https://github.com/omatheuspimenta/xm2026_neuralnetworks/blob/main/aula_01/material_apoio/funcoes_ativacao.ipynb"
+                           target="_blank">
+                            Visualizar
+                        </a>
+
+                        <a href="aula_01/material_apoio/funcoes_ativacao.ipynb"
+                           download
+                           class="download-link">
+                            ⬇ Download
+                        </a>
+                    </div>
+
+                    <div class="resource-item">
+                        <span class="resource-name">Otimização</span>
+
+                        <a href="https://github.com/omatheuspimenta/xm2026_neuralnetworks/blob/main/aula_01/material_apoio/otimizacao.ipynb"
+                           target="_blank">
+                            Visualizar
+                        </a>
+
+                        <a href="aula_01/material_apoio/otimizacao.ipynb"
+                           download
+                           class="download-link">
+                            ⬇ Download
+                        </a>
+                    </div>
+
+                    <div class="resource-item">
+                        <span class="resource-name">Perceptron</span>
+
+                        <a href="https://github.com/omatheuspimenta/xm2026_neuralnetworks/blob/main/aula_01/material_apoio/perceptron.ipynb"
+                           target="_blank">
+                            Visualizar
+                        </a>
+
+                        <a href="aula_01/material_apoio/perceptron.ipynb"
+                           download
+                           class="download-link">
+                            ⬇ Download
+                        </a>
+                    </div>
+
                 </div>
+
             </li>
 
+            <!-- DIA 02 -->
             <li>
+
                 <span class="day-title">Dia 02</span>
+
                 <div class="links-container">
-                    <a href="aula_02/material_suplementar.ipynb" target="_blank">Material Suplementar</a>
-                    <span class="separator">|</span>
-                    <a href="aula_02/pratica_MLP.ipynb" target="_blank">Prática MLP</a>
+
+                    <div class="resource-item">
+                        <span class="resource-name">Material Suplementar</span>
+
+                        <a href="https://github.com/omatheuspimenta/xm2026_neuralnetworks/blob/main/aula_02/material_suplementar.ipynb"
+                           target="_blank">
+                            Visualizar
+                        </a>
+
+                        <a href="aula_02/material_suplementar.ipynb"
+                           download
+                           class="download-link">
+                            ⬇ Download
+                        </a>
+                    </div>
+
+                    <div class="resource-item">
+                        <span class="resource-name">Prática MLP</span>
+
+                        <a href="https://github.com/omatheuspimenta/xm2026_neuralnetworks/blob/main/aula_02/pratica_MLP.ipynb"
+                           target="_blank">
+                            Visualizar
+                        </a>
+
+                        <a href="aula_02/pratica_MLP.ipynb"
+                           download
+                           class="download-link">
+                            ⬇ Download
+                        </a>
+                    </div>
+
                 </div>
+
             </li>
 
+            <!-- DIA 03 -->
             <li>
+
                 <span class="day-title">Dia 03</span>
+
                 <div class="links-container">
-                    <a href="aula_03/aula_03.html" target="_blank">Abrir Slides</a>
-                    <span class="separator">|</span>
-                    <a href="aula_03/material_apoio/material_suplementar.ipynb" target="_blank">Material Suplementar</a>
-                    <span class="separator">|</span>
-                    <a href="aula_03/material_apoio/pratica_CNN.ipynb" target="_blank">Prática CNN</a>
+
+                    <div class="resource-item">
+                        <span class="resource-name">Slides</span>
+
+                        <a href="aula_03/aula_03.html" target="_blank">
+                            Visualizar
+                        </a>
+                    </div>
+
+                    <div class="resource-item">
+                        <span class="resource-name">Material Suplementar</span>
+
+                        <a href="https://github.com/omatheuspimenta/xm2026_neuralnetworks/blob/main/aula_03/material_apoio/material_suplementar.ipynb"
+                           target="_blank">
+                            Visualizar
+                        </a>
+
+                        <a href="aula_03/material_apoio/material_suplementar.ipynb"
+                           download
+                           class="download-link">
+                            ⬇ Download
+                        </a>
+                    </div>
+
+                    <div class="resource-item">
+                        <span class="resource-name">Prática CNN</span>
+
+                        <a href="https://github.com/omatheuspimenta/xm2026_neuralnetworks/blob/main/aula_03/material_apoio/pratica_CNN.ipynb"
+                           target="_blank">
+                            Visualizar
+                        </a>
+
+                        <a href="aula_03/material_apoio/pratica_CNN.ipynb"
+                           download
+                           class="download-link">
+                            ⬇ Download
+                        </a>
+                    </div>
+
                 </div>
+
             </li>
 
+            <!-- DIA 04 -->
             <li>
+
                 <span class="day-title">Dia 04</span>
+
                 <div class="links-container">
-                    <a href="aula_04/aula_04.html" target="_blank">Abrir Slides</a>
-                    <span class="separator">|</span>
-                    <a href="aula_04/material_apoio/material_suplementar_Vit.ipynb" target="_blank">Material Suplementar ViT</a>
-                    <span class="separator">|</span>
-                    <a href="aula_04/material_apoio/modelo_proteina.ipynb" target="_blank">Modelo Proteína</a>
+
+                    <div class="resource-item">
+                        <span class="resource-name">Slides</span>
+
+                        <a href="aula_04/aula_04.html" target="_blank">
+                            Visualizar
+                        </a>
+                    </div>
+
+                    <div class="resource-item">
+                        <span class="resource-name">Material Suplementar ViT</span>
+
+                        <a href="https://github.com/omatheuspimenta/xm2026_neuralnetworks/blob/main/aula_04/material_apoio/material_suplementar_Vit.ipynb"
+                           target="_blank">
+                            Visualizar
+                        </a>
+
+                        <a href="aula_04/material_apoio/material_suplementar_Vit.ipynb"
+                           download
+                           class="download-link">
+                            ⬇ Download
+                        </a>
+                    </div>
+
+                    <div class="resource-item">
+                        <span class="resource-name">Modelo Proteína</span>
+
+                        <a href="https://github.com/omatheuspimenta/xm2026_neuralnetworks/blob/main/aula_04/material_apoio/modelo_proteina.ipynb"
+                           target="_blank">
+                            Visualizar
+                        </a>
+
+                        <a href="aula_04/material_apoio/modelo_proteina.ipynb"
+                           download
+                           class="download-link">
+                            ⬇ Download
+                        </a>
+                    </div>
+
                 </div>
+
             </li>
 
+            <!-- DIA 05 -->
             <li>
+
                 <span class="day-title">Dia 05</span>
+
                 <div class="links-container">
-                    <a href="aula_05/aula_05.html" target="_blank">Abrir Slides</a>
-                    <span class="separator">|</span>
-                    <a href="aula_05/material_apoio/conceitos_grafo.ipynb" target="_blank">Conceitos de Grafo</a>
-                    <span class="separator">|</span>
-                    <a href="aula_05/material_apoio/material_suplementar.ipynb" target="_blank">Material Suplementar</a>
-                    <span class="separator">|</span>
-                    <a href="aula_05/material_apoio/pratica_GNN.ipynb" target="_blank">Prática GNN</a>
+
+                    <div class="resource-item">
+                        <span class="resource-name">Slides</span>
+
+                        <a href="aula_05/aula_05.html" target="_blank">
+                            Visualizar
+                        </a>
+                    </div>
+
+                    <div class="resource-item">
+                        <span class="resource-name">Conceitos de Grafo</span>
+
+                        <a href="https://github.com/omatheuspimenta/xm2026_neuralnetworks/blob/main/aula_05/material_apoio/conceitos_grafo.ipynb"
+                           target="_blank">
+                            Visualizar
+                        </a>
+
+                        <a href="aula_05/material_apoio/conceitos_grafo.ipynb"
+                           download
+                           class="download-link">
+                            ⬇ Download
+                        </a>
+                    </div>
+
+                    <div class="resource-item">
+                        <span class="resource-name">Material Suplementar</span>
+
+                        <a href="https://github.com/omatheuspimenta/xm2026_neuralnetworks/blob/main/aula_05/material_apoio/material_suplementar.ipynb"
+                           target="_blank">
+                            Visualizar
+                        </a>
+
+                        <a href="aula_05/material_apoio/material_suplementar.ipynb"
+                           download
+                           class="download-link">
+                            ⬇ Download
+                        </a>
+                    </div>
+
+                    <div class="resource-item">
+                        <span class="resource-name">Prática GNN</span>
+
+                        <a href="https://github.com/omatheuspimenta/xm2026_neuralnetworks/blob/main/aula_05/material_apoio/pratica_GNN.ipynb"
+                           target="_blank">
+                            Visualizar
+                        </a>
+
+                        <a href="aula_05/material_apoio/pratica_GNN.ipynb"
+                           download
+                           class="download-link">
+                            ⬇ Download
+                        </a>
+                    </div>
+
                 </div>
+
             </li>
+
         </ul>
+
     </main>
 
     <footer>
-        <p>Atualizado em 20 de maio de 2026 • Curso 2026</p>
+        <p>
+            Atualizado em 20 de maio de 2026 • Curso 2026
+        </p>
     </footer>
 
 </body>
