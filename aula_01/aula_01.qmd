@@ -444,7 +444,7 @@ A derivada geometricamente representa a inclinação da reta tangente ao gráfic
 
 ## Atualização dos Pesos
 
-EEsse algoritmo é conhecido como *Gradient Descent*. Com ele, os parâmetros da rede neural podem ser atualizados da seguinte forma:
+Esse algoritmo é conhecido como *Gradient Descent*. Com ele, os parâmetros da rede neural podem ser atualizados da seguinte forma:
 
 $$
 \theta_{t+1} = \theta_t - \eta \nabla_\theta \mathcal{L}
