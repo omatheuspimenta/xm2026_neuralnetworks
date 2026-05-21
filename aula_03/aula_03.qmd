@@ -74,6 +74,19 @@ Primeira implementação de algo inspirado nesse experimento foi *Neocognitron* 
 
 ## História - Redes Neurais Convolucionais
 
+<iframe
+  width="800"
+  height="450"
+  src="https://www.youtube.com/embed/KAazjZoiCd0"
+  title="YouTube video player"
+  frameborder="0"
+  referrerpolicy="strict-origin-when-cross-origin"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  allowfullscreen>
+</iframe>
+
+## História - Redes Neurais Convolucionais
+
 O *ImageNet* surgiu como um grande desafio de classificação de imagens, reunindo milhões de imagens distribuídas em inúmeras classes. Entre 1989 e 1998, Yann LeCun desenvolveu o *LeNet*, considerado a base das CNNs modernas. Até 2012, as taxas de erro na competição ainda eram elevadas. Nesse ano, uma CNN venceu o desafio pela primeira vez com ampla vantagem, marcando o início do domínio das CNNs nas edições seguintes.
 
 ## Timeline dos principais acontecimentos no desenvolvimento das CNNs
