@@ -12,7 +12,7 @@
   <meta name="author" content="Lucas Otávio Leme Silva">
   <meta name="author" content="Matheus Pimenta">
   <meta name="author" content="Fabricio Martins Lopes">
-  <meta name="dcterms.date" content="2026-05-07">
+  <meta name="dcterms.date" content="2026-05-23">
   <title>Curso Redes Neurais - Xmeeting 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -237,7 +237,7 @@ Fabricio Martins Lopes
     </div>
 </div>
 
-  <p class="date">May 7, 2026</p>
+  <p class="date">May 23, 2026</p>
 </section><section id="TOC">
 <nav role="doc-toc"> 
 <h2 id="toc-title">Table of Contents</h2>
@@ -246,6 +246,7 @@ Fabricio Martins Lopes
 <li><a href="#/criando-representações-de-nós---deepwalk" id="/toc-criando-representações-de-nós---deepwalk">Criando Representações de Nós - DeepWalk</a></li>
 <li><a href="#/incluindo-features-nos-nós---introdução-a-gnn" id="/toc-incluindo-features-nos-nós---introdução-a-gnn">Incluindo Features nos Nós - Introdução a GNN</a></li>
 <li><a href="#/graph-convolutional-network" id="/toc-graph-convolutional-network">Graph Convolutional Network</a></li>
+<li><a href="#/graph-attention-network" id="/toc-graph-attention-network">Graph Attention Network</a></li>
 <li><a href="#/graphsage" id="/toc-graphsage">GraphSAGE</a></li>
 <li><a href="#/referências" id="/toc-referências">Referências</a></li>
 </ul>
@@ -278,8 +279,8 @@ Fabricio Martins Lopes
 <li>Geração de Grafo: Assim como dados sintéticos, é possível gerar grafos sintéticos, ou seja, novos grafos a partir de algum propriedade que esteja nos outros grafos (principal aplicação é gerar novas moléculas para descoberta de novos medicamentos)</li>
 </ul>
 </section>
-<section id="grafos-direcionados-e-não-direcionados" class="slide level2">
-<h2>Grafos Direcionados e Não direcionados</h2>
+<section id="grafos-direcionados" class="slide level2">
+<h2>Grafos Direcionados</h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">import</span> networkx <span class="im">as</span> nx</span>
 <span id="cb1-2"><a href=""></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href=""></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
@@ -288,9 +289,9 @@ Fabricio Martins Lopes
 <span id="cb1-6"><a href=""></a>nx.draw( G, with_labels<span class="op">=</span><span class="va">True</span>, node_color<span class="op">=</span><span class="st">'lightgreen'</span>, font_weight<span class="op">=</span><span class="st">'bold'</span>, node_size<span class="op">=</span><span class="dv">1500</span>, arrowsize<span class="op">=</span><span class="dv">15</span>, edge_color<span class="op">=</span><span class="st">'gray'</span>)</span>
 <span id="cb1-7"><a href=""></a>plt.margins(<span class="fl">0.2</span>)</span>
 <span id="cb1-8"><a href=""></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="quarto-layout-panel" style="text-align:center;" data-layout-ncol="1">
+<div class="quarto-layout-panel" data-layout-ncol="1" style="text-align:center;">
 <div class="quarto-layout-row">
-<div id="6ed459a1" class="cell quarto-layout-cell" data-execution_count="1" style="flex-basis: 100.0%;justify-content: flex-start;">
+<div id="599e5f2b" class="cell quarto-layout-cell" data-execution_count="1" style="flex-basis: 100.0%;justify-content: flex-start;">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -302,15 +303,15 @@ Fabricio Martins Lopes
 </div>
 </div>
 </section>
-<section id="grafos-direcionados" class="slide level2">
-<h2>Grafos Direcionados</h2>
+<section id="grafos-não-direcionados" class="slide level2">
+<h2>Grafos Não Direcionados</h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="co"># Criando um grafo não direcionado</span></span>
 <span id="cb2-2"><a href=""></a>Z <span class="op">=</span> nx.Graph()</span>
 <span id="cb2-3"><a href=""></a>Z.add_edges_from([(<span class="st">'Fabricio'</span>, <span class="st">'Matheus'</span>), (<span class="st">'Fabricio'</span>, <span class="st">'Lucas'</span>), (<span class="st">'Matheus'</span>, <span class="st">'Lucas'</span>)])</span>
 <span id="cb2-4"><a href=""></a>nx.draw( Z, with_labels<span class="op">=</span><span class="va">True</span>, node_color<span class="op">=</span><span class="st">'lightgreen'</span>, font_weight<span class="op">=</span><span class="st">'bold'</span>, node_size<span class="op">=</span><span class="dv">1500</span>, arrowsize<span class="op">=</span><span class="dv">15</span>, edge_color<span class="op">=</span><span class="st">'gray'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="quarto-layout-panel" style="text-align:center;" data-layout-ncol="1">
+<div class="quarto-layout-panel" data-layout-ncol="1" style="text-align:center;">
 <div class="quarto-layout-row">
-<div id="9de67c42" class="cell quarto-layout-cell" data-execution_count="2" style="flex-basis: 100.0%;justify-content: flex-start;">
+<div id="50fb52d6" class="cell quarto-layout-cell" data-execution_count="2" style="flex-basis: 100.0%;justify-content: flex-start;">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -335,9 +336,9 @@ Fabricio Martins Lopes
 <span id="cb3-9"><a href=""></a>nx.draw_networkx_edge_labels(GP, pos, edge_labels<span class="op">=</span>labels)</span>
 <span id="cb3-10"><a href=""></a>plt.margins(<span class="fl">0.2</span>)</span>
 <span id="cb3-11"><a href=""></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="quarto-layout-panel" style="text-align:center;" data-layout-ncol="1">
+<div class="quarto-layout-panel" data-layout-ncol="1" style="text-align:center;">
 <div class="quarto-layout-row">
-<div id="01e518a3" class="cell quarto-layout-cell" data-execution_count="3" style="flex-basis: 100.0%;justify-content: flex-start;">
+<div id="e6119277" class="cell quarto-layout-cell" data-execution_count="3" style="flex-basis: 100.0%;justify-content: flex-start;">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -352,7 +353,7 @@ Fabricio Martins Lopes
 <section id="grafos-conectados-e-disconectados" class="slide level2">
 <h2>Grafos Conectados e Disconectados</h2>
 <p>Um grafo é dito conectado se existe um caminho entra quaisquer dois vértices do grafo, caso contrário, o grafo é dito desconectado.</p>
-<div id="74bab3c7" class="cell" data-execution_count="4">
+<div id="40549875" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">2</span>)) </span>
 <span id="cb4-2"><a href=""></a>G <span class="op">=</span> nx.Graph()</span>
 <span id="cb4-3"><a href=""></a>G.add_edges_from([(<span class="dv">1</span>, <span class="dv">3</span>), (<span class="dv">3</span>, <span class="dv">4</span>), (<span class="dv">4</span>, <span class="dv">1</span>), (<span class="dv">5</span>, <span class="dv">6</span>)])</span>
@@ -399,9 +400,9 @@ Fabricio Martins Lopes
 <span id="cb6-8"><a href=""></a>nx.draw(Z, with_labels<span class="op">=</span><span class="va">True</span>, node_color<span class="op">=</span><span class="st">'orange'</span>, node_size<span class="op">=</span><span class="dv">1000</span>, font_size<span class="op">=</span><span class="dv">10</span>)</span>
 <span id="cb6-9"><a href=""></a>plt.margins(<span class="fl">0.3</span>)</span>
 <span id="cb6-10"><a href=""></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="quarto-layout-panel" style="text-align:center;" data-layout-ncol="1">
+<div class="quarto-layout-panel" data-layout-ncol="1" style="text-align:center;">
 <div class="quarto-layout-row">
-<div id="dd318e5f" class="cell quarto-layout-cell" data-execution_count="5" style="flex-basis: 100.0%;justify-content: flex-start;">
+<div id="49fb335c" class="cell quarto-layout-cell" data-execution_count="5" style="flex-basis: 100.0%;justify-content: flex-start;">
 <div class="cell-output cell-output-stdout">
 <pre><code>Grau(Lucas) = 2</code></pre>
 </div>
@@ -427,21 +428,45 @@ Fabricio Martins Lopes
 <section id="medidas-de-um-grafo-1" class="slide level2">
 <h2>Medidas de um grafo</h2>
 <p>Grau:</p>
+<div class="quarto-layout-panel" data-layout-ncol="2" style="text-align:center;">
+<div class="quarto-layout-row">
+<div class="column quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<p><span class="math display">\[
+C_D(v) = deg(v)
+\]</span></p>
+</div><div class="column quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <p><span class="math display">\[
   C_D(v) = \frac{deg(v)}{|V|-1}
 \]</span></p>
+</div></div>
+</div>
 <p>Proximidade:</p>
+<div class="quarto-layout-panel" data-layout-ncol="2" style="text-align:center;">
+<div class="quarto-layout-row">
+<div class="column quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <p><span class="math display">\[
   C_C(v) = \frac{1}{\sum_u d(v,u)}
 \]</span></p>
+</div><div class="column quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<p><span class="math display">\[
+  C_C(v) = \frac{n-1}{\sum_u d(v,u)}
+\]</span></p>
+</div></div>
+</div>
+</section>
+<section id="medidas-de-um-grafo-2" class="slide level2">
+<h2>Medidas de um grafo</h2>
 <p>Intermediação:</p>
 <p><span class="math display">\[
   C_B(v) = \sum_{s,t} \frac{\sigma_{st}(v)}{\sigma_{st}}
 \]</span></p>
+<p><span class="math display">\[
+C'_B(v) = \frac{C_B(v)}{\frac{(N-1)(N-2)}{2}} = \frac{2 \cdot C_B(v)}{(N-1)(N-2)}
+\]</span></p>
 </section>
-<section id="medidas-de-um-grafo-2" class="slide level2">
+<section id="medidas-de-um-grafo-3" class="slide level2">
 <h2>Medidas de um grafo</h2>
-<div id="982da7df" class="cell" data-execution_count="6">
+<div id="da77479a" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Grau de Centralidade = </span><span class="sc">{</span>nx<span class="sc">.</span>degree_centrality(G)<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb8-2"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Centralidade de proximidade = </span><span class="sc">{</span>nx<span class="sc">.</span>closeness_centrality(G)<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb8-3"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Centralidade de intermediação= </span><span class="sc">{</span>nx<span class="sc">.</span>betweenness_centrality(G)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -568,7 +593,7 @@ vec(mulher) &amp;= [2.5, -2.5, -1]
 </section>
 <section id="graph-linear-layer" class="slide level2">
 <h2>Graph Linear Layer:</h2>
-<div id="8a59bd18" class="cell" data-execution_count="7">
+<div id="a9af2de7" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href=""></a><span class="im">import</span> torch</span>
 <span id="cb10-2"><a href=""></a><span class="im">from</span> torch.nn <span class="im">import</span> Linear</span>
 <span id="cb10-3"><a href=""></a><span class="kw">class</span> GNNLayer(torch.nn.Module):</span>
@@ -621,8 +646,13 @@ vec(mulher) &amp;= [2.5, -2.5, -1]
 <p><span class="math display">\[
   H = \widetilde{D}^{-\frac{1}{2}} \widetilde{A} \widetilde{D}^{-\frac{1}{2}} X W^T
 \]</span></p>
+</section></section>
+<section>
+<section id="graph-attention-network" class="title-slide slide level1 center">
+<h1>Graph Attention Network</h1>
+
 </section>
-<section id="graph-attention-network" class="slide level2">
+<section id="graph-attention-network-1" class="slide level2">
 <h2>Graph Attention Network</h2>
 <p>As <em>Graph Attention Networks (GATs)</em> representam uma evolução teórica das <em>GNNs</em>. Em vez de utilizar apenas uma normalização fixa, elas introduzem fatores de ponderação aprendidos, calculados a partir da importância relativa de cada nó por meio de <em>self-attention</em>.</p>
 <p>Esses fatores são chamados de <em>attention scores</em> <span class="math inline">\(\alpha_{ij}\)</span>, que determinam o peso da influência do nó <span class="math inline">\(j\)</span> sobre o nó <span class="math inline">\(i\)</span>. Com isso, a operação de <em>graph attention</em> pode ser definida como:</p>
@@ -639,6 +669,7 @@ vec(mulher) &amp;= [2.5, -2.5, -1]
 <p>Após isso é aplicado uma função de ativação <em>LeakyRelu</em> e uma softmax:</p>
 <p><span class="math display">\[
   e_{ij} = LeakyRelu(a_{ij})
+\]</span> <span class="math display">\[
   \alpha_{ij} = softmax(e_{ij}) = \frac{exp(e_{ij})}{\sum_{k \in \mathcal{N}_i} exp(e_{ik})}
 \]</span></p>
 </section>
@@ -659,14 +690,14 @@ vec(mulher) &amp;= [2.5, -2.5, -1]
 <h3 id="antes-gat">Antes (GAT)</h3>
 <div style="font-size: 0.7em;">
 <p><span class="math display">\[
-\alpha_{ij} = \frac{\exp(\text{LR}(\mathbf{a}^\top [\mathbf{W}x_i \Vert \mathbf{W}x_j]))}{\sum_{k \in \mathcal{N}_i} \exp(\text{LR}(\mathbf{a}^\top [\mathbf{W}x_i \Vert \mathbf{W}x_k]))}
+\alpha_{ij} = \frac{\exp(\text{LR}(\mathbf{W_{att}}^\top [\mathbf{W}x_i \Vert \mathbf{W}x_j]))}{\sum_{k \in \mathcal{N}_i} \exp(\text{LR}(\mathbf{W_{att}}^\top [\mathbf{W}x_i \Vert \mathbf{W}x_k]))}
 \]</span></p>
 </div>
 </div><div class="column" style="width:50%;">
 <h3 id="depois-gatv2">Depois (GATv2)</h3>
 <div style="font-size: 0.7em;">
 <p><span class="math display">\[
-\alpha_{ij} = \frac{\exp(\mathbf{a}^\top \text{LR}(\mathbf{W} [x_i \Vert x_j]))}{\sum_{k \in \mathcal{N}_i} \exp(\mathbf{a}^\top \text{LR}(\mathbf{W} [x_i \Vert x_k]))}
+\alpha_{ij} = \frac{\exp(\mathbf{W_{att}}^\top \text{LR}(\mathbf{W} [x_i \Vert x_j]))}{\sum_{k \in \mathcal{N}_i} \exp(\mathbf{W_{att}}^\top \text{LR}(\mathbf{W} [x_i \Vert x_k]))}
 \]</span></p>
 </div>
 </div></div>
@@ -719,9 +750,7 @@ vec(mulher) &amp;= [2.5, -2.5, -1]
 <li>Agregador de pooling</li>
 </ul>
 <p>Vamos usar o agregador da média:</p>
-<p><span class="math display">\[
-  h_i = \sigma(W \dot mean_{j \in \mathcal{N}_i}(h_j))
-\]</span></p>
+<p><span class="math display">\[h_i = \sigma \left( W \left[ x_i \parallel \text{mean}_{j \in \mathcal{N}_i} (x_j) \right] \right)\]</span></p>
 </section></section>
 <section>
 <section id="referências" class="title-slide slide level1 center">

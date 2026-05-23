@@ -67,7 +67,7 @@ A partir da união das redes neurais com os grafos podemos resolver diversos tip
 - Classificação do Grafo: A partir de todo o grafo predizer uma categoria para ele
 - Geração de Grafo: Assim como dados sintéticos, é possível gerar grafos sintéticos, ou seja, novos grafos a partir de algum propriedade que esteja nos outros grafos (principal aplicação é gerar novas moléculas para descoberta de novos medicamentos)
 
-## Grafos Direcionados e Não direcionados
+## Grafos Direcionados
 
 ::: {layout-ncol=1 style="text-align:center;"}
 
@@ -84,7 +84,7 @@ plt.show()
 ```
 :::
 
-## Grafos Direcionados 
+## Grafos Não Direcionados 
 ::: {layout-ncol=1 style="text-align:center;"}
 ```{python}
 #| echo: true
@@ -167,21 +167,47 @@ plt.show()
 
 Grau:
 
+::: {layout-ncol=2 style="text-align:center;"}
+::: {.column width="50%"}
+$$
+ C_D(v) = deg(v)
+$$
+:::
+::: {.column width="50%"}
 $$
   C_D(v) = \frac{deg(v)}{|V|-1}
 $$
+:::
+:::
 
 Proximidade:
 
+::: {layout-ncol=2 style="text-align:center;"}
+::: {.column width="50%"}
 $$
   C_C(v) = \frac{1}{\sum_u d(v,u)}
 $$
+:::
+::: {.column width="50%"}
+$$
+  C_C(v) = \frac{n-1}{\sum_u d(v,u)}
+$$
+:::
+:::
+
+## Medidas de um grafo 
 
 Intermediação:
+
 
 $$
   C_B(v) = \sum_{s,t} \frac{\sigma_{st}(v)}{\sigma_{st}}
 $$
+
+$$
+C'_B(v) = \frac{C_B(v)}{\frac{(N-1)(N-2)}{2}} = \frac{2 \cdot C_B(v)}{(N-1)(N-2)}
+$$
+
 
 ## Medidas de um grafo
 
@@ -393,6 +419,8 @@ $$
   H = \widetilde{D}^{-\frac{1}{2}} \widetilde{A} \widetilde{D}^{-\frac{1}{2}} X W^T
 $$
 
+# Graph Attention Network
+
 ## Graph Attention Network
 
 As *Graph Attention Networks (GATs)* representam uma evolução teórica das *GNNs*. Em vez de utilizar apenas uma normalização fixa, elas introduzem fatores de ponderação aprendidos, calculados a partir da importância relativa de cada nó por meio de *self-attention*.
@@ -416,6 +444,8 @@ Após isso é aplicado uma função de ativação *LeakyRelu* e uma softmax:
 
 $$
   e_{ij} = LeakyRelu(a_{ij})
+$$
+$$
   \alpha_{ij} = softmax(e_{ij}) = \frac{exp(e_{ij})}{\sum_{k \in \mathcal{N}_i} exp(e_{ik})}
 $$
 
@@ -440,7 +470,7 @@ Uma segunda versão do *Graph Attention Network* (GAT) foi proposta por Brody et
 ### Antes (GAT)
 <div style="font-size: 0.7em;">
 $$
-\alpha_{ij} = \frac{\exp(\text{LR}(\mathbf{a}^\top [\mathbf{W}x_i \Vert \mathbf{W}x_j]))}{\sum_{k \in \mathcal{N}_i} \exp(\text{LR}(\mathbf{a}^\top [\mathbf{W}x_i \Vert \mathbf{W}x_k]))}
+\alpha_{ij} = \frac{\exp(\text{LR}(\mathbf{W_{att}}^\top [\mathbf{W}x_i \Vert \mathbf{W}x_j]))}{\sum_{k \in \mathcal{N}_i} \exp(\text{LR}(\mathbf{W_{att}}^\top [\mathbf{W}x_i \Vert \mathbf{W}x_k]))}
 $$
 </div>
 :::
@@ -449,7 +479,7 @@ $$
 ### Depois (GATv2)
 <div style="font-size: 0.7em;">
 $$
-\alpha_{ij} = \frac{\exp(\mathbf{a}^\top \text{LR}(\mathbf{W} [x_i \Vert x_j]))}{\sum_{k \in \mathcal{N}_i} \exp(\mathbf{a}^\top \text{LR}(\mathbf{W} [x_i \Vert x_k]))}
+\alpha_{ij} = \frac{\exp(\mathbf{W_{att}}^\top \text{LR}(\mathbf{W} [x_i \Vert x_j]))}{\sum_{k \in \mathcal{N}_i} \exp(\mathbf{W_{att}}^\top \text{LR}(\mathbf{W} [x_i \Vert x_k]))}
 $$
 </div>
 :::
@@ -517,9 +547,7 @@ A operação de agregação é somente para verificar qual operação usar para 
 
 Vamos usar o agregador da média:
 
-$$
-  h_i = \sigma(W \dot mean_{j \in \mathcal{N}_i}(h_j))
-$$
+$$h_i = \sigma \left( W \left[ x_i \parallel \text{mean}_{j \in \mathcal{N}_i} (x_j) \right] \right)$$
 
 # Referências
 
