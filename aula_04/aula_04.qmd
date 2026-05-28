@@ -64,7 +64,7 @@ $$h_t = f(x_t, h_{t-1})$$
 
 Ao longo dos anos, diversas abordagens buscaram resolver a principal limitação desses modelos: a dificuldade em capturar dependências de longo prazo. Isso ocorre porque informações relevantes no início da sequência tendem a se perder ao longo do processamento, enquanto os gradientes diminuem exponencialmente durante o treinamento.
 
-Considere a frase: *“O livro que o professor que o aluno admira escreveu é complexo.”*
+Considere a frase: *“O livro do professor que o aluno admira é complexo.”*
 
 Para relacionar *“livro”* com *“complexo”*, o modelo precisa atravessar múltiplas dependências intermediárias. Modelos recorrentes, como RNNs, possuem dificuldade em preservar esse tipo de informação ao longo da sequência.
 
